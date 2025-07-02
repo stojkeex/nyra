@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Default animated purple gradient */
+            /* Fallback colors */
             --user-bubble-color-start: #6a5af9;
             --user-bubble-color-end: #d66efd;
             --vh: 1vh;
@@ -32,7 +32,7 @@
             background-color: #000;
             transition: background 0.5s ease;
         }
-        /* Background element, used for non-chat screens */
+        /* The background element, used for non-chat screens */
         #background-wrap {
             position: fixed;
             top: 0;
@@ -67,9 +67,17 @@
             color: #ffffff; 
         }
         
-        .text-theme-contrast { color: #1f2937 !important; }
-        .icon-theme-contrast { stroke: #1f2937 !important; }
-        .icon-theme-contrast-fill { fill: #1f2937 !important; }
+        /* Class for theme contrast text */
+        .text-theme-contrast {
+             color: #1f2937 !important; /* dark gray */
+        }
+        .icon-theme-contrast {
+             stroke: #1f2937 !important;
+        }
+        .icon-theme-contrast-fill {
+             fill: #1f2937 !important;
+        }
+
 
         /* --- General Component Styling --- */
         .card-base {
@@ -101,13 +109,15 @@
             background-color: #ef4444; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.5s ease-in-out; z-index: 100;
         }
-        #voice-toast { background-color: #3b82f6; }
+        #voice-toast {
+            background-color: #3b82f6;
+        }
         .modal-backdrop {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
             z-index: 40;
         }
-        .dropdown-menu, .message-actions-menu {
+        .dropdown-menu {
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
         .modal {
@@ -119,23 +129,6 @@
         }
         .theme-swatch.selected {
             border-color: #a78bfa; /* violet-400 */
-        }
-        /* --- Reply Styles --- */
-        #reply-preview-bar {
-            transition: all 0.3s ease-in-out;
-            max-height: 0;
-            overflow: hidden;
-        }
-        #reply-preview-bar.visible {
-            max-height: 100px; /* Adjust as needed */
-            padding: 8px 16px;
-        }
-        .reply-quote {
-            border-left: 2px solid rgba(255, 255, 255, 0.4);
-            padding-left: 8px;
-            margin-bottom: 4px;
-            font-size: 0.8em;
-            opacity: 0.8;
         }
     </style>
 </head>
@@ -252,18 +245,6 @@
                  <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
                     <span id="typing-name"></span> is typing...
                 </div>
-                <!-- Reply Preview -->
-                <div id="reply-preview-bar" class="bg-gray-700/50 rounded-t-xl -mx-3 -mt-3 mb-2 text-sm">
-                     <div class="flex justify-between items-center">
-                        <div class="border-l-4 border-blue-500 pl-3">
-                            <p id="reply-preview-sender" class="font-bold text-white"></p>
-                            <p id="reply-preview-text" class="text-gray-300 truncate"></p>
-                        </div>
-                        <button id="cancel-reply-btn" class="p-2 text-gray-400 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
-                    </div>
-                </div>
                 <form id="chat-form" class="flex items-center gap-2 bg-gray-800 rounded-full p-1.5">
                     <input type="text" id="message-input" placeholder="Message..." class="flex-grow bg-transparent text-white focus:outline-none px-4" autocomplete="off">
                     <input type="file" id="image-chat-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
@@ -314,12 +295,6 @@
             <h2 class="text-xl font-bold text-center mb-6">Change Chat Theme</h2>
             <div id="theme-swatches" class="grid grid-cols-3 gap-4 mb-6"></div>
         </div>
-    </div>
-
-    <!-- Message Actions Menu (without Pin) -->
-    <div id="message-actions-menu" class="message-actions-menu absolute bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 z-30 hidden origin-top-left scale-95 opacity-0">
-        <button data-action="reply" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Reply</button>
-        <button data-action="copy" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Copy</button>
     </div>
 
     <div id="error-toast"></div>
@@ -379,14 +354,6 @@
             const themeModal = document.getElementById('theme-modal');
             const themeSwatches = document.getElementById('theme-swatches');
 
-            // Reply Elements
-            const replyPreviewBar = document.getElementById('reply-preview-bar');
-            const replyPreviewSender = document.getElementById('reply-preview-sender');
-            const replyPreviewText = document.getElementById('reply-preview-text');
-            const cancelReplyBtn = document.getElementById('cancel-reply-btn');
-            const messageActionsMenu = document.getElementById('message-actions-menu');
-
-
             // --- Data ---
             const countries = [
                 { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' },
@@ -421,10 +388,10 @@
             };
 
             const chatColors = [
-                { start: '#6a5af9', end: '#d66efd' }, // Default IG Purple/Blue
-                { start: '#db2777', end: '#be185d' }, // Pink
+                { start: '#833ab4', end: '#5851db' }, // Default IG Purple/Blue
                 { start: '#2563eb', end: '#1d4ed8' }, // Blue
                 { start: '#16a34a', end: '#15803d' }, // Green
+                { start: '#db2777', end: '#be185d' }, // Pink
                 { start: '#f97316', end: '#ea580c' }, // Orange
             ];
             
@@ -443,59 +410,20 @@
             let confirmCallback = null;
             let mediaRecorder;
             let audioChunks = [];
-            let replyingToMessage = null;
-            let activeMessageMenu = null;
-
 
             // --- Functions ---
             
+            // Fix for 100vh on mobile browsers
             function setRealViewportHeight() {
                 let vh = window.innerHeight * 0.01;
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-            
-            function handleIOSKeyboard() {
-                if (messageInput) {
-                    messageInput.addEventListener('focus', () => {
-                        setTimeout(() => {
-                            setRealViewportHeight();
-                            window.scrollTo(0, document.body.scrollHeight);
-                            if (chatMessages) {
-                                chatMessages.scrollTop = chatMessages.scrollHeight;
-                            }
-                        }, 300);
-                    });
-                }
-            }
-            
-            // POPRAVEK: Funkcije premaknjene navzgor, da se prepreči ReferenceError
-            function setChatColor(start, end) {
-                document.documentElement.style.setProperty('--user-bubble-color-start', start);
-                document.documentElement.style.setProperty('--user-bubble-color-end', end);
-                localStorage.setItem('chatColor', JSON.stringify({start, end}));
-            }
-
-            function loadChatColor() {
-                const savedColor = localStorage.getItem('chatColor');
-                if (savedColor) {
-                    try {
-                        const { start, end } = JSON.parse(savedColor);
-                        setChatColor(start, end);
-                    } catch(e) { 
-                        console.error("Error loading chat color:", e);
-                        setChatColor('#6a5af9', '#d66efd');
-                    }
-                } else {
-                    setChatColor('#6a5af9', '#d66efd');
-                }
             }
 
             function init() {
                 setRealViewportHeight();
                 window.addEventListener('resize', setRealViewportHeight);
-                handleIOSKeyboard();
 
-                loadChatColor(); // Zdaj je varno klicati to funkcijo
+                loadChatColor();
                 const savedProfile = localStorage.getItem('alterraProfile');
                 if (savedProfile) {
                     try {
@@ -511,25 +439,20 @@
             }
 
             function showScreen(screenElement) {
-                [homepageScreen, genderSelectionScreen, creationScreen, chatScreen].forEach(s => {
-                    if (s) s.classList.add('hidden');
-                });
-                if (screenElement) screenElement.classList.remove('hidden');
-                
+                [homepageScreen, genderSelectionScreen, creationScreen, chatScreen].forEach(s => s.classList.add('hidden'));
+                screenElement.classList.remove('hidden');
                 if(screenElement === chatScreen || screenElement === creationScreen) {
-                    if (screenElement) screenElement.classList.add('flex', 'flex-col');
+                    screenElement.classList.add('flex', 'flex-col');
                 }
-
                 if (screenElement !== chatScreen) {
-                    if (appContainer) appContainer.style.background = 'black';
-                    if (backgroundWrap) backgroundWrap.classList.remove('hidden');
+                    appContainer.style.background = 'black';
+                    backgroundWrap.classList.remove('hidden');
                 } else {
-                    if (backgroundWrap) backgroundWrap.classList.add('hidden');
+                    backgroundWrap.classList.add('hidden');
                 }
             }
             
             function showToast(element, message, duration = 3000) {
-                if (!element) return;
                 element.textContent = message;
                 element.style.bottom = '20px';
                 setTimeout(() => {
@@ -539,20 +462,19 @@
 
             function showGenderSelectionScreen() {
                 showScreen(genderSelectionScreen);
-                if (backgroundWrap) backgroundWrap.className = 'neutral-gradient';
+                backgroundWrap.className = 'neutral-gradient';
             }
 
             function setupCreationScreen(gender) {
                 currentGender = gender;
-                if (backgroundWrap) backgroundWrap.className = gender === 'girl' ? 'girl-gradient' : 'man-gradient';
+                backgroundWrap.className = gender === 'girl' ? 'girl-gradient' : 'man-gradient';
                 showScreen(creationScreen);
-                if (creationTitle) creationTitle.textContent = `Create Your ${gender === 'girl' ? 'Girlfriend' : 'Boyfriend'}`;
+                creationTitle.textContent = `Create Your ${gender === 'girl' ? 'Girlfriend' : 'Boyfriend'}`;
                 populateEditorNationality();
                 validateEditorInputs();
             }
             
             function populateEditorNationality() {
-                if (!editorNationality) return;
                 editorNationality.innerHTML = '<option value="" disabled selected>Select a nationality</option>';
                 countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
                     const option = document.createElement('option');
@@ -574,16 +496,13 @@
                     const dataUrl = e.target.result;
                     if (isChatMessage) {
                         const imageData = dataUrl.split(',')[1];
-                        const messageId = Date.now();
-                        addMessageToUI('user', { id: messageId, type: 'image', content: dataUrl });
-                        sendAiImageResponse(imageData, file.type, messageId);
+                        addMessageToUI('user', { type: 'image', content: dataUrl });
+                        sendAiImageResponse(imageData, file.type);
                     } else {
                         uploadedImageData = dataUrl;
-                        if (editorImgPreview) {
-                            editorImgPreview.src = uploadedImageData;
-                            editorImgPreview.classList.remove('hidden');
-                        }
-                        if (imageUploadLabel) imageUploadLabel.style.display = 'none';
+                        editorImgPreview.src = uploadedImageData;
+                        editorImgPreview.classList.remove('hidden');
+                        imageUploadLabel.style.display = 'none';
                         validateEditorInputs();
                     }
                 };
@@ -591,7 +510,6 @@
             }
 
             function validateEditorInputs() {
-                if (!editorName || !editorAge || !editorNationality || !saveProfileBtn) return;
                 const nameValid = editorName.value.trim() !== '';
                 const ageValid = editorAge.value.trim() !== '' && !isNaN(editorAge.value) && editorAge.value > 0;
                 const nationalityValid = editorNationality.value !== '';
@@ -599,7 +517,6 @@
             }
 
             saveProfileBtn.addEventListener('click', () => {
-                if (!editorNationality || !editorName || !editorAge || !editorTraits) return;
                 const selectedCountryName = editorNationality.value;
                 currentProfile = {
                     name: editorName.value,
@@ -613,7 +530,7 @@
                 try {
                     localStorage.setItem('alterraProfile', JSON.stringify(currentProfile));
                     chatHistory = [];
-                    localStorage.removeItem(`chatHistory_${currentProfile.name}`);
+                    localStorage.removeItem(`chatHistory_${currentProfile.name}`); // Keep old one for cleanup if needed
                     setupChatScreen();
                 } catch(e) {
                     showToast(errorToast, e.name === 'QuotaExceededError' ? "Image too large." : "An unknown error occurred.");
@@ -621,137 +538,90 @@
             });
 
             function setupChatScreen() {
-                if (!currentProfile) return;
                 loadChatTheme();
                 showScreen(chatScreen);
                 const savedHistory = localStorage.getItem(`chatHistory_${currentProfile.name}`);
                 chatHistory = savedHistory ? JSON.parse(savedHistory) : [];
-                if (chatAvatar) chatAvatar.src = currentProfile.img || `https://placehold.co/112x112/4338ca/f0abfc?text=${currentProfile.gender === 'girl' ? '👩' : '👨'}`;
-                if (chatName) chatName.textContent = currentProfile.name;
+                chatAvatar.src = currentProfile.img || `https://placehold.co/112x112/4338ca/f0abfc?text=${currentProfile.gender === 'girl' ? '👩' : '👨'}`;
+                chatName.textContent = currentProfile.name;
                 renderChatHistory();
                 if (chatHistory.length === 0) sendWelcomeMessage();
             }
-            
+
             function renderChatHistory() {
-                if (!chatMessages) return;
                 chatMessages.innerHTML = '';
                 chatHistory.forEach(msg => addMessageToUI(msg.role, msg.content));
-                setTimeout(() => { if(chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight; }, 0);
+                setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 0);
             }
 
             function addMessageToUI(sender, content, isNew = false) {
-                if (!chatMessages) return;
                 const messageWrapper = document.createElement('div');
-                messageWrapper.className = `flex w-full items-end gap-2 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-                messageWrapper.dataset.messageId = content.id;
-
+                messageWrapper.className = `flex w-full ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
                 const bubble = document.createElement('div');
-                bubble.className = `max-w-[70%] rounded-2xl shadow relative cursor-pointer ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
-                bubble.dataset.messageId = content.id;
-                
-                if (content.replyTo) {
-                    const replyQuote = document.createElement('div');
-                    replyQuote.className = 'reply-quote';
-                    const replySender = document.createElement('strong');
-                    replySender.textContent = `Replying to ${content.replyTo.sender === 'user' ? 'yourself' : (currentProfile ? currentProfile.name : 'AI')}`;
-                    const replyText = document.createElement('p');
-                    replyText.textContent = String(content.replyTo.content).substring(0, 50) + (String(content.replyTo.content).length > 50 ? '...' : '');
-                    replyQuote.appendChild(replySender);
-                    replyQuote.appendChild(replyText);
-                    bubble.appendChild(replyQuote);
-                }
+                bubble.className = `max-w-[70%] rounded-2xl shadow ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
 
                 if (content.type === 'text') {
                     bubble.classList.add('px-4', 'py-2.5');
-                    const textNode = document.createElement('div');
-                    textNode.textContent = content.content;
-                    bubble.appendChild(textNode);
+                    bubble.textContent = content.content;
                 } else if (content.type === 'image') {
                     bubble.classList.add('p-1');
                     const img = document.createElement('img');
                     img.src = content.content;
-                    img.className = 'max-w-full h-auto rounded-2xl';
+                    img.className = 'max-w-full h-auto rounded-2xl'; // FIX: Changed max-w-xs to max-w-full
                     bubble.appendChild(img);
                 } else if (content.type === 'voice') {
                     bubble.classList.add('px-4', 'py-2.5');
-                    const textNode = document.createElement('div');
-                    textNode.textContent = `🎤: "${content.content}"`;
-                    bubble.appendChild(textNode);
+                    bubble.textContent = `🎤: "${content.content}"`;
                 }
 
                 if (isNew) messageWrapper.classList.add('message-bubble');
                 messageWrapper.appendChild(bubble);
                 chatMessages.appendChild(messageWrapper);
                 if (isNew) chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                bubble.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showMessageActions(e.currentTarget);
-                });
             }
             
-            async function sendAiResponse(prompt, parts = [], messageId, replyTo = null) {
-                if (!currentProfile) {
-                    console.error("sendAiResponse called without a profile.");
-                    return;
-                }
-                const newContent = { id: messageId, type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts };
-                if (replyTo) newContent.replyTo = replyTo;
-                updateChatHistory('user', newContent);
-                
+            async function sendAiResponse(prompt, parts = []) {
+                updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
                 setTyping(true);
-                const aiResponse = await callGeminiAPI(prompt, chatHistory, parts);
+                const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
                 const typingDuration = calculateTypingDuration(aiResponse || "");
-                
                 setTimeout(() => {
                     setTyping(false);
                     const responseText = aiResponse || 'Oops, something is glitching...';
-                    const aiMessageId = Date.now();
-                    const aiContent = { id: aiMessageId, type: 'text', content: responseText };
-                    addMessageToUI('model', aiContent, true);
-                    updateChatHistory('model', aiContent);
+                    addMessageToUI('model', { type: 'text', content: responseText }, true);
+                    updateChatHistory('model', { type: 'text', content: responseText });
                 }, typingDuration);
             }
             
-            async function sendAiImageResponse(imageData, mimeType, messageId) {
+            async function sendAiImageResponse(imageData, mimeType) {
                  const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
                  const prompt = `I'm sending you an image. Please react to it in your native language, which is '${currentProfile.languages.native}'.`;
-                 await sendAiResponse(prompt, parts, messageId);
+                 await sendAiResponse(prompt, parts);
             }
 
             async function sendWelcomeMessage() {
-                const messageId = Date.now();
-                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`, [], messageId);
+                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
             }
             
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const userMessage = messageInput.value.trim();
                 if (!userMessage) return;
-                
-                const messageId = Date.now();
-                const replyToData = replyingToMessage ? { sender: replyingToMessage.role, content: replyingToMessage.content.content } : null;
-
-                addMessageToUI('user', { id: messageId, type: 'text', content: userMessage, replyTo: replyToData }, true);
-                
                 messageInput.value = '';
-                if(sendBtn) sendBtn.classList.add('hidden');
-                hideReplyUI();
-                
-                await sendAiResponse(userMessage, [], messageId, replyToData);
+                sendBtn.classList.add('hidden');
+                addMessageToUI('user', { type: 'text', content: userMessage }, true);
+                await sendAiResponse(userMessage);
             });
 
             messageInput.addEventListener('input', () => {
-                if(sendBtn) sendBtn.classList.toggle('hidden', messageInput.value.trim() === '');
+                sendBtn.classList.toggle('hidden', messageInput.value.trim() === '');
             });
 
             function calculateTypingDuration(text) {
-                return Math.max(500, Math.min(3000, (text || "").length * (60000 / (150 * 5))));
+                return Math.max(500, Math.min(3000, text.length * (60000 / (150 * 5))));
             }
             
             async function callGeminiAPI(prompt, history = [], extraParts = []) {
-                if (!currentProfile) return "Error: Profile not loaded.";
-
                 const { name, age, gender, nationality, traits, languages } = currentProfile;
                 const partnerGender = gender === 'girl' ? 'boyfriend' : 'girlfriend';
                 const systemPrompt = `You are ${name}, a ${age}-year-old ${gender} from ${nationality}. Traits: ${traits.join(', ') || 'not defined'}. You are chatting with your ${partnerGender}.
@@ -769,26 +639,25 @@
                     const content = msg.content;
                     let parts = [];
 
-                    if (content) {
-                        if (content.content) {
-                            parts.push({ text: content.content });
-                        }
-                        if (role === 'user' && content.parts) {
-                            parts.push(...content.parts);
-                        }
+                    if (content.content) {
+                        parts.push({ text: content.content });
+                    }
+                    if (role === 'user' && content.parts) {
+                        parts.push(...content.parts);
                     }
                     
                     return { role, parts };
                 });
-                
-                const payload = { 
-                    contents: [
-                        { role: "user", parts: [{ text: systemPrompt }] },
-                        { role: "model", parts: [{ text: `Ok, got it. I'm ${name}.` }] },
-                        ...formattedHistory
-                    ]
-                };
-                // IMPORTANT: Replace with your actual API key
+
+                const userParts = [{ text: prompt }, ...extraParts];
+
+                const fullHistory = [
+                    { role: "user", parts: [{ text: systemPrompt }] },
+                    { role: "model", parts: [{ text: `Ok, got it. I'm ${name}.` }] },
+                    ...formattedHistory,
+                    { role: "user", parts: userParts }
+                ];
+                const payload = { contents: fullHistory };
                 const apiKey = "AIzaSyAywdjQNPmCXoTyTLIJixfW8U45_RWTnBU"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
@@ -811,14 +680,11 @@
             }
             
             function setTyping(isTyping) {
-                if (!currentProfile) return;
-                if(typingName) typingName.textContent = isTyping ? currentProfile.name : '';
-                if(typingIndicator) typingIndicator.classList.toggle('hidden', !isTyping);
+                typingName.textContent = isTyping ? currentProfile.name : '';
+                typingIndicator.classList.toggle('hidden', !isTyping);
             }
 
             function updateChatHistory(role, content) {
-                if (!currentProfile) return;
-                if (chatHistory.find(msg => msg.content.id === content.id)) return;
                 chatHistory.push({ role, content });
                 try {
                     localStorage.setItem(`chatHistory_${currentProfile.name}`, JSON.stringify(chatHistory));
@@ -826,14 +692,13 @@
             }
 
             function showConfirmationModal(message, onConfirm) {
-                if(confirmationMessage) confirmationMessage.textContent = message;
+                confirmationMessage.textContent = message;
                 confirmCallback = onConfirm;
-                if(confirmationModal) confirmationModal.classList.remove('hidden');
+                confirmationModal.classList.remove('hidden');
             }
 
             // --- Menu & Modal Logic ---
             function toggleChatMenu() {
-                if (!chatDropdownMenu) return;
                 if (chatDropdownMenu.classList.contains('hidden')) {
                     chatDropdownMenu.classList.remove('hidden');
                     setTimeout(() => chatDropdownMenu.classList.remove('opacity-0', 'scale-95'), 10);
@@ -844,7 +709,6 @@
             }
 
             function showInfoModal() {
-                if (!infoModalContent || !currentProfile) return;
                 infoModalContent.innerHTML = `
                     <h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2>
                     <div class="space-y-3 text-gray-300">
@@ -854,13 +718,11 @@
                     </div>
                     <button id="close-info-modal" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Close</button>
                 `;
-                if(infoModal) infoModal.classList.remove('hidden');
-                const closeBtn = document.getElementById('close-info-modal');
-                if(closeBtn) closeBtn.addEventListener('click', () => infoModal.classList.add('hidden'));
+                infoModal.classList.remove('hidden');
+                document.getElementById('close-info-modal').addEventListener('click', () => infoModal.classList.add('hidden'));
             }
 
             function showColorModal() {
-                if (!colorSwatches) return;
                 colorSwatches.innerHTML = '';
                 chatColors.forEach(color => {
                     const swatch = document.createElement('div');
@@ -868,15 +730,14 @@
                     swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end})`;
                     swatch.addEventListener('click', () => {
                         setChatColor(color.start, color.end);
-                        if(colorModal) colorModal.classList.add('hidden');
+                        colorModal.classList.add('hidden');
                     });
                     colorSwatches.appendChild(swatch);
                 });
-                if(colorModal) colorModal.classList.remove('hidden');
+                colorModal.classList.remove('hidden');
             }
             
             function showThemeModal() {
-                if (!themeSwatches) return;
                 themeSwatches.innerHTML = '';
                 const currentTheme = localStorage.getItem('chatTheme') || 'black';
                 freeThemes.forEach(theme => {
@@ -886,35 +747,55 @@
                     swatch.style.background = theme.style;
                     swatch.addEventListener('click', () => {
                         setChatTheme(theme);
-                        if(themeModal) themeModal.classList.add('hidden');
+                        themeModal.classList.add('hidden');
                     });
                     themeSwatches.appendChild(swatch);
                 });
-                if(themeModal) themeModal.classList.remove('hidden');
+                themeModal.classList.remove('hidden');
             }
 
             function updateThemeContrast(isLight) {
-                document.querySelectorAll('[data-theme-contrast="text"]').forEach(el => el.classList.toggle('text-theme-contrast', isLight));
-                document.querySelectorAll('[data-theme-contrast="icon"]').forEach(el => el.classList.toggle('icon-theme-contrast', isLight));
-                 document.querySelectorAll('[data-theme-contrast="icon-fill"]').forEach(el => el.classList.toggle('icon-theme-contrast-fill', isLight));
+                document.querySelectorAll('[data-theme-contrast="text"]').forEach(el => {
+                    el.classList.toggle('text-theme-contrast', isLight);
+                });
+                document.querySelectorAll('[data-theme-contrast="icon"]').forEach(el => {
+                    el.classList.toggle('icon-theme-contrast', isLight);
+                });
+                 document.querySelectorAll('[data-theme-contrast="icon-fill"]').forEach(el => {
+                    el.classList.toggle('icon-theme-contrast-fill', isLight);
+                });
             }
 
             function setChatTheme(theme) {
-                if(appContainer) appContainer.style.background = theme.style;
+                appContainer.style.background = theme.style;
                 localStorage.setItem('chatTheme', theme.style);
-                localStorage.setItem('chatThemeIsLight', String(theme.isLight));
+                localStorage.setItem('chatThemeIsLight', theme.isLight);
                 updateThemeContrast(theme.isLight);
             }
 
             function loadChatTheme() {
                 const savedTheme = localStorage.getItem('chatTheme');
                 const isLight = localStorage.getItem('chatThemeIsLight') === 'true';
-                if (savedTheme && appContainer) {
+                if (savedTheme) {
                     appContainer.style.background = savedTheme;
                     updateThemeContrast(isLight);
-                } else if (appContainer) {
+                } else {
                     appContainer.style.background = 'black';
                      updateThemeContrast(false);
+                }
+            }
+
+            function setChatColor(start, end) {
+                document.documentElement.style.setProperty('--user-bubble-color-start', start);
+                document.documentElement.style.setProperty('--user-bubble-color-end', end);
+                localStorage.setItem('chatColor', JSON.stringify({start, end}));
+            }
+
+            function loadChatColor() {
+                const savedColor = localStorage.getItem('chatColor');
+                if (savedColor) {
+                    const { start, end } = JSON.parse(savedColor);
+                    setChatColor(start, end);
                 }
             }
             
@@ -943,177 +824,76 @@
                 if (!mediaRecorder || mediaRecorder.state === "inactive") return;
                 
                 mediaRecorder.stop();
-                if(voiceToast) voiceToast.style.bottom = '-100px';
+                voiceToast.style.bottom = '-100px';
 
                 mediaRecorder.addEventListener("stop", async () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                     const fakeTranscription = "[User sent a voice message]";
-                    const messageId = Date.now();
-                    addMessageToUI('user', { id: messageId, type: 'voice', content: fakeTranscription }, true);
+                    addMessageToUI('user', { type: 'voice', content: fakeTranscription }, true);
                     const prompt = `I just sent a voice message. Please react to it in your native language, which is '${currentProfile.languages.native}'. The user's message was just a sound, you don't have the transcription, just react to the fact they sent a voice note.`;
-                    await sendAiResponse(prompt, [], messageId);
+                    await sendAiResponse(prompt);
 
                     audioChunks = [];
-                    if(mediaRecorder.stream) mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
                 });
             }
 
-            // --- Message Action Functions ---
-            
-            function showMessageActions(bubbleElement) {
-                hideMessageActions(); 
-                activeMessageMenu = messageActionsMenu;
-                if (!activeMessageMenu) return;
-
-                const messageId = Number(bubbleElement.dataset.messageId);
-                const message = chatHistory.find(msg => msg.content.id === messageId);
-                if (!message) return;
-
-                const copyButton = activeMessageMenu.querySelector('[data-action="copy"]');
-                if(copyButton) copyButton.style.display = message.content.type === 'text' ? 'block' : 'none';
-
-                activeMessageMenu.dataset.messageId = messageId;
-                
-                const rect = bubbleElement.getBoundingClientRect();
-                document.body.appendChild(activeMessageMenu);
-                
-                activeMessageMenu.style.top = `${window.scrollY + rect.top - activeMessageMenu.offsetHeight - 5}px`;
-                activeMessageMenu.style.left = `${window.scrollX + rect.left}px`;
-
-                activeMessageMenu.classList.remove('hidden');
-                setTimeout(() => activeMessageMenu.classList.remove('opacity-0', 'scale-95'), 10);
-            }
-
-            function hideMessageActions() {
-                if (activeMessageMenu) {
-                    activeMessageMenu.classList.add('opacity-0', 'scale-95');
-                    setTimeout(() => activeMessageMenu.classList.add('hidden'), 200);
-                    activeMessageMenu = null;
-                }
-            }
-            
-            function handleMessageAction(action, messageId) {
-                const messageIndex = chatHistory.findIndex(msg => msg.content.id === messageId);
-                if (messageIndex === -1) return;
-                const message = chatHistory[messageIndex];
-
-                switch (action) {
-                    case 'reply':
-                        showReplyUI(message);
-                        break;
-                    case 'copy':
-                        if (message.content.type === 'text') {
-                             const textArea = document.createElement("textarea");
-                             textArea.value = message.content.content;
-                             document.body.appendChild(textArea);
-                             textArea.focus();
-                             textArea.select();
-                             try {
-                                 document.execCommand('copy');
-                                 showToast(errorToast, 'Copied!', 1500);
-                             } catch (err) {
-                                 console.error('Failed to copy: ', err);
-                                 showToast(errorToast, 'Failed to copy.', 2000);
-                             }
-                             document.body.removeChild(textArea);
-                        }
-                        break;
-                }
-                hideMessageActions();
-            }
-
-            function showReplyUI(message) {
-                replyingToMessage = message;
-                if(replyPreviewSender) replyPreviewSender.textContent = `Replying to ${message.role === 'user' ? 'yourself' : (currentProfile ? currentProfile.name : '')}`;
-                if(replyPreviewText) replyPreviewText.textContent = message.content.content;
-                if(replyPreviewBar) replyPreviewBar.classList.add('visible');
-                if(messageInput) messageInput.focus();
-            }
-
-            function hideReplyUI() {
-                replyingToMessage = null;
-                if(replyPreviewBar) replyPreviewBar.classList.remove('visible');
-            }
 
             // --- Event Listeners ---
-            if(getStartedBtn) getStartedBtn.addEventListener('click', showGenderSelectionScreen);
-            if(selectGirlBtn) selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
-            if(selectManBtn) selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
-            if(imageUploadInput) imageUploadInput.addEventListener('change', (e) => handleImageUpload(e, false));
-            if(imageChatBtn) imageChatBtn.addEventListener('click', () => { if(imageChatUpload) imageChatUpload.click() });
-            if(imageChatUpload) imageChatUpload.addEventListener('change', (e) => handleImageUpload(e, true));
-            if(voiceBtn) {
-                voiceBtn.addEventListener('mousedown', startRecording);
-                voiceBtn.addEventListener('mouseup', stopRecording);
-                voiceBtn.addEventListener('touchstart', startRecording, { passive: true });
-                voiceBtn.addEventListener('touchend', stopRecording);
-            }
+            getStartedBtn.addEventListener('click', showGenderSelectionScreen);
+            selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
+            selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
+            imageUploadInput.addEventListener('change', (e) => handleImageUpload(e, false));
+            imageChatBtn.addEventListener('click', () => imageChatUpload.click());
+            imageChatUpload.addEventListener('change', (e) => handleImageUpload(e, true));
+            voiceBtn.addEventListener('mousedown', startRecording);
+            voiceBtn.addEventListener('mouseup', stopRecording);
+            voiceBtn.addEventListener('touchstart', startRecording);
+            voiceBtn.addEventListener('touchend', stopRecording);
             
-            [editorName, editorAge, editorTraits, editorNationality].forEach(el => {
-                if(el) el.addEventListener('input', validateEditorInputs)
-            });
+            [editorName, editorAge, editorTraits, editorNationality].forEach(el => el.addEventListener('input', validateEditorInputs));
 
-            if(resetBtn) resetBtn.addEventListener('click', () => {
+            resetBtn.addEventListener('click', () => {
                 showConfirmationModal('Are you sure you want to change your companion? All messages will be deleted.', () => {
                     localStorage.removeItem('alterraProfile');
                     if(currentProfile) localStorage.removeItem(`chatHistory_${currentProfile.name}`);
                     currentProfile = null;
                     chatHistory = [];
-                    if(editorName) editorName.value = ''; 
-                    if(editorAge) editorAge.value = ''; 
-                    if(editorTraits) editorTraits.value = ''; 
-                    if(editorNationality) editorNationality.value = '';
+                    editorName.value = ''; editorAge.value = ''; editorTraits.value = ''; editorNationality.value = '';
                     uploadedImageData = null;
-                    if(editorImgPreview) editorImgPreview.classList.add('hidden');
-                    if(imageUploadLabel) imageUploadLabel.style.display = 'flex';
-                    if(imageUploadInput) imageUploadInput.value = "";
+                    editorImgPreview.classList.add('hidden');
+                    imageUploadLabel.style.display = 'flex';
+                    imageUploadInput.value = "";
                     showGenderSelectionScreen();
                 });
             });
 
-            if(confirmYesBtn) confirmYesBtn.addEventListener('click', () => {
+            confirmYesBtn.addEventListener('click', () => {
                 if (confirmCallback) confirmCallback();
-                if(confirmationModal) confirmationModal.classList.add('hidden');
+                confirmationModal.classList.add('hidden');
                 confirmCallback = null;
             });
 
-            if(confirmNoBtn) confirmNoBtn.addEventListener('click', () => {
-                if(confirmationModal) confirmationModal.classList.add('hidden');
+            confirmNoBtn.addEventListener('click', () => {
+                confirmationModal.classList.add('hidden');
                 confirmCallback = null;
             });
             
-            if(chatMenuBtn) chatMenuBtn.addEventListener('click', (e) => {
+            chatMenuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleChatMenu();
             });
             
-            if(viewInfoBtn) viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
-            if(changeColorBtn) changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
-            if(changeThemeBtn) changeThemeBtn.addEventListener('click', () => { toggleChatMenu(); showThemeModal(); });
-
-            if(messageActionsMenu) messageActionsMenu.addEventListener('click', (e) => {
-                const button = e.target.closest('button');
-                if (button && button.dataset.action) {
-                    const action = button.dataset.action;
-                    if (e.currentTarget instanceof HTMLElement) {
-                        const messageId = Number(e.currentTarget.dataset.messageId);
-                        if (action && messageId) {
-                            handleMessageAction(action, messageId);
-                        }
-                    }
-                }
-            });
-            if(cancelReplyBtn) cancelReplyBtn.addEventListener('click', hideReplyUI);
+            viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
+            changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
+            changeThemeBtn.addEventListener('click', () => { toggleChatMenu(); showThemeModal(); });
 
             document.addEventListener('click', (e) => {
-                if (chatDropdownMenu && !chatDropdownMenu.classList.contains('hidden') && chatMenuBtn && !chatMenuBtn.contains(e.target)) {
+                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target)) {
                     toggleChatMenu();
                 }
-                if (activeMessageMenu && !activeMessageMenu.contains(e.target)) {
-                    hideMessageActions();
-                }
                 const activeModal = document.querySelector('.modal:not(.hidden)');
-                if (activeModal && e.target instanceof Element && e.target.classList.contains('modal-backdrop')) {
+                if (activeModal && e.target.classList.contains('modal-backdrop')) {
                     activeModal.classList.add('hidden');
                 }
             });
