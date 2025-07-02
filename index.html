@@ -13,10 +13,12 @@
             /* Fallback colors */
             --user-bubble-color-start: #6a5af9;
             --user-bubble-color-end: #d66efd;
+            --vh: 1vh;
         }
         /* Basic setup for a full-screen app experience */
         html, body {
-            height: 100%;
+            height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+            height: calc(var(--vh, 1vh) * 100);
             overflow: hidden;
             background-color: #000;
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -134,7 +136,7 @@
 
     <div id="background-wrap" class="neutral-gradient"></div>
 
-    <div id="app-container" class="sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-[95vh] sm:max-h-[800px] sm:border sm:border-white/20">
+    <div id="app-container" class="sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-auto sm:max-h-[95vh] sm:border sm:border-white/20">
         
         <!-- Homepage Screen -->
         <div id="homepage-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full text-center">
@@ -410,8 +412,17 @@
             let audioChunks = [];
 
             // --- Functions ---
+            
+            // Fix for 100vh on mobile browsers
+            function setRealViewportHeight() {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
 
             function init() {
+                setRealViewportHeight();
+                window.addEventListener('resize', setRealViewportHeight);
+
                 loadChatColor();
                 const savedProfile = localStorage.getItem('aiPartnerProfile');
                 if (savedProfile) {
@@ -584,7 +595,8 @@
             
             async function sendAiImageResponse(imageData, mimeType) {
                  const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
-                 await sendAiResponse("What do you think of this image?", parts);
+                 const prompt = `I'm sending you an image. Please react to it in your native language, which is '${currentProfile.languages.native}'.`;
+                 await sendAiResponse(prompt, parts);
             }
 
             async function sendWelcomeMessage() {
@@ -627,12 +639,9 @@
                     const content = msg.content;
                     let parts = [];
 
-                    // The main text content is always in `content.content`
                     if (content.content) {
                         parts.push({ text: content.content });
                     }
-
-                    // User messages might have additional media parts
                     if (role === 'user' && content.parts) {
                         parts.push(...content.parts);
                     }
@@ -819,11 +828,10 @@
 
                 mediaRecorder.addEventListener("stop", async () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    // This is a placeholder for a real Speech-to-Text API
-                    // For now, we'll just acknowledge the voice message.
                     const fakeTranscription = "[User sent a voice message]";
                     addMessageToUI('user', { type: 'voice', content: fakeTranscription }, true);
-                    await sendAiResponse("I just sent a voice message. Please react to it.");
+                    const prompt = `I just sent a voice message. Please react to it in your native language, which is '${currentProfile.languages.native}'. The user's message was just a sound, you don't have the transcription, just react to the fact they sent a voice note.`;
+                    await sendAiResponse(prompt);
 
                     audioChunks = [];
                     mediaRecorder.stream.getTracks().forEach(track => track.stop());
