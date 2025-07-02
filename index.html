@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Partner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --user-bubble-color-start: #8b5cf6;
+            --user-bubble-color-end: #7c3aed;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+        }
+        #background-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: background 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        .girl-gradient { background: linear-gradient(315deg, #fbc2eb 0%, #a6c1ee 74%); }
+        .man-gradient { background: linear-gradient(315deg, #a8e063 0%, #56ab2f 74%); }
+        .neutral-gradient { background: linear-gradient(315deg, #1e293b 0%, #4c1d95 74%); }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 35s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100vh) translateX(15vw); }
+            100% { transform: translateY(-200vh) translateX(-15vw); }
+        }
+        .chat-bubble-user {
+            background-image: linear-gradient(to right, var(--user-bubble-color-start), var(--user-bubble-color-end));
+            color: white;
+        }
+        .chat-bubble-ai {
+            background-color: #374151; /* gray-700 */
+            color: #d1d5db; /* gray-300 */
+        }
+        .card-base {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(17, 24, 39, 0.4); /* gray-900 with opacity */
+        }
+        .card-base:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        #chat-messages::-webkit-scrollbar { width: 6px; }
+        #chat-messages::-webkit-scrollbar-track { background: transparent; }
+        #chat-messages::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
+        #chat-messages::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        .message-bubble { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+        #image-upload-label {
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            width: 112px; height: 112px; border: 2px dashed #6b7280; transition: background-color 0.2s;
+        }
+        #image-upload-label:hover { background-color: rgba(255,255,255,0.05); }
+        #error-toast {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background-color: #ef4444; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: bottom 0.5s ease-in-out; z-index: 100;
+        }
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+            z-index: 40;
+        }
+        .dropdown-menu {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .modal {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .theme-swatch {
+            border: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        .theme-swatch.selected {
+            border-color: #a78bfa; /* violet-400 */
+        }
+        .premium-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fcd34d; /* amber-300 */
+            border-radius: 0.5rem;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen sm:p-4">
+
+    <div id="background-wrap" class="neutral-gradient"></div>
+
+    <div id="app-container" class="w-full h-full bg-transparent flex flex-col overflow-hidden sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-[95vh] sm:max-h-[800px] sm:border sm:border-white/20">
+        
+        <!-- Homepage Screen -->
+        <div id="homepage-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full text-center bg-gray-900/40 backdrop-blur-sm">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Welcome to AI Partner</h1>
+            <p class="text-lg text-gray-300 mb-12 max-w-md">Create your perfect virtual companion, powered by advanced AI. Chat, share, and build a unique connection.</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button id="get-started-btn" class="bg-violet-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-violet-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg">Get Started</button>
+                <button id="go-premium-btn" class="bg-amber-400 text-gray-900 font-bold py-3 px-8 rounded-xl hover:bg-amber-500 transition-all duration-300 shadow-lg hover:shadow-xl text-lg">Get Premium</button>
+            </div>
+        </div>
+
+        <!-- Premium Page Screen -->
+        <div id="premium-page-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full text-center bg-gray-900/40 backdrop-blur-sm hidden">
+            <h2 class="text-3xl font-bold text-center mb-4 text-amber-300">Go Premium!</h2>
+            <p class="text-center text-gray-300 mb-8 max-w-sm">Unlock the full experience and build a deeper connection with exclusive features.</p>
+            <ul class="space-y-4 mb-8 text-left bg-gray-800/50 p-6 rounded-xl">
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Advanced AI Personality Model</span></li>
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Custom Chat Backgrounds</span></li>
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Ad-Free Experience</span></li>
+            </ul>
+            <div class="text-center">
+                 <button id="subscribe-now-btn" class="w-full bg-amber-400 text-gray-900 font-bold py-3 px-8 rounded-xl hover:bg-amber-500 transition-all duration-300 shadow-lg text-lg mb-4">Subscribe Now - $9.99/mo</button>
+                 <button id="back-to-home-btn" class="text-gray-400 hover:text-white transition mb-4">Back to Home</button>
+                 <button id="admin-btn" class="text-xs text-gray-500 hover:text-gray-400 transition">Admin?</button>
+            </div>
+        </div>
+
+        <!-- Gender Selection Screen -->
+        <div id="gender-selection-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full bg-gray-900/40 backdrop-blur-sm hidden">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-white mb-4">Choose Your Partner</h1>
+            <p class="text-center text-gray-300 mb-12">Who would you like to talk to?</p>
+            <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
+                <div id="select-girl" class="card-base p-6 rounded-2xl shadow-lg cursor-pointer text-center">
+                    <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Girl</h2>
+                </div>
+                <div id="select-man" class="card-base p-6 rounded-2xl shadow-lg cursor-pointer text-center">
+                    <img src="https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Man</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creation Screen -->
+        <div id="creation-screen" class="p-4 sm:p-6 md:p-8 overflow-y-auto hidden bg-gray-900/40 backdrop-blur-sm">
+            <h1 id="creation-title" class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-6"></h1>
+            
+            <div class="bg-gray-800/50 p-4 sm:p-6 rounded-2xl shadow-inner">
+                <div class="flex flex-col gap-6 items-center">
+                    <div class="relative">
+                        <img id="editor-img-preview" src="" class="w-28 h-28 rounded-full object-cover shadow-lg ring-4 ring-gray-900/50 hidden">
+                        <label id="image-upload-label" for="image-upload-input" class="rounded-full">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </label>
+                        <input type="file" id="image-upload-input" class="hidden" accept="image/png, image/jpeg, image/webp">
+                    </div>
+                    <div class="flex-grow space-y-4 w-full">
+                        <div>
+                            <label for="editor-name" class="block text-sm font-medium text-gray-300 mb-1">Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="editor-name" placeholder="Set name" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                        </div>
+                        <div>
+                            <label for="editor-age" class="block text-sm font-medium text-gray-300 mb-1">Age <span class="text-red-500">*</span></label>
+                            <input type="number" id="editor-age" placeholder="Set age" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                        </div>
+                        <div>
+                            <label for="editor-traits" class="block text-sm font-medium text-gray-300 mb-1">Traits (comma-separated)</label>
+                            <input type="text" id="editor-traits" placeholder="Optional, e.g. funny, smart" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                        </div>
+                        <div>
+                            <label for="editor-nationality" class="block text-sm font-medium text-gray-300 mb-1">Nationality <span class="text-red-500">*</span></label>
+                            <select id="editor-nationality" class="w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                                <!-- Nationality options will be loaded here -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <button id="save-profile-btn" class="bg-violet-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-violet-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        Save and Start Chatting
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chat-screen" class="hidden flex-grow flex flex-col min-h-0">
+            <!-- Chat Header -->
+            <div class="flex items-center p-4 border-b border-gray-700/80 bg-gray-900/60 shrink-0">
+                <img id="chat-avatar" src="" class="w-11 h-11 rounded-full object-cover mr-4 shadow-md">
+                <div>
+                    <h2 id="chat-name" class="text-lg font-bold text-white flex items-center gap-2"></h2>
+                    <p id="chat-status" class="text-xs text-green-400">Active now</p>
+                </div>
+                <div class="ml-auto flex items-center gap-2">
+                     <button id="reset-btn" class="text-xs text-gray-400 hover:text-red-500 transition">Change</button>
+                    <div class="relative">
+                        <button id="chat-menu-btn" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                        </button>
+                        <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-1 z-20 hidden origin-top-right scale-95 opacity-0">
+                           <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">View Info</button>
+                           <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Change Color</button>
+                           <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Change Theme</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="chat-messages" class="flex-grow p-4 sm:p-6 overflow-y-auto space-y-4">
+                <!-- Ad placeholder -->
+                <div id="ad-placeholder" class="p-2 my-4 text-center text-xs text-gray-500 bg-gray-800/50 rounded-lg hidden">Advertisement</div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="p-4 border-t border-gray-700/80 bg-gray-900/60 shrink-0">
+                 <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
+                    <span id="typing-name"></span> is typing...
+                </div>
+                <form id="chat-form" class="flex items-center gap-3">
+                    <input type="text" id="message-input" placeholder="Type a message..." class="flex-grow bg-gray-800 border-gray-700 text-white rounded-full py-3 px-5 focus:ring-2 focus:ring-violet-500 transition-all" autocomplete="off">
+                    <button type="submit" class="bg-violet-600 text-white rounded-full p-3 hover:bg-violet-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div id="premium-modal" class="hidden modal">
+        <div class="modal-backdrop"></div>
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
+            <h2 class="text-3xl font-bold text-center mb-4 text-amber-300">Go Premium!</h2>
+            <p class="text-center text-gray-300 mb-8">Unlock the full experience and build a deeper connection.</p>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Advanced AI Personality Model</span></li>
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Custom Chat Backgrounds</span></li>
+                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Ad-Free Experience</span></li>
+            </ul>
+            <div class="text-center">
+                 <button id="subscribe-btn" class="w-full bg-amber-400 text-gray-900 font-bold py-3 px-8 rounded-xl hover:bg-amber-500 transition-all duration-300 shadow-lg text-lg mb-4">Subscribe Now - $9.99/mo</button>
+                 <button id="no-thanks-btn" class="text-gray-400 hover:text-white transition">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="info-modal" class="hidden modal">
+        <div class="modal-backdrop"></div>
+        <div id="info-modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
+            <!-- Content will be injected here -->
+        </div>
+    </div>
+
+    <div id="color-modal" class="hidden modal">
+        <div class="modal-backdrop"></div>
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xs bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
+            <h2 class="text-xl font-bold text-center mb-6">Change Chat Color</h2>
+            <div id="color-swatches" class="grid grid-cols-4 gap-4">
+                <!-- Color swatches will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="theme-modal" class="hidden modal">
+        <div class="modal-backdrop"></div>
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
+            <h2 class="text-xl font-bold text-center mb-6">Change Chat Theme</h2>
+            <div id="theme-swatches" class="grid grid-cols-3 gap-4 mb-6">
+                <!-- Theme swatches will be injected here -->
+            </div>
+            <div id="premium-theme-section">
+                <h3 class="text-lg font-bold text-amber-300 mb-2">Premium Feature</h3>
+                <label id="custom-theme-label" for="custom-theme-upload" class="block w-full text-center bg-amber-400 text-gray-900 font-bold py-2.5 px-6 rounded-lg hover:bg-amber-500 transition cursor-pointer">
+                    Upload Custom Image
+                </label>
+                <input type="file" id="custom-theme-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
+            </div>
+        </div>
+    </div>
+
+    <div id="error-toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const backgroundWrap = document.getElementById('background-wrap');
+            const appContainer = document.getElementById('app-container');
+            const homepageScreen = document.getElementById('homepage-screen');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const goPremiumBtn = document.getElementById('go-premium-btn');
+            const premiumPageScreen = document.getElementById('premium-page-screen');
+            const subscribeNowBtn = document.getElementById('subscribe-now-btn');
+            const backToHomeBtn = document.getElementById('back-to-home-btn');
+            const adminBtn = document.getElementById('admin-btn');
+            const genderSelectionScreen = document.getElementById('gender-selection-screen');
+            const selectGirlBtn = document.getElementById('select-girl');
+            const selectManBtn = document.getElementById('select-man');
+            const creationScreen = document.getElementById('creation-screen');
+            const creationTitle = document.getElementById('creation-title');
+            const editorImgPreview = document.getElementById('editor-img-preview');
+            const imageUploadLabel = document.getElementById('image-upload-label');
+            const imageUploadInput = document.getElementById('image-upload-input');
+            const editorName = document.getElementById('editor-name');
+            const editorAge = document.getElementById('editor-age');
+            const editorTraits = document.getElementById('editor-traits');
+            const editorNationality = document.getElementById('editor-nationality');
+            const saveProfileBtn = document.getElementById('save-profile-btn');
+            const chatScreen = document.getElementById('chat-screen');
+            const chatAvatar = document.getElementById('chat-avatar');
+            const chatName = document.getElementById('chat-name');
+            const chatStatus = document.getElementById('chat-status');
+            const resetBtn = document.getElementById('reset-btn');
+            const chatMessages = document.getElementById('chat-messages');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const typingName = document.getElementById('typing-name');
+            const chatForm = document.getElementById('chat-form');
+            const messageInput = document.getElementById('message-input');
+            const errorToast = document.getElementById('error-toast');
+            const premiumModal = document.getElementById('premium-modal');
+            const subscribeBtn = document.getElementById('subscribe-btn');
+            const noThanksBtn = document.getElementById('no-thanks-btn');
+            const adPlaceholder = document.getElementById('ad-placeholder');
+            const chatMenuBtn = document.getElementById('chat-menu-btn');
+            const chatDropdownMenu = document.getElementById('chat-dropdown-menu');
+            const viewInfoBtn = document.getElementById('view-info-btn');
+            const changeColorBtn = document.getElementById('change-color-btn');
+            const changeThemeBtn = document.getElementById('change-theme-btn');
+            const infoModal = document.getElementById('info-modal');
+            const infoModalContent = document.getElementById('info-modal-content');
+            const colorModal = document.getElementById('color-modal');
+            const colorSwatches = document.getElementById('color-swatches');
+            const themeModal = document.getElementById('theme-modal');
+            const themeSwatches = document.getElementById('theme-swatches');
+            const premiumThemeSection = document.getElementById('premium-theme-section');
+            const customThemeUpload = document.getElementById('custom-theme-upload');
+            const customThemeLabel = document.getElementById('custom-theme-label');
+
+            // --- Data ---
+            const countries = [
+                { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' },
+                { name: 'Argentina', code: 'AR' }, { name: 'Australia', code: 'AU' }, { name: 'Austria', code: 'AT' },
+                { name: 'Belgium', code: 'BE' }, { name: 'Brazil', code: 'BR' }, { name: 'Canada', code: 'CA' },
+                { name: 'China', code: 'CN' }, { name: 'Colombia', code: 'CO' }, { name: 'Croatia', code: 'HR' },
+                { name: 'Denmark', code: 'DK' }, { name: 'Egypt', code: 'EG' }, { name: 'Finland', code: 'FI' },
+                { name: 'France', code: 'FR' }, { name: 'Germany', code: 'DE' }, { name: 'Greece', code: 'GR' },
+                { name: 'Hungary', code: 'HU' }, { name: 'Iceland', code: 'IS' }, { name: 'India', code: 'IN' },
+                { name: 'Indonesia', code: 'ID' }, { name: 'Ireland', code: 'IE' }, { name: 'Italy', code: 'IT' },
+                { name: 'Japan', code: 'JP' }, { name: 'Mexico', code: 'MX' }, { name: 'Netherlands', code: 'NL' },
+                { name: 'New Zealand', code: 'NZ' }, { name: 'Nigeria', code: 'NG' }, { name: 'Norway', code: 'NO' },
+                { name: 'Poland', code: 'PL' }, { name: 'Portugal', code: 'PT' }, { name: 'Russia', code: 'RU' },
+                { name: 'Saudi Arabia', code: 'SA' }, { name: 'Serbia', code: 'RS' }, { name: 'Slovenia', code: 'SI' },
+                { name: 'South Africa', code: 'ZA' }, { name: 'South Korea', code: 'KR' }, { name: 'Spain', code: 'ES' },
+                { name: 'Sweden', code: 'SE' }, { name: 'Switzerland', code: 'CH' }, { name: 'Turkey', code: 'TR' },
+                { name: 'United Kingdom', code: 'GB' }, { name: 'USA', code: 'US' }
+            ];
+            const languageMap = {
+                'SI': 'sl', 'IT': 'it', 'DE': 'de', 'US': 'en', 'GB': 'en', 'ES': 'es', 'FR': 'fr', 'JP': 'ja', 'BR': 'pt',
+                'AF': 'ps', 'AL': 'sq', 'DZ': 'ar', 'AR': 'es', 'AU': 'en', 'AT': 'de', 'BE': 'nl', 'CA': 'en', 'CN': 'zh',
+                'CO': 'es', 'HR': 'hr', 'DK': 'da', 'EG': 'ar', 'FI': 'fi', 'GR': 'el', 'HU': 'hu', 'IS': 'is', 'IN': 'hi',
+                'ID': 'id', 'IE': 'en', 'MX': 'es', 'NL': 'nl', 'NZ': 'en', 'NG': 'en', 'NO': 'no', 'PL': 'pl', 'PT': 'pt',
+                'RU': 'ru', 'SA': 'ar', 'RS': 'sr', 'ZA': 'en', 'KR': 'ko', 'SE': 'sv', 'CH': 'de', 'TR': 'tr'
+            };
+            
+            const languageKnowledge = {
+                'Slovenia': { native: 'sl', fluent: ['en', 'hr', 'sr', 'bs'], basic: ['de', 'it'] },
+                'Italy': { native: 'it', fluent: ['en'], basic: ['es', 'fr'] },
+                'Germany': { native: 'de', fluent: ['en'], basic: ['fr'] },
+                'USA': { native: 'en', fluent: [], basic: ['es'] },
+                'China': { native: 'zh', fluent: [], basic: ['en'] },
+                'Japan': { native: 'ja', fluent: [], basic: ['en'] },
+                'France': { native: 'fr', fluent: ['en'], basic: ['es', 'de'] },
+                'Spain': { native: 'es', fluent: ['en'], basic: ['fr', 'pt'] },
+                'Brazil': { native: 'pt', fluent: ['es'], basic: ['en'] },
+                'Albania': { native: 'sq', fluent: ['it'], basic: ['en', 'el'] },
+            };
+
+            const chatColors = [
+                { start: '#8b5cf6', end: '#7c3aed' }, // Default Purple
+                { start: '#2563eb', end: '#1d4ed8' }, // Blue
+                { start: '#16a34a', end: '#15803d' }, // Green
+                { start: '#db2777', end: '#be185d' }, // Pink
+                { start: '#f97316', end: '#ea580c' }, // Orange
+            ];
+            
+            const freeThemes = [
+                { name: 'Default', value: 'default', style: 'linear-gradient(315deg, #1e293b 0%, #4c1d95 74%)' },
+                { name: 'Sunset', value: 'sunset', style: 'linear-gradient(to right, #ff7e5f, #feb47b)' },
+                { name: 'Ocean', value: 'ocean', style: 'linear-gradient(to right, #00c6ff, #0072ff)' },
+                { name: 'Forest', value: 'forest', style: 'linear-gradient(to right, #134e5e, #71b280)' },
+                { name: 'Night Sky', value: 'nightsky', style: 'linear-gradient(to right, #2c3e50, #4ca1af)'},
+                { name: 'Peach', value: 'peach', style: 'linear-gradient(to right, #ffdab9, #ff9a9e)'}
+            ];
+
+            let currentProfile = null;
+            let chatHistory = [];
+            let currentGender = null;
+            let uploadedImageData = null;
+
+            // --- Functions ---
+
+            function init() {
+                createParticles();
+                loadChatColor();
+                const savedProfile = localStorage.getItem('aiPartnerProfile');
+                if (savedProfile) {
+                    try {
+                        currentProfile = JSON.parse(savedProfile);
+                        setupChatScreen();
+                    } catch (e) {
+                        localStorage.removeItem('aiPartnerProfile');
+                        showInitialScreen();
+                    }
+                } else {
+                    showInitialScreen();
+                }
+            }
+            
+            function showInitialScreen() {
+                const modalSeen = localStorage.getItem('premiumModalSeen');
+                if (!modalSeen) {
+                    premiumModal.classList.remove('hidden');
+                } else {
+                    homepageScreen.classList.remove('hidden');
+                }
+            }
+
+            function createParticles() {
+                const particleContainer = document.getElementById('background-wrap');
+                if (!particleContainer) return;
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 15 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.top = `${Math.random() * 100}vh`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDelay = `${Math.random() * -25}s`;
+                    particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
+                    particleContainer.appendChild(particle);
+                }
+            }
+            
+            function showErrorToast(message) {
+                errorToast.textContent = message;
+                errorToast.style.bottom = '20px';
+                setTimeout(() => {
+                    errorToast.style.bottom = '-100px';
+                }, 4000);
+            }
+
+            function showGenderSelectionScreen() {
+                homepageScreen.classList.add('hidden');
+                premiumPageScreen.classList.add('hidden');
+                chatScreen.classList.add('hidden');
+                creationScreen.classList.add('hidden');
+                genderSelectionScreen.classList.remove('hidden');
+                backgroundWrap.className = 'neutral-gradient';
+                backgroundWrap.style.backgroundImage = '';
+            }
+            
+            function showPremiumScreen() {
+                homepageScreen.classList.add('hidden');
+                genderSelectionScreen.classList.add('hidden');
+                premiumPageScreen.classList.remove('hidden');
+            }
+
+            function setupCreationScreen(gender) {
+                currentGender = gender;
+                backgroundWrap.classList.remove('neutral-gradient', 'man-gradient', 'girl-gradient');
+                backgroundWrap.classList.add(gender === 'girl' ? 'girl-gradient' : 'man-gradient');
+                genderSelectionScreen.classList.add('hidden');
+                creationScreen.classList.remove('hidden');
+                creationTitle.textContent = `Create Your AI ${gender === 'girl' ? 'Girlfriend' : 'Boyfriend'}`;
+                populateEditorNationality();
+                validateEditorInputs();
+            }
+            
+            function populateEditorNationality() {
+                editorNationality.innerHTML = '<option value="" disabled selected>Select a nationality</option>';
+                countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.name;
+                    option.textContent = country.name;
+                    editorNationality.appendChild(option);
+                });
+            }
+            
+            function handleImageUpload(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+                if (file.size > MAX_SIZE) {
+                    showErrorToast("Image is too large. Please choose a file under 2MB.");
+                    imageUploadInput.value = "";
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_DIMENSION = 512;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_DIMENSION) {
+                                height *= MAX_DIMENSION / width;
+                                width = MAX_DIMENSION;
+                            }
+                        } else {
+                            if (height > MAX_DIMENSION) {
+                                width *= MAX_DIMENSION / height;
+                                height = MAX_DIMENSION;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+
+                        uploadedImageData = dataUrl;
+                        editorImgPreview.src = uploadedImageData;
+                        editorImgPreview.classList.remove('hidden');
+                        imageUploadLabel.style.display = 'none';
+                        validateEditorInputs();
+                    };
+                    img.onerror = () => {
+                         showErrorToast("There was an error processing the image.");
+                    };
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => {
+                    showErrorToast("Failed to read the image file.");
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function validateEditorInputs() {
+                const nameValid = editorName.value.trim() !== '';
+                const ageValid = editorAge.value.trim() !== '' && !isNaN(editorAge.value) && editorAge.value > 0;
+                const nationalityValid = editorNationality.value !== '';
+                
+                saveProfileBtn.disabled = !(nameValid && ageValid && nationalityValid);
+            }
+
+            saveProfileBtn.addEventListener('click', () => {
+                const selectedCountryName = editorNationality.value;
+                let knownLanguages;
+
+                if (languageKnowledge[selectedCountryName]) {
+                    knownLanguages = languageKnowledge[selectedCountryName];
+                } else {
+                    const countryData = countries.find(c => c.name === selectedCountryName);
+                    const langCode = countryData ? languageMap[countryData.code] : 'en';
+                    knownLanguages = {
+                        native: langCode || 'en',
+                        fluent: ['en'],
+                        basic: []
+                    };
+                }
+                
+                currentProfile = {
+                    name: editorName.value,
+                    age: editorAge.value,
+                    traits: editorTraits.value.split(',').map(t => t.trim()).filter(t => t),
+                    nationality: selectedCountryName,
+                    languages: knownLanguages,
+                    gender: currentGender,
+                    img: uploadedImageData,
+                    isPremium: localStorage.getItem('isPremiumUser') === 'true'
+                };
+                
+                try {
+                    localStorage.setItem('aiPartnerProfile', JSON.stringify(currentProfile));
+                    chatHistory = [];
+                    localStorage.removeItem(`chatHistory_${currentProfile.name}`);
+                    setupChatScreen();
+                } catch(e) {
+                    if (e.name === 'QuotaExceededError') {
+                        showErrorToast("Could not save profile. The uploaded image is too large. Please use a smaller one.");
+                    } else {
+                        showErrorToast("An unknown error occurred while saving.");
+                    }
+                }
+            });
+
+            function setupChatScreen() {
+                homepageScreen.classList.add('hidden');
+                creationScreen.classList.add('hidden');
+                genderSelectionScreen.classList.add('hidden');
+                premiumPageScreen.classList.add('hidden');
+                chatScreen.classList.remove('hidden');
+                chatScreen.classList.add('flex');
+                
+                loadChatTheme();
+
+                const savedHistory = localStorage.getItem(`chatHistory_${currentProfile.name}`);
+                chatHistory = savedHistory ? JSON.parse(savedHistory) : [];
+
+                chatAvatar.src = currentProfile.img || `https://placehold.co/112x112/4338ca/f0abfc?text=${currentProfile.gender === 'girl' ? '👩' : '👨'}`;
+                chatName.innerHTML = `${currentProfile.name} ${currentProfile.isPremium ? '<span class="text-xs bg-amber-300 text-amber-800 font-bold px-1.5 py-0.5 rounded-full">PRO</span>' : ''}`;
+                
+                adPlaceholder.classList.toggle('hidden', currentProfile.isPremium);
+
+                renderChatHistory();
+                if (chatHistory.length === 0) sendWelcomeMessage();
+            }
+
+            function renderChatHistory() {
+                chatMessages.innerHTML = '';
+                chatHistory.forEach(msg => addMessageToUI(msg.role, msg.parts[0].text, false));
+                setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 0);
+            }
+
+            function addMessageToUI(sender, text, isNew = false) {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+                const bubble = document.createElement('div');
+                bubble.className = `max-w-md lg:max-w-lg px-4 py-2.5 rounded-xl shadow-md ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+                bubble.textContent = text;
+                if (isNew) messageWrapper.classList.add('message-bubble');
+                messageWrapper.appendChild(bubble);
+                chatMessages.appendChild(messageWrapper);
+                if (isNew) chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            async function sendWelcomeMessage() {
+                const welcomePrompt = `Greet me in a casual way, like you already know me. You MUST speak in your native language, which is identified by the language code '${currentProfile.languages.native}'.`;
+                setTyping(true);
+                const responseText = await callGeminiAPI(welcomePrompt);
+                const typingDuration = calculateTypingDuration(responseText || "");
+                setTimeout(() => {
+                    setTyping(false);
+                    if (responseText) {
+                        addMessageToUI('model', responseText, true);
+                        updateChatHistory('model', {text: responseText});
+                    }
+                }, typingDuration);
+            }
+            
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userMessage = messageInput.value.trim();
+                if (!userMessage) return;
+                messageInput.value = '';
+                addMessageToUI('user', userMessage, true);
+                updateChatHistory('user', {text: userMessage});
+                
+                setTyping(true);
+                const aiResponse = await callGeminiAPI(userMessage, chatHistory.slice(0, -1));
+                const typingDuration = calculateTypingDuration(aiResponse || "");
+                
+                setTimeout(() => {
+                    setTyping(false);
+                    if (aiResponse) {
+                        addMessageToUI('model', aiResponse, true);
+                        updateChatHistory('model', {text: aiResponse});
+                    } else {
+                        addMessageToUI('model', 'Oops, something is glitching... can you say that again?', true);
+                    }
+                }, typingDuration);
+            });
+
+            function calculateTypingDuration(text) {
+                const WPM = 150;
+                const CPM = WPM * 5;
+                const msPerChar = 60000 / CPM;
+                const minDuration = 500;
+                const maxDuration = 4000;
+                let duration = text.length * msPerChar;
+                duration = Math.max(minDuration, duration);
+                duration = Math.min(maxDuration, duration);
+                return duration;
+            }
+            
+            async function callGeminiAPI(prompt, history = []) {
+                const partnerGender = currentProfile.gender === 'girl' ? 'boyfriend' : 'girlfriend';
+                const languages = currentProfile.languages;
+                const premiumNotice = currentProfile.isPremium ? 'You are using the advanced personality model, so your responses should be more creative and insightful.' : '';
+                const systemPrompt = `You are ${currentProfile.name}, a ${currentProfile.age}-year-old ${currentProfile.gender} from ${currentProfile.nationality}. Your personality traits are: ${currentProfile.traits.join(', ') || 'not defined'}. You are chatting with your ${partnerGender}. ${premiumNotice}
+
+                **Your Language Rules are CRITICAL and you must follow them exactly:**
+                1.  Your native language is '${languages.native}'. You speak this perfectly.
+                2.  You are fluent in: ${languages.fluent.join(', ') || 'none'}. You speak these perfectly.
+                3.  You have basic knowledge of: ${languages.basic.join(', ') || 'none'}.
+                4.  You do not understand any other languages.
+
+                **How to Reply (This is the most important rule):**
+                -   First, detect the language of the user's message ('${prompt}').
+                -   If it's your **native** language or a **fluent** language, reply perfectly and naturally in that language. You must understand common slang for these languages (e.g., for Slovenian, understand words like 'jou', 'kajma', 'uredu').
+                -   If it's a language you have **basic** knowledge of, YOU MUST reply with mistakes. Use simple words, broken grammar, and maybe mix in a word from your native language. It must be obvious you are not a native speaker.
+                -   If it's a language you **don't know at all**, you MUST reply **in your NATIVE language** with a natural, confused reaction. Instead of a direct "I don't understand", ask what a word means or express confusion playfully. For example, if you are Slovenian and someone says "que pasa", you could reply "haha kaj to pomeni?" or "tega pa ne razumem glih". Be creative and human-like.
+                
+                **General Tone (Very Important):**
+                Your tone must be completely casual and realistic, like you're texting on Instagram DMs. Use slang and short sentences. **Sometimes skip punctuation or capital letters to seem more real.** Use emojis very, very rarely, almost never. Never admit you're an AI. You are just ${currentProfile.name}.`;
+
+                let fullHistory = [
+                    { role: "user", parts: [{ text: systemPrompt }] },
+                    { role: "model", parts: [{ text: `Ok, got it. I'm ${currentProfile.name}.` }] },
+                    ...history,
+                    { role: "user", parts: [{ text: prompt }] }
+                ];
+
+                const payload = { contents: fullHistory };
+                const apiKey = "AIzaSyAywdjQNPmCXoTyTLIJixfW8U45_RWTnBU";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) return null;
+                    const result = await response.json();
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text || null;
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    return "Ugh, my internet is acting up... Try again later.";
+                }
+            }
+            
+            function setTyping(isTyping) {
+                if (isTyping && currentProfile) {
+                    typingName.textContent = currentProfile.name;
+                }
+                typingIndicator.classList.toggle('hidden', !isTyping);
+            }
+
+            function updateChatHistory(role, content) {
+                chatHistory.push({ role, parts: [content] });
+                try {
+                    localStorage.setItem(`chatHistory_${currentProfile.name}`, JSON.stringify(chatHistory));
+                } catch (e) {
+                    console.error("Could not save chat history:", e);
+                }
+            }
+
+            // --- Menu & Modal Logic ---
+            function toggleChatMenu() {
+                if (chatDropdownMenu.classList.contains('hidden')) {
+                    chatDropdownMenu.classList.remove('hidden');
+                    setTimeout(() => {
+                        chatDropdownMenu.classList.remove('opacity-0', 'scale-95');
+                    }, 10);
+                } else {
+                    chatDropdownMenu.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        chatDropdownMenu.classList.add('hidden');
+                    }, 200);
+                }
+            }
+
+            function showInfoModal() {
+                infoModalContent.innerHTML = `
+                    <h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2>
+                    <div class="space-y-3 text-gray-300">
+                        <p><strong>Age:</strong> ${currentProfile.age}</p>
+                        <p><strong>Nationality:</strong> ${currentProfile.nationality}</p>
+                        <p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p>
+                        <p><strong>Status:</strong> ${currentProfile.isPremium ? 'Premium User' : 'Standard User'}</p>
+                    </div>
+                    <button id="close-info-modal" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Close</button>
+                `;
+                infoModal.classList.remove('hidden');
+                document.getElementById('close-info-modal').addEventListener('click', () => infoModal.classList.add('hidden'));
+            }
+
+            function showColorModal() {
+                colorSwatches.innerHTML = '';
+                chatColors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'w-10 h-10 rounded-full cursor-pointer ring-2 ring-transparent hover:ring-white';
+                    swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end})`;
+                    swatch.addEventListener('click', () => {
+                        setChatColor(color.start, color.end);
+                        colorModal.classList.add('hidden');
+                    });
+                    colorSwatches.appendChild(swatch);
+                });
+                colorModal.classList.remove('hidden');
+            }
+            
+            function showThemeModal() {
+                themeSwatches.innerHTML = '';
+                const currentTheme = localStorage.getItem('chatTheme');
+                freeThemes.forEach(theme => {
+                    const swatchWrapper = document.createElement('div');
+                    swatchWrapper.className = 'relative';
+                    const swatch = document.createElement('div');
+                    swatch.className = 'theme-swatch h-16 rounded-lg cursor-pointer bg-cover bg-center';
+                    if (currentTheme === theme.style) swatch.classList.add('selected');
+                    swatch.style.background = theme.style;
+                    swatch.addEventListener('click', () => {
+                        setChatTheme(theme.style);
+                        themeModal.classList.add('hidden');
+                    });
+                    swatchWrapper.appendChild(swatch);
+                    themeSwatches.appendChild(swatchWrapper);
+                });
+
+                if (currentProfile.isPremium) {
+                    premiumThemeSection.style.opacity = '1';
+                    customThemeLabel.classList.remove('cursor-not-allowed', 'opacity-50');
+                    customThemeUpload.disabled = false;
+                } else {
+                    premiumThemeSection.style.opacity = '0.5';
+                    customThemeLabel.classList.add('cursor-not-allowed', 'opacity-50');
+                    customThemeUpload.disabled = true;
+                }
+                themeModal.classList.remove('hidden');
+            }
+
+            function handleCustomThemeUpload(event) {
+                if(currentProfile.isPremium) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    if (file.size > 2 * 1024 * 1024) {
+                        showErrorToast("Image is too large. Please choose a file under 2MB.");
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (e) => setChatTheme(`url(${e.target.result})`);
+                    reader.readAsDataURL(file);
+                    themeModal.classList.add('hidden');
+                } else {
+                    showErrorToast("This is a premium feature.");
+                }
+            }
+
+            function setChatTheme(themeValue) {
+                backgroundWrap.style.backgroundImage = themeValue;
+                localStorage.setItem('chatTheme', themeValue);
+            }
+
+            function loadChatTheme() {
+                const savedTheme = localStorage.getItem('chatTheme');
+                if (savedTheme) {
+                    setChatTheme(savedTheme);
+                } else {
+                    backgroundWrap.style.backgroundImage = ''; // Clear inline style
+                    backgroundWrap.className = currentProfile.gender === 'girl' ? 'girl-gradient' : 'man-gradient';
+                }
+            }
+
+            function setChatColor(start, end) {
+                document.documentElement.style.setProperty('--user-bubble-color-start', start);
+                document.documentElement.style.setProperty('--user-bubble-color-end', end);
+                localStorage.setItem('chatColor', JSON.stringify({start, end}));
+            }
+
+            function loadChatColor() {
+                const savedColor = localStorage.getItem('chatColor');
+                if (savedColor) {
+                    const { start, end } = JSON.parse(savedColor);
+                    setChatColor(start, end);
+                }
+            }
+
+            // --- Event Listeners ---
+            getStartedBtn.addEventListener('click', showGenderSelectionScreen);
+            goPremiumBtn.addEventListener('click', showPremiumScreen);
+            subscribeNowBtn.addEventListener('click', () => {
+                window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_PAYPAL_BUTTON_ID', '_blank');
+            });
+            backToHomeBtn.addEventListener('click', () => {
+                premiumPageScreen.classList.add('hidden');
+                homepageScreen.classList.remove('hidden');
+            });
+            adminBtn.addEventListener('click', () => {
+                const pass = prompt("Enter Admin Password:");
+                if (pass === "Mikerike123") {
+                    localStorage.setItem('isPremiumUser', 'true');
+                    alert("Success! You now have Premium access.");
+                } else if(pass) {
+                    alert("Incorrect password.");
+                }
+            });
+
+            selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
+            selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
+            imageUploadInput.addEventListener('change', handleImageUpload);
+            [editorName, editorAge, editorTraits, editorNationality].forEach(el => {
+                el.addEventListener('input', validateEditorInputs);
+            });
+            
+            function closePremiumModal() {
+                premiumModal.classList.add('hidden');
+                localStorage.setItem('premiumModalSeen', 'true');
+                homepageScreen.classList.remove('hidden');
+            }
+
+            subscribeBtn.addEventListener('click', () => {
+                localStorage.setItem('isPremiumUser', 'true');
+                closePremiumModal();
+            });
+            noThanksBtn.addEventListener('click', closePremiumModal);
+
+            chatMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChatMenu();
+            });
+            
+            viewInfoBtn.addEventListener('click', () => {
+                toggleChatMenu();
+                showInfoModal();
+            });
+            changeColorBtn.addEventListener('click', () => {
+                toggleChatMenu();
+                showColorModal();
+            });
+            changeThemeBtn.addEventListener('click', () => {
+                toggleChatMenu();
+                showThemeModal();
+            });
+            customThemeUpload.addEventListener('change', handleCustomThemeUpload);
+
+            document.addEventListener('click', (e) => {
+                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target)) {
+                    toggleChatMenu();
+                }
+                const activeModal = document.querySelector('.modal:not(.hidden)');
+                if (activeModal && e.target.classList.contains('modal-backdrop')) {
+                    activeModal.classList.add('hidden');
+                }
+            });
+
+            resetBtn.addEventListener('click', () => {
+                if (window.confirm('Are you sure you want to change your partner? All messages will be deleted.')) {
+                    localStorage.removeItem('aiPartnerProfile');
+                    if(currentProfile) localStorage.removeItem(`chatHistory_${currentProfile.name}`);
+                    localStorage.removeItem('chatTheme');
+                    currentProfile = null;
+                    chatHistory = [];
+                    // Reset creation form
+                    editorName.value = '';
+                    editorAge.value = '';
+                    editorTraits.value = '';
+                    editorNationality.value = '';
+                    uploadedImageData = null;
+                    editorImgPreview.classList.add('hidden');
+                    imageUploadLabel.style.display = 'flex';
+                    imageUploadInput.value = "";
+                    backgroundWrap.className = 'neutral-gradient';
+                    showGenderSelectionScreen();
+                }
+            });
+
+            init();
+        });
+    </script>
+</body>
+</html>
