@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Alterra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,20 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Fallback colors */
+            /* Fallback barve */
             --user-bubble-color-start: #6a5af9;
             --user-bubble-color-end: #d66efd;
             --vh: 1vh;
         }
-        /* Basic setup for a full-screen app experience */
+        /* Osnovna nastavitev za celozaslonsko izkušnjo aplikacije */
         html, body {
-            height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+            height: 100vh; /* Fallback za brskalnike, ki ne podpirajo Custom Properties */
             height: calc(var(--vh, 1vh) * 100);
             overflow: hidden;
             background-color: #000;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        /* The main container for the app */
+        /* Glavni vsebnik aplikacije */
         #app-container {
             height: 100%;
             width: 100%;
@@ -32,7 +32,7 @@
             background-color: #000;
             transition: background 0.5s ease;
         }
-        /* The background element, used for non-chat screens */
+        /* Element za ozadje, uporabljen na zaslonih, ki niso klepet */
         #background-wrap {
             position: fixed;
             top: 0;
@@ -48,7 +48,7 @@
         .man-gradient { background: linear-gradient(315deg, #a8e063 0%, #56ab2f 74%); }
         .neutral-gradient { background: linear-gradient(315deg, #1e293b 0%, #4c1d95 74%); }
         
-        /* --- Instagram Theme Styles --- */
+        /* --- Stili teme Instagram --- */
         @keyframes instagram-gradient-animation {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -67,19 +67,11 @@
             color: #ffffff; 
         }
         
-        /* Class for theme contrast text */
-        .text-theme-contrast {
-             color: #1f2937 !important; /* dark gray */
-        }
-        .icon-theme-contrast {
-             stroke: #1f2937 !important;
-        }
-        .icon-theme-contrast-fill {
-             fill: #1f2937 !important;
-        }
+        .text-theme-contrast { color: #1f2937 !important; }
+        .icon-theme-contrast { stroke: #1f2937 !important; }
+        .icon-theme-contrast-fill { fill: #1f2937 !important; }
 
-
-        /* --- General Component Styling --- */
+        /* --- Splošno oblikovanje komponent --- */
         .card-base {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -109,15 +101,13 @@
             background-color: #ef4444; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.5s ease-in-out; z-index: 100;
         }
-        #voice-toast {
-            background-color: #3b82f6;
-        }
+        #voice-toast { background-color: #3b82f6; }
         .modal-backdrop {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
             z-index: 40;
         }
-        .dropdown-menu {
+        .dropdown-menu, .message-actions-menu {
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
         .modal {
@@ -130,6 +120,35 @@
         .theme-swatch.selected {
             border-color: #a78bfa; /* violet-400 */
         }
+        /* --- NOVO: Stili za pripenjanje in odgovarjanje --- */
+        #pinned-messages-bar {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #pinned-messages-bar.visible {
+            max-height: 100px; /* Prilagodite po potrebi */
+            padding: 8px 12px;
+        }
+        .pinned-message {
+            cursor: pointer;
+        }
+        #reply-preview-bar {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #reply-preview-bar.visible {
+            max-height: 100px; /* Prilagodite po potrebi */
+            padding: 8px 16px;
+        }
+        .reply-quote {
+            border-left: 2px solid rgba(255, 255, 255, 0.4);
+            padding-left: 8px;
+            margin-bottom: 4px;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body class="bg-black">
@@ -138,32 +157,32 @@
 
     <div id="app-container" class="sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-auto sm:max-h-[95vh] sm:border sm:border-white/20">
         
-        <!-- Homepage Screen -->
+        <!-- Domači zaslon -->
         <div id="homepage-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Welcome to Alterra</h1>
-            <p class="text-lg text-gray-300 mb-12 max-w-md">Create your perfect digital companion, powered by advanced AI. Chat, share, and build a unique connection.</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Dobrodošli v Alterra</h1>
+            <p class="text-lg text-gray-300 mb-12 max-w-md">Ustvarite svojega popolnega digitalnega spremljevalca, ki ga poganja napredna umetna inteligenca. Klepetajte, delite in zgradite edinstveno povezavo.</p>
             <div class="flex flex-col sm:flex-row gap-4">
-                <button id="get-started-btn" class="bg-violet-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-violet-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg">Get Started</button>
+                <button id="get-started-btn" class="bg-violet-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-violet-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg">Začni</button>
             </div>
         </div>
 
-        <!-- Gender Selection Screen -->
+        <!-- Zaslon za izbiro spola -->
         <div id="gender-selection-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full hidden">
-            <h1 class="text-3xl md:text-4xl font-bold text-center text-white mb-4">Choose Your Companion</h1>
-            <p class="text-center text-gray-300 mb-12">Who would you like to talk to?</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-white mb-4">Izberite svojega spremljevalca</h1>
+            <p class="text-center text-gray-300 mb-12">S kom bi radi govorili?</p>
             <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
                 <div id="select-girl" class="card-base p-6 rounded-2xl shadow-lg cursor-pointer text-center">
-                    <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.src='https://placehold.co/128x128/fbc2eb/a6c1ee?text=Girl'" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
-                    <h2 class="text-xl sm:text-2xl font-bold text-white">Girl</h2>
+                    <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.src='https://placehold.co/128x128/fbc2eb/a6c1ee?text=Punca'" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Punca</h2>
                 </div>
                 <div id="select-man" class="card-base p-6 rounded-2xl shadow-lg cursor-pointer text-center">
-                    <img src="https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.src='https://placehold.co/128x128/a8e063/56ab2f?text=Man'" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
-                    <h2 class="text-xl sm:text-2xl font-bold text-white">Man</h2>
+                    <img src="https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.src='https://placehold.co/128x128/a8e063/56ab2f?text=Fant'" class="w-32 h-32 object-cover rounded-xl mx-auto mb-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Fant</h2>
                 </div>
             </div>
         </div>
 
-        <!-- Creation Screen -->
+        <!-- Zaslon za ustvarjanje -->
         <div id="creation-screen" class="flex-grow p-4 sm:p-6 md:p-8 overflow-y-auto hidden">
             <h1 id="creation-title" class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-6"></h1>
             
@@ -180,36 +199,36 @@
                     </div>
                     <div class="flex-grow space-y-4 w-full">
                         <div>
-                            <label for="editor-name" class="block text-sm font-medium text-gray-300 mb-1">Name <span class="text-red-500">*</span></label>
-                            <input type="text" id="editor-name" placeholder="Set name" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                            <label for="editor-name" class="block text-sm font-medium text-gray-300 mb-1">Ime <span class="text-red-500">*</span></label>
+                            <input type="text" id="editor-name" placeholder="Nastavi ime" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
                         </div>
                         <div>
-                            <label for="editor-age" class="block text-sm font-medium text-gray-300 mb-1">Age <span class="text-red-500">*</span></label>
-                            <input type="number" id="editor-age" placeholder="Set age" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                            <label for="editor-age" class="block text-sm font-medium text-gray-300 mb-1">Starost <span class="text-red-500">*</span></label>
+                            <input type="number" id="editor-age" placeholder="Nastavi starost" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
                         </div>
                         <div>
-                            <label for="editor-traits" class="block text-sm font-medium text-gray-300 mb-1">Traits (comma-separated)</label>
-                            <input type="text" id="editor-traits" placeholder="Optional, e.g. funny, smart" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
+                            <label for="editor-traits" class="block text-sm font-medium text-gray-300 mb-1">Lastnosti (ločene z vejico)</label>
+                            <input type="text" id="editor-traits" placeholder="Neobvezno, npr. smešen, pameten" class="mt-1 block w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
                         </div>
                         <div>
-                            <label for="editor-nationality" class="block text-sm font-medium text-gray-300 mb-1">Nationality <span class="text-red-500">*</span></label>
+                            <label for="editor-nationality" class="block text-sm font-medium text-gray-300 mb-1">Nacionalnost <span class="text-red-500">*</span></label>
                             <select id="editor-nationality" class="w-full bg-gray-700/50 border-gray-600 text-white rounded-lg shadow-sm focus:ring-violet-500 focus:border-violet-500 py-2.5">
-                                <!-- Nationality options will be loaded here -->
+                                <!-- Možnosti nacionalnosti bodo naložene tukaj -->
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="mt-8 text-center">
                     <button id="save-profile-btn" class="bg-violet-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-violet-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                        Save and Start Chatting
+                        Shrani in začni klepet
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Chat Screen -->
+        <!-- Zaslon za klepet -->
         <div id="chat-screen" class="hidden flex-grow flex flex-col min-h-0">
-            <!-- Chat Header -->
+            <!-- Glava klepeta -->
             <div class="flex items-center p-3 border-b border-gray-800 shrink-0">
                 <button id="reset-btn" class="p-2 rounded-full hover:bg-gray-800 transition-colors">
                      <svg data-theme-contrast="icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -219,7 +238,7 @@
                 <img id="chat-avatar" src="" class="w-11 h-11 rounded-full object-cover ml-2 mr-4 shadow-md">
                 <div class="mr-auto">
                     <h2 id="chat-name" data-theme-contrast="text" class="text-lg font-bold text-white flex items-center gap-2"></h2>
-                    <p id="chat-status" data-theme-contrast="text" class="text-xs text-gray-400">Active now</p>
+                    <p id="chat-status" data-theme-contrast="text" class="text-xs text-gray-400">Aktiven zdaj</p>
                 </div>
                 <div class="relative">
                     <button id="chat-menu-btn" class="p-2 rounded-full hover:bg-gray-800 transition-colors">
@@ -228,25 +247,42 @@
                         </svg>
                     </button>
                     <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 z-20 hidden origin-top-right scale-95 opacity-0">
-                       <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">View Info</button>
-                       <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Color</button>
-                       <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Theme</button>
+                       <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Poglej info</button>
+                       <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Spremeni barvo</button>
+                       <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Spremeni temo</button>
                     </div>
                 </div>
             </div>
+            
+            <!-- NOVO: Vrstica za pripeta sporočila -->
+            <div id="pinned-messages-bar" class="border-b border-gray-800 bg-gray-900/50">
+                <!-- Pripeta sporočila bodo vstavljena tukaj -->
+            </div>
 
-            <!-- Messages -->
+            <!-- Sporočila -->
             <div id="chat-messages" class="flex-grow p-4 sm:p-6 overflow-y-auto space-y-4">
-                <!-- Messages will be injected here -->
+                <!-- Sporočila bodo vstavljena tukaj -->
             </div>
             
-            <!-- Input Area -->
+            <!-- Vnosno območje -->
             <div class="p-3 shrink-0">
                  <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
-                    <span id="typing-name"></span> is typing...
+                    <span id="typing-name"></span> piše...
+                </div>
+                <!-- NOVO: Predogled odgovora -->
+                <div id="reply-preview-bar" class="bg-gray-700/50 rounded-t-xl -mx-3 -mt-3 mb-2 text-sm">
+                     <div class="flex justify-between items-center">
+                        <div class="border-l-4 border-blue-500 pl-3">
+                            <p id="reply-preview-sender" class="font-bold text-white"></p>
+                            <p id="reply-preview-text" class="text-gray-300 truncate"></p>
+                        </div>
+                        <button id="cancel-reply-btn" class="p-2 text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
                 </div>
                 <form id="chat-form" class="flex items-center gap-2 bg-gray-800 rounded-full p-1.5">
-                    <input type="text" id="message-input" placeholder="Message..." class="flex-grow bg-transparent text-white focus:outline-none px-4" autocomplete="off">
+                    <input type="text" id="message-input" placeholder="Sporočilo..." class="flex-grow bg-transparent text-white focus:outline-none px-4" autocomplete="off">
                     <input type="file" id="image-chat-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
                     <button type="button" id="image-chat-btn" class="p-2 text-gray-400 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -264,14 +300,14 @@
         </div>
     </div>
     
-    <!-- Modals -->
+    <!-- Modali -->
     <div id="confirmation-modal" class="hidden modal">
         <div class="modal-backdrop"></div>
         <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-sm bg-gray-800 text-white p-6 rounded-2xl shadow-2xl z-50 text-center">
-            <p id="confirmation-message" class="mb-6 text-lg">Are you sure?</p>
+            <p id="confirmation-message" class="mb-6 text-lg">Ste prepričani?</p>
             <div class="flex gap-4">
-                <button id="confirm-yes-btn" class="flex-1 bg-red-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-red-700 transition">Yes</button>
-                <button id="confirm-no-btn" class="flex-1 bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-500 transition">No</button>
+                <button id="confirm-yes-btn" class="flex-1 bg-red-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-red-700 transition">Da</button>
+                <button id="confirm-no-btn" class="flex-1 bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-500 transition">Ne</button>
             </div>
         </div>
     </div>
@@ -284,7 +320,7 @@
     <div id="color-modal" class="hidden modal">
         <div class="modal-backdrop"></div>
         <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xs bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
-            <h2 class="text-xl font-bold text-center mb-6">Change Chat Color</h2>
+            <h2 class="text-xl font-bold text-center mb-6">Spremeni barvo klepeta</h2>
             <div id="color-swatches" class="grid grid-cols-4 gap-4"></div>
         </div>
     </div>
@@ -292,17 +328,24 @@
     <div id="theme-modal" class="hidden modal">
         <div class="modal-backdrop"></div>
         <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
-            <h2 class="text-xl font-bold text-center mb-6">Change Chat Theme</h2>
+            <h2 class="text-xl font-bold text-center mb-6">Spremeni temo klepeta</h2>
             <div id="theme-swatches" class="grid grid-cols-3 gap-4 mb-6"></div>
         </div>
     </div>
 
+    <!-- NOVO: Meni z dejanji za sporočila -->
+    <div id="message-actions-menu" class="message-actions-menu absolute bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 z-30 hidden origin-top-left scale-95 opacity-0">
+        <button data-action="reply" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Odgovori</button>
+        <button data-action="pin" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Pripni</button>
+        <button data-action="copy" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Kopiraj</button>
+    </div>
+
     <div id="error-toast"></div>
-    <div id="voice-toast">Recording... Release to send.</div>
+    <div id="voice-toast">Snemanje... Spustite za pošiljanje.</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Elements ---
+            // --- DOM elementi ---
             const backgroundWrap = document.getElementById('background-wrap');
             const appContainer = document.getElementById('app-container');
             const homepageScreen = document.getElementById('homepage-screen');
@@ -337,7 +380,7 @@
             const errorToast = document.getElementById('error-toast');
             const voiceToast = document.getElementById('voice-toast');
             
-            // Modals
+            // Modali
             const confirmationModal = document.getElementById('confirmation-modal');
             const confirmationMessage = document.getElementById('confirmation-message');
             const confirmYesBtn = document.getElementById('confirm-yes-btn');
@@ -354,7 +397,16 @@
             const themeModal = document.getElementById('theme-modal');
             const themeSwatches = document.getElementById('theme-swatches');
 
-            // --- Data ---
+            // NOVO: Elementi za pripenjanje in odgovarjanje
+            const pinnedMessagesBar = document.getElementById('pinned-messages-bar');
+            const replyPreviewBar = document.getElementById('reply-preview-bar');
+            const replyPreviewSender = document.getElementById('reply-preview-sender');
+            const replyPreviewText = document.getElementById('reply-preview-text');
+            const cancelReplyBtn = document.getElementById('cancel-reply-btn');
+            const messageActionsMenu = document.getElementById('message-actions-menu');
+
+
+            // --- Podatki ---
             const countries = [
                 { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' },
                 { name: 'Argentina', code: 'AR' }, { name: 'Australia', code: 'AU' }, { name: 'Austria', code: 'AT' },
@@ -388,11 +440,11 @@
             };
 
             const chatColors = [
-                { start: '#833ab4', end: '#5851db' }, // Default IG Purple/Blue
-                { start: '#2563eb', end: '#1d4ed8' }, // Blue
-                { start: '#16a34a', end: '#15803d' }, // Green
-                { start: '#db2777', end: '#be185d' }, // Pink
-                { start: '#f97316', end: '#ea580c' }, // Orange
+                { start: '#833ab4', end: '#5851db' }, // Privzeto IG vijolična/modra
+                { start: '#2563eb', end: '#1d4ed8' }, // Modra
+                { start: '#16a34a', end: '#15803d' }, // Zelena
+                { start: '#db2777', end: '#be185d' }, // Roza
+                { start: '#f97316', end: '#ea580c' }, // Oranžna
             ];
             
             const freeThemes = [
@@ -402,7 +454,7 @@
                 { name: 'Sunrise', style: 'linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)', isLight: true },
             ];
 
-            // App State
+            // Stanje aplikacije
             let currentProfile = null;
             let chatHistory = [];
             let currentGender = null;
@@ -410,18 +462,35 @@
             let confirmCallback = null;
             let mediaRecorder;
             let audioChunks = [];
+            // NOVO: Stanje za odgovarjanje in dejanja
+            let replyingToMessage = null;
+            let activeMessageMenu = null;
 
-            // --- Functions ---
+
+            // --- Funkcije ---
             
-            // Fix for 100vh on mobile browsers
+            // POPRAVEK: Popravek za 100vh na mobilnih brskalnikih
             function setRealViewportHeight() {
                 let vh = window.innerHeight * 0.01;
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            
+            // POPRAVEK: Funkcija za reševanje problema s tipkovnico na iOS
+            function handleIOSKeyboard() {
+                if (messageInput) {
+                    messageInput.addEventListener('focus', () => {
+                        setTimeout(() => {
+                            window.scrollTo(0, document.body.scrollHeight);
+                            if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }, 300); // Majhna zakasnitev za pravilen čas
+                    });
+                }
             }
 
             function init() {
                 setRealViewportHeight();
                 window.addEventListener('resize', setRealViewportHeight);
+                handleIOSKeyboard(); // Klic nove funkcije
 
                 loadChatColor();
                 const savedProfile = localStorage.getItem('alterraProfile');
@@ -439,20 +508,25 @@
             }
 
             function showScreen(screenElement) {
-                [homepageScreen, genderSelectionScreen, creationScreen, chatScreen].forEach(s => s.classList.add('hidden'));
-                screenElement.classList.remove('hidden');
+                [homepageScreen, genderSelectionScreen, creationScreen, chatScreen].forEach(s => {
+                    if (s) s.classList.add('hidden');
+                });
+                if (screenElement) screenElement.classList.remove('hidden');
+                
                 if(screenElement === chatScreen || screenElement === creationScreen) {
-                    screenElement.classList.add('flex', 'flex-col');
+                    if (screenElement) screenElement.classList.add('flex', 'flex-col');
                 }
+
                 if (screenElement !== chatScreen) {
-                    appContainer.style.background = 'black';
-                    backgroundWrap.classList.remove('hidden');
+                    if (appContainer) appContainer.style.background = 'black';
+                    if (backgroundWrap) backgroundWrap.classList.remove('hidden');
                 } else {
-                    backgroundWrap.classList.add('hidden');
+                    if (backgroundWrap) backgroundWrap.classList.add('hidden');
                 }
             }
             
             function showToast(element, message, duration = 3000) {
+                if (!element) return;
                 element.textContent = message;
                 element.style.bottom = '20px';
                 setTimeout(() => {
@@ -462,20 +536,21 @@
 
             function showGenderSelectionScreen() {
                 showScreen(genderSelectionScreen);
-                backgroundWrap.className = 'neutral-gradient';
+                if (backgroundWrap) backgroundWrap.className = 'neutral-gradient';
             }
 
             function setupCreationScreen(gender) {
                 currentGender = gender;
-                backgroundWrap.className = gender === 'girl' ? 'girl-gradient' : 'man-gradient';
+                if (backgroundWrap) backgroundWrap.className = gender === 'girl' ? 'girl-gradient' : 'man-gradient';
                 showScreen(creationScreen);
-                creationTitle.textContent = `Create Your ${gender === 'girl' ? 'Girlfriend' : 'Boyfriend'}`;
+                if (creationTitle) creationTitle.textContent = `Ustvari svojo ${gender === 'girl' ? 'punco' : 'fanta'}`;
                 populateEditorNationality();
                 validateEditorInputs();
             }
             
             function populateEditorNationality() {
-                editorNationality.innerHTML = '<option value="" disabled selected>Select a nationality</option>';
+                if (!editorNationality) return;
+                editorNationality.innerHTML = '<option value="" disabled selected>Izberi nacionalnost</option>';
                 countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
                     const option = document.createElement('option');
                     option.value = country.name;
@@ -487,8 +562,8 @@
             function handleImageUpload(event, isChatMessage = false) {
                 const file = event.target.files[0];
                 if (!file) return;
-                if (file.size > 4 * 1024 * 1024) { // 4MB Limit for Gemini
-                    showToast(errorToast, "Image is too large. Max 4MB.");
+                if (file.size > 4 * 1024 * 1024) { // 4MB omejitev za Gemini
+                    showToast(errorToast, "Slika je prevelika. Največ 4MB.");
                     return;
                 }
                 const reader = new FileReader();
@@ -496,13 +571,16 @@
                     const dataUrl = e.target.result;
                     if (isChatMessage) {
                         const imageData = dataUrl.split(',')[1];
-                        addMessageToUI('user', { type: 'image', content: dataUrl });
-                        sendAiImageResponse(imageData, file.type);
+                        const messageId = Date.now();
+                        addMessageToUI('user', { id: messageId, type: 'image', content: dataUrl });
+                        sendAiImageResponse(imageData, file.type, messageId);
                     } else {
                         uploadedImageData = dataUrl;
-                        editorImgPreview.src = uploadedImageData;
-                        editorImgPreview.classList.remove('hidden');
-                        imageUploadLabel.style.display = 'none';
+                        if (editorImgPreview) {
+                            editorImgPreview.src = uploadedImageData;
+                            editorImgPreview.classList.remove('hidden');
+                        }
+                        if (imageUploadLabel) imageUploadLabel.style.display = 'none';
                         validateEditorInputs();
                     }
                 };
@@ -510,6 +588,7 @@
             }
 
             function validateEditorInputs() {
+                if (!editorName || !editorAge || !editorNationality || !saveProfileBtn) return;
                 const nameValid = editorName.value.trim() !== '';
                 const ageValid = editorAge.value.trim() !== '' && !isNaN(editorAge.value) && editorAge.value > 0;
                 const nationalityValid = editorNationality.value !== '';
@@ -517,6 +596,7 @@
             }
 
             saveProfileBtn.addEventListener('click', () => {
+                if (!editorNationality || !editorName || !editorAge || !editorTraits) return;
                 const selectedCountryName = editorNationality.value;
                 currentProfile = {
                     name: editorName.value,
@@ -530,91 +610,147 @@
                 try {
                     localStorage.setItem('alterraProfile', JSON.stringify(currentProfile));
                     chatHistory = [];
-                    localStorage.removeItem(`chatHistory_${currentProfile.name}`); // Keep old one for cleanup if needed
+                    localStorage.removeItem(`chatHistory_${currentProfile.name}`);
                     setupChatScreen();
                 } catch(e) {
-                    showToast(errorToast, e.name === 'QuotaExceededError' ? "Image too large." : "An unknown error occurred.");
+                    showToast(errorToast, e.name === 'QuotaExceededError' ? "Slika je prevelika." : "Prišlo je do neznane napake.");
                 }
             });
 
             function setupChatScreen() {
+                if (!currentProfile) return;
                 loadChatTheme();
                 showScreen(chatScreen);
                 const savedHistory = localStorage.getItem(`chatHistory_${currentProfile.name}`);
                 chatHistory = savedHistory ? JSON.parse(savedHistory) : [];
-                chatAvatar.src = currentProfile.img || `https://placehold.co/112x112/4338ca/f0abfc?text=${currentProfile.gender === 'girl' ? '👩' : '👨'}`;
-                chatName.textContent = currentProfile.name;
+                if (chatAvatar) chatAvatar.src = currentProfile.img || `https://placehold.co/112x112/4338ca/f0abfc?text=${currentProfile.gender === 'girl' ? '👩' : '👨'}`;
+                if (chatName) chatName.textContent = currentProfile.name;
                 renderChatHistory();
                 if (chatHistory.length === 0) sendWelcomeMessage();
             }
-
+            
             function renderChatHistory() {
+                if (!chatMessages) return;
                 chatMessages.innerHTML = '';
                 chatHistory.forEach(msg => addMessageToUI(msg.role, msg.content));
-                setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 0);
+                renderPinnedMessages();
+                setTimeout(() => { if(chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight; }, 0);
             }
 
             function addMessageToUI(sender, content, isNew = false) {
+                if (!chatMessages) return;
                 const messageWrapper = document.createElement('div');
-                messageWrapper.className = `flex w-full ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+                messageWrapper.className = `flex w-full items-end gap-2 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+                messageWrapper.dataset.messageId = content.id;
+
                 const bubble = document.createElement('div');
-                bubble.className = `max-w-[70%] rounded-2xl shadow ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+                bubble.className = `max-w-[70%] rounded-2xl shadow relative cursor-pointer ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+                bubble.dataset.messageId = content.id;
+
+                if (content.pinned) {
+                    const pinIcon = document.createElement('div');
+                    pinIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white/70" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 3.636a1 1 0 011.414 0L10 7.172l3.536-3.536a1 1 0 111.414 1.414L11.414 8.586l3.536 3.536a1 1 0 11-1.414 1.414L10 10.414l-3.536 3.536a1 1 0 01-1.414-1.414L8.586 8.586 5.05 5.05a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`;
+                    pinIcon.className = 'absolute -top-1 -right-1 bg-gray-500 rounded-full p-0.5';
+                    bubble.appendChild(pinIcon);
+                }
+                
+                if (content.replyTo) {
+                    const replyQuote = document.createElement('div');
+                    replyQuote.className = 'reply-quote';
+                    const replySender = document.createElement('strong');
+                    // FIX: Added null check for currentProfile
+                    replySender.textContent = content.replyTo.sender === 'user' ? 'You' : (currentProfile ? currentProfile.name : 'AI');
+                    const replyText = document.createElement('p');
+                    replyText.textContent = String(content.replyTo.content).substring(0, 50) + (String(content.replyTo.content).length > 50 ? '...' : '');
+                    replyQuote.appendChild(replySender);
+                    replyQuote.appendChild(replyText);
+                    bubble.appendChild(replyQuote);
+                }
 
                 if (content.type === 'text') {
                     bubble.classList.add('px-4', 'py-2.5');
-                    bubble.textContent = content.content;
+                    const textNode = document.createElement('div');
+                    textNode.textContent = content.content;
+                    bubble.appendChild(textNode);
                 } else if (content.type === 'image') {
                     bubble.classList.add('p-1');
                     const img = document.createElement('img');
                     img.src = content.content;
-                    img.className = 'max-w-full h-auto rounded-2xl'; // FIX: Changed max-w-xs to max-w-full
+                    img.className = 'max-w-full h-auto rounded-2xl';
                     bubble.appendChild(img);
                 } else if (content.type === 'voice') {
                     bubble.classList.add('px-4', 'py-2.5');
-                    bubble.textContent = `🎤: "${content.content}"`;
+                    const textNode = document.createElement('div');
+                    textNode.textContent = `🎤: "${content.content}"`;
+                    bubble.appendChild(textNode);
                 }
 
                 if (isNew) messageWrapper.classList.add('message-bubble');
                 messageWrapper.appendChild(bubble);
                 chatMessages.appendChild(messageWrapper);
                 if (isNew) chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                bubble.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showMessageActions(e.currentTarget);
+                });
             }
             
-            async function sendAiResponse(prompt, parts = []) {
-                updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
+            async function sendAiResponse(prompt, parts = [], messageId, replyTo = null) {
+                // FIX: Added null check for currentProfile
+                if (!currentProfile) {
+                    console.error("sendAiResponse called without a profile.");
+                    return;
+                }
+                const newContent = { id: messageId, type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts };
+                if (replyTo) newContent.replyTo = replyTo;
+                updateChatHistory('user', newContent);
+                
                 setTyping(true);
-                const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
+                const aiResponse = await callGeminiAPI(prompt, chatHistory, parts);
                 const typingDuration = calculateTypingDuration(aiResponse || "");
+                
                 setTimeout(() => {
                     setTyping(false);
-                    const responseText = aiResponse || 'Oops, something is glitching...';
-                    addMessageToUI('model', { type: 'text', content: responseText }, true);
-                    updateChatHistory('model', { type: 'text', content: responseText });
+                    const responseText = aiResponse || 'Ups, nekaj nagaja...';
+                    const aiMessageId = Date.now();
+                    const aiContent = { id: aiMessageId, type: 'text', content: responseText };
+                    addMessageToUI('model', aiContent, true);
+                    updateChatHistory('model', aiContent);
                 }, typingDuration);
             }
             
-            async function sendAiImageResponse(imageData, mimeType) {
+            async function sendAiImageResponse(imageData, mimeType, messageId) {
                  const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
-                 const prompt = `I'm sending you an image. Please react to it in your native language, which is '${currentProfile.languages.native}'.`;
-                 await sendAiResponse(prompt, parts);
+                 const prompt = `Pošiljam ti sliko. Prosim, reagiraj nanjo v svojem maternem jeziku, ki je '${currentProfile.languages.native}'.`;
+                 await sendAiResponse(prompt, parts, messageId);
             }
 
             async function sendWelcomeMessage() {
-                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
+                const messageId = Date.now();
+                await sendAiResponse(`Pozdravi me sproščeno, kot da se že poznava. MORAŠ govoriti v svojem maternem jeziku ('${currentProfile.languages.native}').`, [], messageId);
             }
             
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const userMessage = messageInput.value.trim();
                 if (!userMessage) return;
+                
+                const messageId = Date.now();
+                const replyToData = replyingToMessage ? { sender: replyingToMessage.role, content: replyingToMessage.content.content } : null;
+
+                addMessageToUI('user', { id: messageId, type: 'text', content: userMessage, replyTo: replyToData }, true);
+                
                 messageInput.value = '';
-                sendBtn.classList.add('hidden');
-                addMessageToUI('user', { type: 'text', content: userMessage }, true);
-                await sendAiResponse(userMessage);
+                if(sendBtn) sendBtn.classList.add('hidden');
+                hideReplyUI();
+                
+                // FIX: Pass the full chat history to the AI response function
+                await sendAiResponse(userMessage, [], messageId, replyToData);
             });
 
             messageInput.addEventListener('input', () => {
-                sendBtn.classList.toggle('hidden', messageInput.value.trim() === '');
+                if(sendBtn) sendBtn.classList.toggle('hidden', messageInput.value.trim() === '');
             });
 
             function calculateTypingDuration(text) {
@@ -622,6 +758,8 @@
             }
             
             async function callGeminiAPI(prompt, history = [], extraParts = []) {
+                if (!currentProfile) return "Error: Profile not loaded.";
+
                 const { name, age, gender, nationality, traits, languages } = currentProfile;
                 const partnerGender = gender === 'girl' ? 'boyfriend' : 'girlfriend';
                 const systemPrompt = `You are ${name}, a ${age}-year-old ${gender} from ${nationality}. Traits: ${traits.join(', ') || 'not defined'}. You are chatting with your ${partnerGender}.
@@ -639,25 +777,31 @@
                     const content = msg.content;
                     let parts = [];
 
-                    if (content.content) {
-                        parts.push({ text: content.content });
-                    }
-                    if (role === 'user' && content.parts) {
-                        parts.push(...content.parts);
+                    // FIX: Added null check for content
+                    if (content) {
+                        if (content.content) {
+                            parts.push({ text: content.content });
+                        }
+                        if (role === 'user' && content.parts) {
+                            parts.push(...content.parts);
+                        }
                     }
                     
                     return { role, parts };
                 });
 
                 const userParts = [{ text: prompt }, ...extraParts];
-
-                const fullHistory = [
-                    { role: "user", parts: [{ text: systemPrompt }] },
-                    { role: "model", parts: [{ text: `Ok, got it. I'm ${name}.` }] },
-                    ...formattedHistory,
-                    { role: "user", parts: userParts }
-                ];
-                const payload = { contents: fullHistory };
+                
+                // The last message is already part of the history, so we don't need to add it again.
+                // The API expects the full conversation history.
+                const payload = { 
+                    contents: [
+                        { role: "user", parts: [{ text: systemPrompt }] },
+                        { role: "model", parts: [{ text: `Ok, got it. I'm ${name}.` }] },
+                        ...formattedHistory
+                    ]
+                };
+                // IMPORTANT: Replace with your actual API key
                 const apiKey = "AIzaSyAywdjQNPmCXoTyTLIJixfW8U45_RWTnBU"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
@@ -675,30 +819,36 @@
                     return result.candidates?.[0]?.content?.parts?.[0]?.text || null;
                 } catch (error) {
                     console.error('Fetch error:', error);
-                    return "Ugh, my internet is acting up... Try again later.";
+                    return "Uf, internet mi nekaj šteka... Poskusi kasneje.";
                 }
             }
             
             function setTyping(isTyping) {
-                typingName.textContent = isTyping ? currentProfile.name : '';
-                typingIndicator.classList.toggle('hidden', !isTyping);
+                // FIX: Added null check for currentProfile
+                if (!currentProfile) return;
+                if(typingName) typingName.textContent = isTyping ? currentProfile.name : '';
+                if(typingIndicator) typingIndicator.classList.toggle('hidden', !isTyping);
             }
 
             function updateChatHistory(role, content) {
+                // FIX: Added null check for currentProfile
+                if (!currentProfile) return;
+                if (chatHistory.find(msg => msg.content.id === content.id)) return;
                 chatHistory.push({ role, content });
                 try {
                     localStorage.setItem(`chatHistory_${currentProfile.name}`, JSON.stringify(chatHistory));
-                } catch (e) { console.error("Could not save chat history:", e); }
+                } catch (e) { console.error("Ni bilo mogoče shraniti zgodovine klepeta:", e); }
             }
 
             function showConfirmationModal(message, onConfirm) {
-                confirmationMessage.textContent = message;
+                if(confirmationMessage) confirmationMessage.textContent = message;
                 confirmCallback = onConfirm;
-                confirmationModal.classList.remove('hidden');
+                if(confirmationModal) confirmationModal.classList.remove('hidden');
             }
 
-            // --- Menu & Modal Logic ---
+            // --- Logika menija in modalov ---
             function toggleChatMenu() {
+                if (!chatDropdownMenu) return;
                 if (chatDropdownMenu.classList.contains('hidden')) {
                     chatDropdownMenu.classList.remove('hidden');
                     setTimeout(() => chatDropdownMenu.classList.remove('opacity-0', 'scale-95'), 10);
@@ -709,20 +859,23 @@
             }
 
             function showInfoModal() {
+                if (!infoModalContent || !currentProfile) return;
                 infoModalContent.innerHTML = `
                     <h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2>
                     <div class="space-y-3 text-gray-300">
-                        <p><strong>Age:</strong> ${currentProfile.age}</p>
-                        <p><strong>Nationality:</strong> ${currentProfile.nationality}</p>
-                        <p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p>
+                        <p><strong>Starost:</strong> ${currentProfile.age}</p>
+                        <p><strong>Nacionalnost:</strong> ${currentProfile.nationality}</p>
+                        <p><strong>Lastnosti:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Ni nastavljeno'}</p>
                     </div>
-                    <button id="close-info-modal" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Close</button>
+                    <button id="close-info-modal" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Zapri</button>
                 `;
-                infoModal.classList.remove('hidden');
-                document.getElementById('close-info-modal').addEventListener('click', () => infoModal.classList.add('hidden'));
+                if(infoModal) infoModal.classList.remove('hidden');
+                const closeBtn = document.getElementById('close-info-modal');
+                if(closeBtn) closeBtn.addEventListener('click', () => infoModal.classList.add('hidden'));
             }
 
             function showColorModal() {
+                if (!colorSwatches) return;
                 colorSwatches.innerHTML = '';
                 chatColors.forEach(color => {
                     const swatch = document.createElement('div');
@@ -730,14 +883,15 @@
                     swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end})`;
                     swatch.addEventListener('click', () => {
                         setChatColor(color.start, color.end);
-                        colorModal.classList.add('hidden');
+                        if(colorModal) colorModal.classList.add('hidden');
                     });
                     colorSwatches.appendChild(swatch);
                 });
-                colorModal.classList.remove('hidden');
+                if(colorModal) colorModal.classList.remove('hidden');
             }
             
             function showThemeModal() {
+                if (!themeSwatches) return;
                 themeSwatches.innerHTML = '';
                 const currentTheme = localStorage.getItem('chatTheme') || 'black';
                 freeThemes.forEach(theme => {
@@ -747,39 +901,33 @@
                     swatch.style.background = theme.style;
                     swatch.addEventListener('click', () => {
                         setChatTheme(theme);
-                        themeModal.classList.add('hidden');
+                        if(themeModal) themeModal.classList.add('hidden');
                     });
                     themeSwatches.appendChild(swatch);
                 });
-                themeModal.classList.remove('hidden');
+                if(themeModal) themeModal.classList.remove('hidden');
             }
 
             function updateThemeContrast(isLight) {
-                document.querySelectorAll('[data-theme-contrast="text"]').forEach(el => {
-                    el.classList.toggle('text-theme-contrast', isLight);
-                });
-                document.querySelectorAll('[data-theme-contrast="icon"]').forEach(el => {
-                    el.classList.toggle('icon-theme-contrast', isLight);
-                });
-                 document.querySelectorAll('[data-theme-contrast="icon-fill"]').forEach(el => {
-                    el.classList.toggle('icon-theme-contrast-fill', isLight);
-                });
+                document.querySelectorAll('[data-theme-contrast="text"]').forEach(el => el.classList.toggle('text-theme-contrast', isLight));
+                document.querySelectorAll('[data-theme-contrast="icon"]').forEach(el => el.classList.toggle('icon-theme-contrast', isLight));
+                 document.querySelectorAll('[data-theme-contrast="icon-fill"]').forEach(el => el.classList.toggle('icon-theme-contrast-fill', isLight));
             }
 
             function setChatTheme(theme) {
-                appContainer.style.background = theme.style;
+                if(appContainer) appContainer.style.background = theme.style;
                 localStorage.setItem('chatTheme', theme.style);
-                localStorage.setItem('chatThemeIsLight', theme.isLight);
+                localStorage.setItem('chatThemeIsLight', String(theme.isLight));
                 updateThemeContrast(theme.isLight);
             }
 
             function loadChatTheme() {
                 const savedTheme = localStorage.getItem('chatTheme');
                 const isLight = localStorage.getItem('chatThemeIsLight') === 'true';
-                if (savedTheme) {
+                if (savedTheme && appContainer) {
                     appContainer.style.background = savedTheme;
                     updateThemeContrast(isLight);
-                } else {
+                } else if (appContainer) {
                     appContainer.style.background = 'black';
                      updateThemeContrast(false);
                 }
@@ -794,29 +942,31 @@
             function loadChatColor() {
                 const savedColor = localStorage.getItem('chatColor');
                 if (savedColor) {
-                    const { start, end } = JSON.parse(savedColor);
-                    setChatColor(start, end);
+                    try {
+                        const { start, end } = JSON.parse(savedColor);
+                        setChatColor(start, end);
+                    } catch(e) { console.error("Error loading chat color:", e)}
                 }
             }
             
-            // --- Voice Recording ---
+            // --- Snemanje zvoka ---
             async function startRecording() {
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showToast(errorToast, 'Voice recording is not supported on your browser.');
+                    showToast(errorToast, 'Snemanje zvoka ni podprto v vašem brskalniku.');
                     return;
                 }
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     mediaRecorder = new MediaRecorder(stream);
                     mediaRecorder.start();
-                    showToast(voiceToast, 'Recording... Release to send.');
+                    showToast(voiceToast, 'Snemanje... Spustite za pošiljanje.');
                     audioChunks = [];
                     mediaRecorder.addEventListener("dataavailable", event => {
                         audioChunks.push(event.data);
                     });
                 } catch (err) {
                     console.error(err);
-                    showToast(errorToast, 'Could not access microphone. Please grant permission.');
+                    showToast(errorToast, 'Dostop do mikrofona ni mogoč. Prosimo, dovolite dostop.');
                 }
             }
 
@@ -824,76 +974,212 @@
                 if (!mediaRecorder || mediaRecorder.state === "inactive") return;
                 
                 mediaRecorder.stop();
-                voiceToast.style.bottom = '-100px';
+                if(voiceToast) voiceToast.style.bottom = '-100px';
 
                 mediaRecorder.addEventListener("stop", async () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    const fakeTranscription = "[User sent a voice message]";
-                    addMessageToUI('user', { type: 'voice', content: fakeTranscription }, true);
-                    const prompt = `I just sent a voice message. Please react to it in your native language, which is '${currentProfile.languages.native}'. The user's message was just a sound, you don't have the transcription, just react to the fact they sent a voice note.`;
-                    await sendAiResponse(prompt);
+                    const fakeTranscription = "[Uporabnik je poslal glasovno sporočilo]";
+                    const messageId = Date.now();
+                    addMessageToUI('user', { id: messageId, type: 'voice', content: fakeTranscription }, true);
+                    const prompt = `Pravkar sem poslal glasovno sporočilo. Prosim, reagiraj nanj v svojem maternem jeziku, ki je '${currentProfile.languages.native}'. Uporabnikovo sporočilo je bilo samo zvok, nimaš transkripcije, samo reagiraj na dejstvo, da so poslali glasovno sporočilo.`;
+                    await sendAiResponse(prompt, [], messageId);
 
                     audioChunks = [];
-                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                    if(mediaRecorder.stream) mediaRecorder.stream.getTracks().forEach(track => track.stop());
                 });
             }
 
-
-            // --- Event Listeners ---
-            getStartedBtn.addEventListener('click', showGenderSelectionScreen);
-            selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
-            selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
-            imageUploadInput.addEventListener('change', (e) => handleImageUpload(e, false));
-            imageChatBtn.addEventListener('click', () => imageChatUpload.click());
-            imageChatUpload.addEventListener('change', (e) => handleImageUpload(e, true));
-            voiceBtn.addEventListener('mousedown', startRecording);
-            voiceBtn.addEventListener('mouseup', stopRecording);
-            voiceBtn.addEventListener('touchstart', startRecording);
-            voiceBtn.addEventListener('touchend', stopRecording);
+            // --- NOVO: Funkcije za dejanja s sporočili ---
             
-            [editorName, editorAge, editorTraits, editorNationality].forEach(el => el.addEventListener('input', validateEditorInputs));
+            function showMessageActions(bubbleElement) {
+                hideMessageActions(); 
+                activeMessageMenu = messageActionsMenu;
+                if (!activeMessageMenu) return;
 
-            resetBtn.addEventListener('click', () => {
-                showConfirmationModal('Are you sure you want to change your companion? All messages will be deleted.', () => {
+                const messageId = Number(bubbleElement.dataset.messageId);
+                const message = chatHistory.find(msg => msg.content.id === messageId);
+                if (!message) return;
+
+                const pinButton = activeMessageMenu.querySelector('[data-action="pin"]');
+                if(pinButton) pinButton.textContent = message.content.pinned ? 'Odpni' : 'Pripni';
+                const copyButton = activeMessageMenu.querySelector('[data-action="copy"]');
+                if(copyButton) copyButton.style.display = message.content.type === 'text' ? 'block' : 'none';
+
+                activeMessageMenu.dataset.messageId = messageId;
+                
+                const rect = bubbleElement.getBoundingClientRect();
+                document.body.appendChild(activeMessageMenu);
+                
+                activeMessageMenu.style.top = `${window.scrollY + rect.top - activeMessageMenu.offsetHeight - 5}px`;
+                activeMessageMenu.style.left = `${window.scrollX + rect.left}px`;
+
+                activeMessageMenu.classList.remove('hidden');
+                setTimeout(() => activeMessageMenu.classList.remove('opacity-0', 'scale-95'), 10);
+            }
+
+            function hideMessageActions() {
+                if (activeMessageMenu) {
+                    activeMessageMenu.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => activeMessageMenu.classList.add('hidden'), 200);
+                    activeMessageMenu = null;
+                }
+            }
+            
+            function handleMessageAction(action, messageId) {
+                const messageIndex = chatHistory.findIndex(msg => msg.content.id === messageId);
+                if (messageIndex === -1) return;
+                const message = chatHistory[messageIndex];
+
+                switch (action) {
+                    case 'reply':
+                        showReplyUI(message);
+                        break;
+                    case 'pin':
+                        message.content.pinned = !message.content.pinned;
+                        updateChatHistoryStorage();
+                        renderChatHistory();
+                        break;
+                    case 'copy':
+                        if (message.content.type === 'text') {
+                             const textArea = document.createElement("textarea");
+                             textArea.value = message.content.content;
+                             document.body.appendChild(textArea);
+                             textArea.focus();
+                             textArea.select();
+                             try {
+                                 document.execCommand('copy');
+                                 showToast(errorToast, 'Kopirano!', 1500);
+                             } catch (err) {
+                                 console.error('Kopiranje ni uspelo: ', err);
+                                 showToast(errorToast, 'Kopiranje ni uspelo.', 2000);
+                             }
+                             document.body.removeChild(textArea);
+                        }
+                        break;
+                }
+                hideMessageActions();
+            }
+
+            function showReplyUI(message) {
+                replyingToMessage = message;
+                if(replyPreviewSender) replyPreviewSender.textContent = `Odgovarjanje na ${message.role === 'user' ? 'sebe' : (currentProfile ? currentProfile.name : '')}`;
+                if(replyPreviewText) replyPreviewText.textContent = message.content.content;
+                if(replyPreviewBar) replyPreviewBar.classList.add('visible');
+                if(messageInput) messageInput.focus();
+            }
+
+            function hideReplyUI() {
+                replyingToMessage = null;
+                if(replyPreviewBar) replyPreviewBar.classList.remove('visible');
+            }
+
+            function renderPinnedMessages() {
+                if (!pinnedMessagesBar) return;
+                const pinned = chatHistory.filter(msg => msg.content.pinned);
+                pinnedMessagesBar.innerHTML = '';
+                if (pinned.length > 0) {
+                    pinned.forEach(msg => {
+                        const pinnedEl = document.createElement('div');
+                        pinnedEl.className = 'pinned-message text-xs text-gray-300 p-1 rounded hover:bg-gray-700 flex items-center gap-2';
+                        pinnedEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.243 3.03a1 1 0 01.757 1.659l-4.5 4.5a1 1 0 01-1.414-1.414l4.5-4.5a1 1 0 01.657-.245zM12.757 4.689a1 1 0 011.414 0l2.25 2.25a1 1 0 010 1.414l-8.25 8.25a1 1 0 01-1.414 0l-2.25-2.25a1 1 0 010-1.414l8.25-8.25zM11.343 6.103a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l4.5-4.5a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> <span class="truncate">${msg.content.content}</span>`;
+                        pinnedEl.addEventListener('click', () => {
+                            const originalMsgEl = document.querySelector(`[data-message-id='${msg.content.id}']`);
+                            if (originalMsgEl) {
+                                originalMsgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                originalMsgEl.classList.add('ring-2', 'ring-blue-500', 'transition-all', 'duration-1000');
+                                setTimeout(() => originalMsgEl.classList.remove('ring-2', 'ring-blue-500'), 1000);
+                            }
+                        });
+                        pinnedMessagesBar.appendChild(pinnedEl);
+                    });
+                    pinnedMessagesBar.classList.add('visible');
+                } else {
+                    pinnedMessagesBar.classList.remove('visible');
+                }
+            }
+
+            function updateChatHistoryStorage() {
+                 try {
+                    if(currentProfile) localStorage.setItem(`chatHistory_${currentProfile.name}`, JSON.stringify(chatHistory));
+                } catch (e) { console.error("Could not save chat history:", e); }
+            }
+
+            // --- Poslušalci dogodkov ---
+            if(getStartedBtn) getStartedBtn.addEventListener('click', showGenderSelectionScreen);
+            if(selectGirlBtn) selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
+            if(selectManBtn) selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
+            if(imageUploadInput) imageUploadInput.addEventListener('change', (e) => handleImageUpload(e, false));
+            if(imageChatBtn) imageChatBtn.addEventListener('click', () => { if(imageChatUpload) imageChatUpload.click() });
+            if(imageChatUpload) imageChatUpload.addEventListener('change', (e) => handleImageUpload(e, true));
+            if(voiceBtn) {
+                voiceBtn.addEventListener('mousedown', startRecording);
+                voiceBtn.addEventListener('mouseup', stopRecording);
+                voiceBtn.addEventListener('touchstart', startRecording, { passive: true });
+                voiceBtn.addEventListener('touchend', stopRecording);
+            }
+            
+            [editorName, editorAge, editorTraits, editorNationality].forEach(el => {
+                if(el) el.addEventListener('input', validateEditorInputs)
+            });
+
+            if(resetBtn) resetBtn.addEventListener('click', () => {
+                showConfirmationModal('Ste prepričani, da želite zamenjati spremljevalca? Vsa sporočila bodo izbrisana.', () => {
                     localStorage.removeItem('alterraProfile');
                     if(currentProfile) localStorage.removeItem(`chatHistory_${currentProfile.name}`);
                     currentProfile = null;
                     chatHistory = [];
-                    editorName.value = ''; editorAge.value = ''; editorTraits.value = ''; editorNationality.value = '';
+                    if(editorName) editorName.value = ''; 
+                    if(editorAge) editorAge.value = ''; 
+                    if(editorTraits) editorTraits.value = ''; 
+                    if(editorNationality) editorNationality.value = '';
                     uploadedImageData = null;
-                    editorImgPreview.classList.add('hidden');
-                    imageUploadLabel.style.display = 'flex';
-                    imageUploadInput.value = "";
+                    if(editorImgPreview) editorImgPreview.classList.add('hidden');
+                    if(imageUploadLabel) imageUploadLabel.style.display = 'flex';
+                    if(imageUploadInput) imageUploadInput.value = "";
                     showGenderSelectionScreen();
                 });
             });
 
-            confirmYesBtn.addEventListener('click', () => {
+            if(confirmYesBtn) confirmYesBtn.addEventListener('click', () => {
                 if (confirmCallback) confirmCallback();
-                confirmationModal.classList.add('hidden');
+                if(confirmationModal) confirmationModal.classList.add('hidden');
                 confirmCallback = null;
             });
 
-            confirmNoBtn.addEventListener('click', () => {
-                confirmationModal.classList.add('hidden');
+            if(confirmNoBtn) confirmNoBtn.addEventListener('click', () => {
+                if(confirmationModal) confirmationModal.classList.add('hidden');
                 confirmCallback = null;
             });
             
-            chatMenuBtn.addEventListener('click', (e) => {
+            if(chatMenuBtn) chatMenuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleChatMenu();
             });
             
-            viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
-            changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
-            changeThemeBtn.addEventListener('click', () => { toggleChatMenu(); showThemeModal(); });
+            if(viewInfoBtn) viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
+            if(changeColorBtn) changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
+            if(changeThemeBtn) changeThemeBtn.addEventListener('click', () => { toggleChatMenu(); showThemeModal(); });
+
+            if(messageActionsMenu) messageActionsMenu.addEventListener('click', (e) => {
+                const action = e.target.dataset.action;
+                if (e.currentTarget instanceof HTMLElement) {
+                    const messageId = Number(e.currentTarget.dataset.messageId);
+                    if (action && messageId) {
+                        handleMessageAction(action, messageId);
+                    }
+                }
+            });
+            if(cancelReplyBtn) cancelReplyBtn.addEventListener('click', hideReplyUI);
 
             document.addEventListener('click', (e) => {
-                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target)) {
+                if (chatDropdownMenu && !chatDropdownMenu.classList.contains('hidden') && chatMenuBtn && !chatMenuBtn.contains(e.target)) {
                     toggleChatMenu();
                 }
+                if (activeMessageMenu && !activeMessageMenu.contains(e.target)) {
+                    hideMessageActions();
+                }
                 const activeModal = document.querySelector('.modal:not(.hidden)');
-                if (activeModal && e.target.classList.contains('modal-backdrop')) {
+                if (activeModal && e.target instanceof Element && e.target.classList.contains('modal-backdrop')) {
                     activeModal.classList.add('hidden');
                 }
             });
