@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AI Partner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,49 +12,31 @@
         :root {
             --user-bubble-color-start: #8b5cf6;
             --user-bubble-color-end: #7c3aed;
+            --app-background: #121212;
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow: hidden;
+            background-color: #000;
         }
-        #background-wrap {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            transition: background 1s ease-in-out;
+        #app-container {
+            background-color: var(--app-background);
             background-size: cover;
             background-position: center;
-        }
-        .girl-gradient { background: linear-gradient(315deg, #fbc2eb 0%, #a6c1ee 74%); }
-        .man-gradient { background: linear-gradient(315deg, #a8e063 0%, #56ab2f 74%); }
-        .neutral-gradient { background: linear-gradient(315deg, #1e293b 0%, #4c1d95 74%); }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            animation: float 35s infinite linear;
-        }
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100vh) translateX(15vw); }
-            100% { transform: translateY(-200vh) translateX(-15vw); }
+            transition: background 0.5s ease-in-out;
         }
         .chat-bubble-user {
             background-image: linear-gradient(to right, var(--user-bubble-color-start), var(--user-bubble-color-end));
             color: white;
         }
         .chat-bubble-ai {
-            background-color: #374151; /* gray-700 */
-            color: #d1d5db; /* gray-300 */
+            background-color: #262626;
+            color: #e5e5e5;
         }
         .card-base {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: rgba(17, 24, 39, 0.4); /* gray-900 with opacity */
+            background-color: rgba(31, 41, 55, 0.5); /* gray-800 with opacity */
         }
         .card-base:hover {
             transform: translateY(-8px);
@@ -112,11 +94,9 @@
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen sm:p-4">
+<body class="flex items-center justify-center min-h-screen">
 
-    <div id="background-wrap" class="neutral-gradient"></div>
-
-    <div id="app-container" class="w-full h-full bg-gray-900 flex flex-col overflow-hidden sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-[95vh] sm:max-h-[800px] sm:border sm:border-white/20">
+    <div id="app-container" class="w-full h-full bg-black flex flex-col overflow-hidden sm:max-w-lg sm:mx-auto sm:rounded-3xl sm:shadow-2xl sm:h-[95vh] sm:max-h-[800px] sm:border sm:border-white/20">
         
         <!-- Homepage Screen -->
         <div id="homepage-screen" class="p-6 md:p-8 flex flex-col justify-center items-center h-full text-center">
@@ -207,7 +187,7 @@
         <!-- Chat Screen -->
         <div id="chat-screen" class="hidden flex-grow flex flex-col min-h-0">
             <!-- Chat Header -->
-            <div class="flex items-center p-4 border-b border-gray-700/80 bg-gray-900/60 shrink-0">
+            <div class="flex items-center p-4 border-b border-gray-700/80 bg-black/30 shrink-0">
                 <img id="chat-avatar" src="" class="w-11 h-11 rounded-full object-cover mr-4 shadow-md">
                 <div>
                     <h2 id="chat-name" class="text-lg font-bold text-white flex items-center gap-2"></h2>
@@ -237,7 +217,7 @@
             </div>
             
             <!-- Input Area -->
-            <div class="p-4 border-t border-gray-700/80 bg-gray-900/60 shrink-0">
+            <div class="p-4 border-t border-gray-700/80 bg-black/30 shrink-0">
                  <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
                     <span id="typing-name"></span> is typing...
                 </div>
@@ -482,8 +462,8 @@
                 chatScreen.classList.add('hidden');
                 creationScreen.classList.add('hidden');
                 genderSelectionScreen.classList.remove('hidden');
-                backgroundWrap.className = 'neutral-gradient';
-                backgroundWrap.style.backgroundImage = '';
+                appContainer.style.backgroundImage = '';
+                appContainer.style.backgroundColor = '#121212';
             }
             
             function showPremiumScreen() {
@@ -494,8 +474,7 @@
 
             function setupCreationScreen(gender) {
                 currentGender = gender;
-                backgroundWrap.classList.remove('neutral-gradient', 'man-gradient', 'girl-gradient');
-                backgroundWrap.classList.add(gender === 'girl' ? 'girl-gradient' : 'man-gradient');
+                appContainer.style.backgroundImage = gender === 'girl' ? 'linear-gradient(315deg, #fbc2eb 0%, #a6c1ee 74%)' : 'linear-gradient(315deg, #a8e063 0%, #56ab2f 74%)';
                 genderSelectionScreen.classList.add('hidden');
                 creationScreen.classList.remove('hidden');
                 creationTitle.textContent = `Create Your AI ${gender === 'girl' ? 'Girlfriend' : 'Boyfriend'}`;
@@ -862,7 +841,7 @@
             }
 
             function setChatTheme(themeValue) {
-                backgroundWrap.style.backgroundImage = themeValue;
+                appContainer.style.backgroundImage = themeValue;
                 localStorage.setItem('chatTheme', themeValue);
             }
 
@@ -871,8 +850,8 @@
                 if (savedTheme) {
                     setChatTheme(savedTheme);
                 } else {
-                    backgroundWrap.style.backgroundImage = ''; // Clear inline style
-                    backgroundWrap.className = currentProfile.gender === 'girl' ? 'girl-gradient' : 'man-gradient';
+                    appContainer.style.backgroundImage = ''; // Clear inline style
+                    appContainer.style.backgroundColor = '#121212';
                 }
             }
 
