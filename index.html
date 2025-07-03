@@ -99,6 +99,7 @@
             background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
             background-size: 20px 20px;
             animation: patternMove 30s linear infinite;
+            pointer-events: none;
         }
 
         .bg-pattern-waves::before {
@@ -116,6 +117,7 @@
                 rgba(255,255,255,0.05) 20px
             );
             animation: patternMove 25s linear infinite;
+            pointer-events: none;
         }
 
         .bg-pattern-grid::before {
@@ -130,6 +132,7 @@
                 linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 30px 30px;
             animation: patternMove 35s linear infinite;
+            pointer-events: none;
         }
 
         @keyframes gradientShift {
@@ -326,23 +329,36 @@
                 font-size: 16px;
             }
             
-            /* Fix mobile input area */
+            /* Fix mobile input area and keyboard handling */
             #chat-screen {
                 height: 100vh;
                 height: calc(var(--vh, 1vh) * 100);
+                position: relative;
             }
             
             .chat-input-area {
-                position: sticky;
+                position: fixed;
                 bottom: 0;
-                z-index: 10;
+                left: 0;
+                right: 0;
+                z-index: 100;
                 padding-bottom: env(safe-area-inset-bottom);
+                transition: transform 0.3s ease;
             }
             
             #chat-messages {
-                padding-bottom: 20px;
+                padding-bottom: 100px; /* Space for fixed input */
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Handle keyboard show/hide */
+            .keyboard-open #chat-messages {
+                padding-bottom: 120px;
+            }
+            
+            .keyboard-open .chat-input-area {
+                transform: translateY(0);
             }
         }
 
@@ -709,8 +725,44 @@
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
             }
 
+            // Mobile keyboard handling
+            function handleMobileKeyboard() {
+                if (window.innerWidth <= 768) {
+                    const initialViewportHeight = window.innerHeight;
+                    
+                    window.addEventListener('resize', () => {
+                        const currentViewportHeight = window.innerHeight;
+                        const keyboardHeight = initialViewportHeight - currentViewportHeight;
+                        
+                        if (keyboardHeight > 150) { // Keyboard is open
+                            document.body.classList.add('keyboard-open');
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        } else { // Keyboard is closed
+                            document.body.classList.remove('keyboard-open');
+                            setTimeout(() => {
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }, 300);
+                        }
+                    });
+                    
+                    // Handle input focus/blur
+                    messageInput.addEventListener('focus', () => {
+                        setTimeout(() => {
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }, 300);
+                    });
+                    
+                    messageInput.addEventListener('blur', () => {
+                        setTimeout(() => {
+                            document.body.classList.remove('keyboard-open');
+                        }, 100);
+                    });
+                }
+            }
+
             function init() {
                 setRealViewportHeight();
+                handleMobileKeyboard();
                 window.addEventListener('resize', setRealViewportHeight);
 
                 loadChatColor();
@@ -894,7 +946,17 @@
             }
 
             async function sendWelcomeMessage() {
-                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
+                // Don't add the system prompt to chat history, just send it to API
+                setTyping(true);
+                const prompt = `Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`;
+                const aiResponse = await callGeminiAPI(prompt, [], []);
+                const typingDuration = calculateTypingDuration(aiResponse || "");
+                setTimeout(() => {
+                    setTyping(false);
+                    const responseText = aiResponse || 'Hey there! 👋';
+                    addMessageToUI('model', { type: 'text', content: responseText }, true);
+                    updateChatHistory('model', { type: 'text', content: responseText });
+                }, typingDuration);
             }
             
             chatForm.addEventListener('submit', async (e) => {
@@ -1027,11 +1089,19 @@
                 colorSwatches.innerHTML = '';
                 chatColors.forEach(color => {
                     const swatch = document.createElement('div');
-                    swatch.className = 'w-12 h-12 rounded-full cursor-pointer hover:scale-110 transition-transform';
+                    swatch.className = 'w-12 h-12 rounded-full cursor-pointer hover:scale-110 transition-transform border-2 border-transparent';
                     swatch.style.backgroundColor = color;
+                    
+                    // Show current selection
+                    const currentColor = getComputedStyle(document.documentElement).getPropertyValue('--user-bubble-color').trim();
+                    if (currentColor === color) {
+                        swatch.classList.add('border-white');
+                    }
+                    
                     swatch.addEventListener('click', () => {
                         setChatColor(color);
                         colorModal.classList.add('hidden');
+                        showToast(errorToast, 'Chat color changed!', 2000);
                     });
                     colorSwatches.appendChild(swatch);
                 });
@@ -1042,11 +1112,24 @@
                 themeSwatches.innerHTML = '';
                 themes.forEach(theme => {
                     const swatch = document.createElement('div');
-                    swatch.className = `h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold text-sm relative overflow-hidden ${theme.class} ${theme.pattern}`;
+                    swatch.className = `h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold text-sm relative overflow-hidden border-2 border-transparent ${theme.class} ${theme.pattern}`;
                     swatch.textContent = theme.name;
+                    
+                    // Show current selection
+                    const savedTheme = localStorage.getItem('selectedTheme');
+                    if (savedTheme) {
+                        try {
+                            const currentTheme = JSON.parse(savedTheme);
+                            if (currentTheme.name === theme.name) {
+                                swatch.classList.add('border-white');
+                            }
+                        } catch (e) {}
+                    }
+                    
                     swatch.addEventListener('click', () => {
                         setTheme(theme);
                         themeModal.classList.add('hidden');
+                        showToast(errorToast, 'Theme changed!', 2000);
                     });
                     themeSwatches.appendChild(swatch);
                 });
@@ -1059,8 +1142,13 @@
             }
 
             function setTheme(theme) {
-                // Remove all theme classes
-                chatScreen.className = chatScreen.className.replace(/bg-animated-\S+/g, '').replace(/bg-pattern-\S+/g, '');
+                // Remove all existing theme and pattern classes
+                const allThemeClasses = ['bg-animated-blue-purple', 'bg-animated-peach-yellow', 'bg-animated-red-orange', 'bg-animated-cosmic', 'bg-animated-aurora', 'bg-animated-sunset', 'bg-animated-ocean', 'bg-animated-forest'];
+                const allPatternClasses = ['bg-pattern-dots', 'bg-pattern-waves', 'bg-pattern-grid'];
+                
+                allThemeClasses.forEach(cls => chatScreen.classList.remove(cls));
+                allPatternClasses.forEach(cls => chatScreen.classList.remove(cls));
+                
                 // Add new theme classes
                 chatScreen.classList.add(theme.class);
                 if (theme.pattern) {
