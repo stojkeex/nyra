@@ -440,7 +440,20 @@
                 <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-6">
                     Alterra
                 </h1>
-                <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto rounded-full mb-8"></div>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto rounded-full mb-8">
+<!-- Inbox Screen -->
+<div id="inbox-screen" class="screen active p-4 bg-animated-cosmic">
+    <div class="w-full max-w-md mx-auto">
+        <h2 class="text-2xl text-white font-bold mb-4 text-center">Your Chats</h2>
+        <div id="inbox-list" class="space-y-4">
+            <!-- Conversations will be injected here -->
+        </div>
+        <button id="new-group-btn" class="btn-primary w-full py-3 rounded-lg text-lg font-semibold mt-6">
+            ➕ New Group Chat
+        </button>
+    </div>
+</div>
+</div>
                 <p class="text-lg text-gray-300 mb-10 leading-relaxed">
                     Create your perfect digital companion, powered by advanced AI.
                 </p>
@@ -686,6 +699,60 @@
     }
 
     fixIOSKeyboardLayout();
+
+
+    // Inbox logic
+    const inboxScreen = document.getElementById('inbox-screen');
+    const inboxList = document.getElementById('inbox-list');
+    const newGroupBtn = document.getElementById('new-group-btn');
+
+    function loadInbox() {
+        inboxList.innerHTML = '';
+        const allProfiles = JSON.parse(localStorage.getItem('alterraInbox') || '[]');
+        if (allProfiles.length === 0) {
+            inboxList.innerHTML = '<p class="text-gray-400 text-center">No chats yet.</p>';
+        } else {
+            allProfiles.forEach(profile => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition-colors';
+                item.innerHTML = \`
+                    <div class="flex items-center space-x-3">
+                        <img src="\${profile.img || 'https://placehold.co/40x40'}" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="text-white font-semibold">\${profile.name}</p>
+                            <p class="text-gray-400 text-sm truncate w-40">\${profile.lastMessage || 'No messages yet'}</p>
+                        </div>
+                    </div>
+                    <span class="text-gray-400 text-xs">\${profile.time || ''}</span>
+                \`;
+                item.onclick = () => {
+                    currentProfile = profile;
+                    localStorage.setItem('alterraProfile', JSON.stringify(currentProfile));
+                    setupChatScreen();
+                };
+                inboxList.appendChild(item);
+            });
+        }
+    }
+
+    newGroupBtn.addEventListener('click', () => {
+        showToast("Group chat creation coming soon...");
+    });
+
+    // Reset button returns to inbox
+    resetBtn.addEventListener('click', () => {
+        showScreen(inboxScreen);
+        loadInbox();
+    });
+
+    // Extend saveProfileBtn to push to inbox list
+    const originalSave = saveProfileBtn.onclick;
+    saveProfileBtn.onclick = () => {
+        if (originalSave) originalSave();
+        let inbox = JSON.parse(localStorage.getItem('alterraInbox') || '[]');
+        inbox.push(currentProfile);
+        localStorage.setItem('alterraInbox', JSON.stringify(inbox));
+    };
 
 document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
