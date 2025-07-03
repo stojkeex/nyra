@@ -668,6 +668,25 @@
     window.addEventListener('load', setRealViewportHeight);
     setRealViewportHeight();
 
+
+    // --- iOS Chrome Keyboard Bug Fix ---
+    function fixIOSKeyboardLayout() {
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', () => {
+                document.body.scrollIntoView(false);
+            });
+        }
+
+        const input = document.getElementById('message-input');
+        if (input) {
+            input.addEventListener('blur', () => {
+                setTimeout(() => window.scrollTo(0, 0), 50);
+            });
+        }
+    }
+
+    fixIOSKeyboardLayout();
+
 document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
             const appContainer = document.getElementById('app-container');
