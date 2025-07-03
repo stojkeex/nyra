@@ -264,6 +264,12 @@
         .input-style::placeholder {
             color: rgba(255, 255, 255, 0.5);
         }
+        
+        /* Fix for select dropdown on desktop */
+        .input-style option {
+            background-color: #262626; /* Dark background for options */
+            color: white; /* White text for options */
+        }
 
         /* Chat screen layout */
         #chat-screen {
@@ -464,7 +470,7 @@
                     <div id="select-man" class="setup-card p-6 rounded-2xl cursor-pointer text-center">
                         <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
                             <img src="https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                                 onerror="this.src='https://placehold.co/80x80/667eea/ffffff?text=�'" 
+                                 onerror="this.src='https://placehold.co/80x80/667eea/ffffff?text=👨'" 
                                  class="w-full h-full object-cover">
                         </div>
                         <h2 class="text-xl font-bold text-white mb-1">Male Companion</h2>
@@ -650,7 +656,19 @@
     <div id="voice-toast" class="toast fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-500 translate-y-20 opacity-0 bg-blue-500">Recording... Release to send.</div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        
+    // Fix for iOS Chrome virtual keyboard layout bug
+    function setRealViewportHeight() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    window.addEventListener('resize', setRealViewportHeight);
+    window.addEventListener('orientationchange', setRealViewportHeight);
+    window.addEventListener('load', setRealViewportHeight);
+    setRealViewportHeight();
+
+document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
             const appContainer = document.getElementById('app-container');
             const allScreens = document.querySelectorAll('.screen');
@@ -982,7 +1000,12 @@
             });
 
             function calculateTypingDuration(text) {
-                return Math.max(800, Math.min(3500, text.length * (60000 / (150 * 5))));
+                if (!text) return 1000;
+                const msPerChar = 170; // Milliseconds per character
+                const baseTime = 1500; // Base "thinking" time
+                const randomFactor = Math.random() * 0.4 + 0.8; // Adds 80% to 120% variability
+                const calculatedTime = baseTime + text.length * msPerChar * randomFactor;
+                return calculatedTime;
             }
             
             async function callGeminiAPI(prompt, history = [], extraParts = []) {
@@ -1149,7 +1172,6 @@
                 const allThemeClasses = ['bg-animated-blue-purple', 'bg-animated-peach-yellow', 'bg-animated-red-orange', 'bg-animated-cosmic', 'bg-animated-aurora', 'bg-animated-sunset', 'bg-animated-ocean', 'bg-animated-forest'];
                 const allPatternClasses = ['bg-pattern-dots', 'bg-pattern-waves', 'bg-pattern-grid'];
                 
-                // Only apply themes to the chat screen background
                 allThemeClasses.forEach(cls => chatScreen.classList.remove(cls));
                 allPatternClasses.forEach(cls => chatScreen.classList.remove(cls));
                 
@@ -1305,4 +1327,3 @@
     </script>
 </body>
 </html>
-�
