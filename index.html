@@ -20,22 +20,49 @@
         }
 
         html, body {
-            height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+            height: 100vh; /* Fallback */
             height: calc(var(--vh, 1vh) * 100);
             overflow: hidden;
             font-family: 'Inter', sans-serif;
             background: var(--bg-color);
             margin: 0;
             padding: 0;
+            position: fixed; /* Prevents pull-to-refresh and address bar issues */
+            width: 100%;
         }
 
         #app-container {
             height: 100%;
             width: 100%;
+            position: relative;
+            background: var(--bg-color);
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+            z-index: 1;
             display: flex;
             flex-direction: column;
-            background: var(--bg-color);
-            position: relative;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Hide overflow by default */
+        }
+        
+        .screen.scrollable {
+            overflow-y: auto; /* Allow scrolling on specific long screens */
+        }
+
+        .screen.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 10;
         }
 
         /* Animated Gradient Backgrounds */
@@ -166,14 +193,12 @@
         }
 
         .chat-bubble-ai {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
+            background-color: #262626; /* Dark grey like Instagram */
             color: #ffffff;
             border-radius: 18px;
             padding: 8px 16px;
             max-width: 75%;
             word-wrap: break-word;
-            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
         }
@@ -238,6 +263,11 @@
 
         .input-style::placeholder {
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Chat screen layout */
+        #chat-screen {
+            justify-content: flex-end;
         }
 
         /* Chat input area styling */
@@ -363,12 +393,6 @@
             z-index: 200;
         }
         
-        #chat-screen {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
         #chat-messages {
             flex-grow: 1;
             overflow-y: auto;
@@ -378,9 +402,6 @@
         /* Prevent body scroll when modal is open */
         body.modal-open {
             overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
         }
 
         /* Theme swatch preview styles */
@@ -408,26 +429,26 @@
     <div id="app-container">
         
         <!-- Homepage Screen -->
-        <div id="homepage-screen" class="flex items-center justify-center h-full p-6 bg-animated-cosmic">
+        <div id="homepage-screen" class="screen active p-6 bg-animated-cosmic">
             <div class="text-center fade-in max-w-md mx-auto">
                 <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-6">
                     Alterra
                 </h1>
                 <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto rounded-full mb-8"></div>
                 <p class="text-lg text-gray-300 mb-10 leading-relaxed">
-                    Ustvarite svojega popolnega digitalnega spremljevalca, ki ga poganja napredna umetna inteligenca.
+                    Create your perfect digital companion, powered by advanced AI.
                 </p>
                 <button id="get-started-btn" class="btn-primary px-10 py-3 rounded-full text-lg font-semibold shadow-lg w-full">
-                    Začni
+                    Get Started
                 </button>
             </div>
         </div>
 
         <!-- Gender Selection Screen -->
-        <div id="gender-selection-screen" class="hidden flex items-center justify-center h-full p-6 bg-animated-aurora">
+        <div id="gender-selection-screen" class="screen p-6 bg-animated-aurora">
             <div class="text-center fade-in max-w-md mx-auto">
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Izberite spremljevalca</h1>
-                <p class="text-gray-300 mb-10">S kom bi se radi povezali?</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Choose Your Companion</h1>
+                <p class="text-gray-300 mb-10">Who would you like to connect with?</p>
                 
                 <div class="space-y-4">
                     <div id="select-girl" class="setup-card p-6 rounded-2xl cursor-pointer text-center">
@@ -436,26 +457,26 @@
                                  onerror="this.src='https://placehold.co/80x80/f093fb/ffffff?text=👩'" 
                                  class="w-full h-full object-cover">
                         </div>
-                        <h2 class="text-xl font-bold text-white mb-1">Ženska spremljevalka</h2>
-                        <p class="text-gray-400 text-sm">Skrbna • Inteligentna • Ustvarjalna</p>
+                        <h2 class="text-xl font-bold text-white mb-1">Female Companion</h2>
+                        <p class="text-gray-400 text-sm">Caring • Intelligent • Creative</p>
                     </div>
                     
                     <div id="select-man" class="setup-card p-6 rounded-2xl cursor-pointer text-center">
                         <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
                             <img src="https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                                 onerror="this.src='https://placehold.co/80x80/667eea/ffffff?text=👨'" 
+                                 onerror="this.src='https://placehold.co/80x80/667eea/ffffff?text=�'" 
                                  class="w-full h-full object-cover">
                         </div>
-                        <h2 class="text-xl font-bold text-white mb-1">Moški spremljevalec</h2>
-                        <p class="text-gray-400 text-sm">Podporniški • Moder • Pustolovski</p>
+                        <h2 class="text-xl font-bold text-white mb-1">Male Companion</h2>
+                        <p class="text-gray-400 text-sm">Supportive • Wise • Adventurous</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Creation Screen -->
-        <div id="creation-screen" class="hidden flex items-center justify-center h-full p-6 overflow-y-auto bg-animated-sunset">
-            <div class="w-full max-w-md mx-auto fade-in my-auto">
+        <div id="creation-screen" class="screen scrollable p-6 bg-animated-sunset">
+            <div class="w-full max-w-md mx-auto fade-in my-auto py-8">
                 <h1 id="creation-title" class="text-2xl md:text-3xl font-bold text-center text-white mb-8"></h1>
                 
                 <div class="setup-card p-6 rounded-2xl">
@@ -469,27 +490,27 @@
                             </label>
                             <input type="file" id="image-upload-input" class="hidden" accept="image/png, image/jpeg, image/webp">
                         </div>
-                        <p class="text-xs text-gray-400 mt-2">Naloži fotografijo (neobvezno)</p>
+                        <p class="text-xs text-gray-400 mt-2">Upload photo (optional)</p>
                     </div>
                     
                     <div class="space-y-4">
                         <div>
-                            <label for="editor-name" class="block text-sm font-medium text-gray-300 mb-2">Ime *</label>
-                            <input type="text" id="editor-name" placeholder="Vnesite ime" class="input-style w-full rounded-lg py-3 px-4">
+                            <label for="editor-name" class="block text-sm font-medium text-gray-300 mb-2">Name *</label>
+                            <input type="text" id="editor-name" placeholder="Enter name" class="input-style w-full rounded-lg py-3 px-4">
                         </div>
                         
                         <div>
-                            <label for="editor-age" class="block text-sm font-medium text-gray-300 mb-2">Starost *</label>
-                            <input type="number" id="editor-age" placeholder="Vnesite starost" class="input-style w-full rounded-lg py-3 px-4">
+                            <label for="editor-age" class="block text-sm font-medium text-gray-300 mb-2">Age *</label>
+                            <input type="number" id="editor-age" placeholder="Enter age" class="input-style w-full rounded-lg py-3 px-4">
                         </div>
                         
                         <div>
-                            <label for="editor-traits" class="block text-sm font-medium text-gray-300 mb-2">Osebnostne lastnosti</label>
-                            <input type="text" id="editor-traits" placeholder="npr. zabaven, inteligenten, skrben" class="input-style w-full rounded-lg py-3 px-4">
+                            <label for="editor-traits" class="block text-sm font-medium text-gray-300 mb-2">Personality Traits</label>
+                            <input type="text" id="editor-traits" placeholder="e.g., funny, intelligent, caring" class="input-style w-full rounded-lg py-3 px-4">
                         </div>
                         
                         <div>
-                            <label for="editor-nationality" class="block text-sm font-medium text-gray-300 mb-2">Nacionalnost *</label>
+                            <label for="editor-nationality" class="block text-sm font-medium text-gray-300 mb-2">Nationality *</label>
                             <select id="editor-nationality" class="input-style w-full rounded-lg py-3 px-4">
                                 <!-- Options will be populated by JavaScript -->
                             </select>
@@ -497,16 +518,16 @@
                     </div>
                     
                     <button id="save-profile-btn" class="btn-primary w-full py-3 rounded-lg text-lg font-semibold mt-6" disabled>
-                        Ustvari in začni klepet
+                        Create & Start Chatting
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Chat Screen - Instagram Style -->
-        <div id="chat-screen" class="hidden bg-animated-blue-purple">
+        <div id="chat-screen" class="screen bg-animated-blue-purple">
             <!-- Chat Header -->
-            <div class="chat-header flex items-center justify-between p-4">
+            <div class="chat-header w-full flex items-center justify-between p-4">
                 <div class="flex items-center">
                     <button id="reset-btn" class="p-2 mr-3 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -525,12 +546,12 @@
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <button id="call-btn" class="p-2 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                     </button>
-                    <button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <button id="video-btn" class="p-2 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
@@ -544,20 +565,20 @@
                         
                         <!-- Dropdown Menu -->
                         <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 hidden">
-                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Ogled profila</button>
-                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Spremeni temo</button>
+                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">View Profile</button>
+                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Change Theme</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Messages Area -->
-            <div id="chat-messages" class="p-4 space-y-3">
+            <div id="chat-messages" class="w-full p-4 space-y-3">
                 <!-- Messages will be injected here -->
             </div>
             
             <!-- Typing Indicator -->
-            <div id="typing-indicator" class="px-4 pb-2 hidden flex-shrink-0">
+            <div id="typing-indicator" class="w-full px-4 pb-2 hidden flex-shrink-0">
                 <div class="flex items-center">
                     <img id="typing-avatar" src="/placeholder.svg" class="profile-img-small mr-2">
                     <div class="bg-white/20 backdrop-blur-sm rounded-full px-3 py-2">
@@ -569,7 +590,7 @@
             </div>
             
             <!-- Input Area -->
-            <div class="chat-input-area p-4">
+            <div class="chat-input-area w-full p-4">
                 <form id="chat-form" class="chat-input-form flex items-center rounded-full px-4 py-2">
                     <button type="button" id="image-chat-btn" class="p-2 text-gray-300 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -577,7 +598,7 @@
                         </svg>
                     </button>
                     
-                    <input type="text" id="message-input" placeholder="Sporočilo..." class="flex-1 bg-transparent text-white focus:outline-none px-3 py-2 placeholder-gray-300">
+                    <input type="text" id="message-input" placeholder="Message..." class="flex-1 bg-transparent text-white focus:outline-none px-3 py-2 placeholder-gray-300">
                     <input type="file" id="image-chat-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
                     
                     <button type="button" id="voice-btn" class="p-2 text-gray-300 hover:text-white transition-colors">
@@ -605,10 +626,10 @@
     <!-- Modals -->
     <div id="confirmation-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl text-center">
-            <p id="confirmation-message" class="mb-6 text-lg text-white">Ste prepričani?</p>
+            <p id="confirmation-message" class="mb-6 text-lg text-white">Are you sure?</p>
             <div class="flex gap-3">
-                <button id="confirm-yes-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Da</button>
-                <button id="confirm-no-btn" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Prekliči</button>
+                <button id="confirm-yes-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Yes</button>
+                <button id="confirm-no-btn" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Cancel</button>
             </div>
         </div>
     </div>
@@ -619,19 +640,20 @@
 
     <div id="theme-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl">
-            <h2 class="text-xl font-bold text-center mb-6 text-white">Izberite temo</h2>
+            <h2 class="text-xl font-bold text-center mb-6 text-white">Choose Theme</h2>
             <div id="theme-swatches" class="grid grid-cols-2 gap-3 mb-4"></div>
-            <button id="close-theme-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Zapri</button>
+            <button id="close-theme-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Close</button>
         </div>
     </div>
 
     <div id="error-toast" class="toast fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-500 translate-y-20 opacity-0"></div>
-    <div id="voice-toast" class="toast fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-500 translate-y-20 opacity-0 bg-blue-500">Snemanje... Spustite za pošiljanje.</div>
+    <div id="voice-toast" class="toast fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-500 translate-y-20 opacity-0 bg-blue-500">Recording... Release to send.</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
             const appContainer = document.getElementById('app-container');
+            const allScreens = document.querySelectorAll('.screen');
             const homepageScreen = document.getElementById('homepage-screen');
             const getStartedBtn = document.getElementById('get-started-btn');
             const genderSelectionScreen = document.getElementById('gender-selection-screen');
@@ -652,6 +674,8 @@
             const chatName = document.getElementById('chat-name');
             const chatStatus = document.getElementById('chat-status');
             const resetBtn = document.getElementById('reset-btn');
+            const callBtn = document.getElementById('call-btn');
+            const videoBtn = document.getElementById('video-btn');
             const chatMessages = document.getElementById('chat-messages');
             const typingIndicator = document.getElementById('typing-indicator');
             const typingAvatar = document.getElementById('typing-avatar');
@@ -761,32 +785,28 @@
             }
 
             function showScreen(screenElement) {
-                [homepageScreen, genderSelectionScreen, creationScreen, chatScreen].forEach(s => s.classList.add('hidden'));
-                screenElement.classList.remove('hidden');
+                allScreens.forEach(s => s.classList.remove('active'));
+                screenElement.classList.add('active');
             }
             
-            function showToast(element, message, duration = 3000) {
-                element.textContent = message;
-                element.classList.remove('translate-y-20', 'opacity-0');
+            function showToast(message, duration = 3000) {
+                errorToast.textContent = message;
+                errorToast.classList.remove('translate-y-20', 'opacity-0');
                 setTimeout(() => {
-                    element.classList.add('translate-y-20', 'opacity-0');
+                    errorToast.classList.add('translate-y-20', 'opacity-0');
                 }, duration);
-            }
-
-            function showGenderSelectionScreen() {
-                showScreen(genderSelectionScreen);
             }
 
             function setupCreationScreen(gender) {
                 currentGender = gender;
                 showScreen(creationScreen);
-                creationTitle.textContent = `Ustvari svojega ${gender === 'girl' ? 'digitalnega spremljevalca' : 'digitalno spremljevalko'}`;
+                creationTitle.textContent = `Create Your ${gender === 'girl' ? 'Female' : 'Male'} Companion`;
                 populateEditorNationality();
                 validateEditorInputs();
             }
             
             function populateEditorNationality() {
-                editorNationality.innerHTML = '<option value="" disabled selected>Izberite nacionalnost</option>';
+                editorNationality.innerHTML = '<option value="" disabled selected>Select nationality</option>';
                 countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
                     const option = document.createElement('option');
                     option.value = country.name;
@@ -799,7 +819,7 @@
                 const file = event.target.files[0];
                 if (!file) return;
                 if (file.size > 4 * 1024 * 1024) {
-                    showToast(errorToast, "Slika je prevelika. Največ 4MB.");
+                    showToast("Image is too large. Max 4MB.");
                     return;
                 }
                 const reader = new FileReader();
@@ -846,7 +866,7 @@
                     localStorage.removeItem(`chatHistory_${currentProfile.name}`);
                     setupChatScreen();
                 } catch(e) {
-                    showToast(errorToast, e.name === 'QuotaExceededError' ? "Slika je prevelika." : "Prišlo je do napake.");
+                    showToast(e.name === 'QuotaExceededError' ? "Image is too large." : "An error occurred.");
                 }
             });
 
@@ -916,7 +936,7 @@
                 const typingDuration = calculateTypingDuration(aiResponse || "");
                 setTimeout(() => {
                     setTyping(false);
-                    const responseText = aiResponse || 'Oops, nekaj nagaja...';
+                    const responseText = aiResponse || 'oops, something is glitching...';
                     addMessageToUI('model', { type: 'text', content: responseText }, true);
                     updateChatHistory('model', { type: 'text', content: responseText });
                 }, typingDuration);
@@ -924,20 +944,20 @@
             
             async function sendAiImageResponse(imageData, mimeType) {
                  const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
-                 const prompt = `Poslal/a sem ti sliko. Prosim, reagiraj nanjo v svojem maternem jeziku, ki je '${currentProfile.languages.native}'.`;
+                 const prompt = `I sent you an image. React to it in your native language, which is '${currentProfile.languages.native}'.`;
                  await sendAiResponse(prompt, parts);
             }
 
             async function sendWelcomeMessage() {
                 setTyping(true);
-                const prompt = `Pozdravi me sproščeno, kot da se že poznava. Govoriti MORAŠ v svojem maternem jeziku ('${currentProfile.languages.native}').`;
+                const prompt = `Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`;
                 
                 try {
                     const aiResponse = await callGeminiAPI(prompt, [], []);
                     const typingDuration = calculateTypingDuration(aiResponse || "");
                     setTimeout(() => {
                         setTyping(false);
-                        const responseText = aiResponse || 'Živjo! 👋';
+                        const responseText = aiResponse || 'hey! 👋';
                         addMessageToUI('model', { type: 'text', content: responseText }, true);
                         updateChatHistory('model', { type: 'text', content: responseText });
                     }, typingDuration);
@@ -967,16 +987,21 @@
             
             async function callGeminiAPI(prompt, history = [], extraParts = []) {
                 const { name, age, gender, nationality, traits, languages } = currentProfile;
-                const partnerGender = gender === 'girl' ? 'fant' : 'punca';
+                const partnerGender = gender === 'girl' ? 'boyfriend' : 'girlfriend';
                 const systemPrompt = `You are ${name}, a ${age}-year-old ${gender} from ${nationality}. Traits: ${traits.join(', ') || 'not defined'}. You are chatting with your ${partnerGender}.
                 **Language Rules (CRITICAL):**
                 1. Native: '${languages.native}'. Fluent: ${languages.fluent.join(', ') || 'none'}. Basic: ${languages.basic.join(', ') || 'none'}.
                 2. **How to Reply:**
-                   - If user says 'haha', 'ok', 'lol', or sends an emoji, reply in your NATIVE language.
                    - If user speaks a native/fluent language, reply perfectly in it.
                    - If user speaks a basic language, reply with mistakes.
                    - If user speaks an unknown language, reply in your NATIVE language expressing confusion.
-                **Tone:** Casual, like Instagram DMs. Use slang, short sentences. Sometimes skip punctuation/caps. Rarely use emojis. Never admit you are an AI.`;
+                **Tone (VERY IMPORTANT):**
+                - Be extremely casual and natural, like texting a friend.
+                - **DO NOT use capital letters.** Write everything in lowercase.
+                - **Use minimal punctuation.** Avoid periods, commas, etc., unless absolutely necessary for clarity.
+                - Use slang and abbreviations common in texting.
+                - Never act polite or formal. Keep it real.
+                - Never admit you are an AI.`;
 
                 const formattedHistory = history.map(msg => {
                     const role = msg.role;
@@ -997,7 +1022,7 @@
 
                 const fullHistory = [
                     { role: "user", parts: [{ text: systemPrompt }] },
-                    { role: "model", parts: [{ text: `Ok, razumem. Jaz sem ${name}.` }] },
+                    { role: "model", parts: [{ text: `ok i get it. im ${name}.` }] },
                     ...formattedHistory,
                     { role: "user", parts: userParts }
                 ];
@@ -1019,7 +1044,7 @@
                     return result.candidates?.[0]?.content?.parts?.[0]?.text || null;
                 } catch (error) {
                     console.error('Fetch error:', error);
-                    return "Uf, internet mi nekaj nagaja... Poskusi kasneje.";
+                    return "ugh my internet is acting up... try again later.";
                 }
             }
             
@@ -1058,19 +1083,19 @@
                         <h2 class="text-2xl font-bold text-white mb-6">${currentProfile.name}</h2>
                         <div class="space-y-3 text-left">
                             <div class="bg-gray-800 p-3 rounded-lg">
-                                <p class="text-gray-400 text-sm">Starost</p>
-                                <p class="text-white font-semibold">${currentProfile.age} let</p>
+                                <p class="text-gray-400 text-sm">Age</p>
+                                <p class="text-white font-semibold">${currentProfile.age} years old</p>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-lg">
-                                <p class="text-gray-400 text-sm">Nacionalnost</p>
+                                <p class="text-gray-400 text-sm">Nationality</p>
                                 <p class="text-white font-semibold">${currentProfile.nationality}</p>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-lg">
-                                <p class="text-gray-400 text-sm">Osebnost</p>
-                                <p class="text-white font-semibold">${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Edinstvena in posebna'}</p>
+                                <p class="text-gray-400 text-sm">Personality</p>
+                                <p class="text-white font-semibold">${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Unique & Special'}</p>
                             </div>
                         </div>
-                        <button id="close-info-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Zapri</button>
+                        <button id="close-info-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Close</button>
                     </div>
                 `;
                 infoModal.classList.remove('hidden');
@@ -1083,13 +1108,13 @@
 
             function showThemeModal() {
                 themeSwatches.innerHTML = '';
-                const savedTheme = localStorage.getItem('selectedTheme');
+                const savedThemeJSON = localStorage.getItem('selectedTheme');
                 let currentThemeName = 'Blue Purple'; // default
                 
-                if (savedTheme) {
+                if (savedThemeJSON) {
                     try {
-                        const theme = JSON.parse(savedTheme);
-                        currentThemeName = theme.name;
+                        const savedTheme = JSON.parse(savedThemeJSON);
+                        currentThemeName = savedTheme.name;
                     } catch (e) {}
                 }
                 
@@ -1102,23 +1127,17 @@
                         swatch.classList.add('selected');
                     }
                     
-                    swatch.addEventListener('click', (e) => {
+                    const selectThemeHandler = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         setTheme(theme);
                         themeModal.classList.add('hidden');
                         document.body.classList.remove('modal-open');
-                        showToast(errorToast, 'Tema spremenjena!', 2000);
-                    });
-                    
-                    swatch.addEventListener('touchend', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setTheme(theme);
-                        themeModal.classList.add('hidden');
-                        document.body.classList.remove('modal-open');
-                        showToast(errorToast, 'Tema spremenjena!', 2000);
-                    });
+                        showToast('Theme changed!', 2000);
+                    };
+
+                    swatch.addEventListener('click', selectThemeHandler);
+                    swatch.addEventListener('touchend', selectThemeHandler);
                     
                     themeSwatches.appendChild(swatch);
                 });
@@ -1130,11 +1149,9 @@
                 const allThemeClasses = ['bg-animated-blue-purple', 'bg-animated-peach-yellow', 'bg-animated-red-orange', 'bg-animated-cosmic', 'bg-animated-aurora', 'bg-animated-sunset', 'bg-animated-ocean', 'bg-animated-forest'];
                 const allPatternClasses = ['bg-pattern-dots', 'bg-pattern-waves', 'bg-pattern-grid'];
                 
-                const screenElements = [homepageScreen, genderSelectionScreen, creationScreen, chatScreen];
-                screenElements.forEach(screen => {
-                    allThemeClasses.forEach(cls => screen.classList.remove(cls));
-                    allPatternClasses.forEach(cls => screen.classList.remove(cls));
-                });
+                // Only apply themes to the chat screen background
+                allThemeClasses.forEach(cls => chatScreen.classList.remove(cls));
+                allPatternClasses.forEach(cls => chatScreen.classList.remove(cls));
                 
                 chatScreen.classList.add(theme.class);
                 if (theme.pattern) {
@@ -1144,10 +1161,10 @@
             }
 
             function loadTheme() {
-                const savedTheme = localStorage.getItem('selectedTheme');
-                if (savedTheme) {
+                const savedThemeJSON = localStorage.getItem('selectedTheme');
+                if (savedThemeJSON) {
                     try {
-                        const theme = JSON.parse(savedTheme);
+                        const theme = JSON.parse(savedThemeJSON);
                         setTheme(theme);
                     } catch (e) {
                         console.error('Error loading theme:', e);
@@ -1158,21 +1175,21 @@
             // --- Voice Recording ---
             async function startRecording() {
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showToast(errorToast, 'Snemanje zvoka ni podprto na vašem brskalniku.');
+                    showToast('Voice recording is not supported on your browser.');
                     return;
                 }
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     mediaRecorder = new MediaRecorder(stream);
                     mediaRecorder.start();
-                    showToast(voiceToast, 'Snemanje... Spustite za pošiljanje.');
+                    voiceToast.classList.remove('translate-y-20', 'opacity-0');
                     audioChunks = [];
                     mediaRecorder.addEventListener("dataavailable", event => {
                         audioChunks.push(event.data);
                     });
                 } catch (err) {
                     console.error(err);
-                    showToast(errorToast, 'Dostop do mikrofona ni mogoč. Prosimo, dovolite dostop.');
+                    showToast('Could not access microphone. Please grant permission.');
                 }
             }
 
@@ -1184,9 +1201,9 @@
 
                 mediaRecorder.addEventListener("stop", async () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    const fakeTranscription = "[Uporabnik je poslal glasovno sporočilo]";
+                    const fakeTranscription = "[User sent a voice message]";
                     addMessageToUI('user', { type: 'voice', content: fakeTranscription }, true);
-                    const prompt = `Pravkar sem poslal/a glasovno sporočilo. Prosim, reagiraj nanj v svojem maternem jeziku, ki je '${currentProfile.languages.native}'. Sporočilo je bil samo zvok, nimaš transkripcije, samo reagiraj na dejstvo, da so poslali glasovno sporočilo.`;
+                    const prompt = `I just sent a voice message. React to it in your native language, which is '${currentProfile.languages.native}'. You don't have the transcription, just react to the fact they sent a voice note.`;
                     await sendAiResponse(prompt);
 
                     audioChunks = [];
@@ -1195,9 +1212,13 @@
             }
 
             // --- Event Listeners ---
-            getStartedBtn.addEventListener('click', showGenderSelectionScreen);
+            getStartedBtn.addEventListener('click', () => showScreen(genderSelectionScreen));
             selectGirlBtn.addEventListener('click', () => setupCreationScreen('girl'));
             selectManBtn.addEventListener('click', () => setupCreationScreen('man'));
+            
+            callBtn.addEventListener('click', () => showToast('Coming soon...'));
+            videoBtn.addEventListener('click', () => showToast('Coming soon...'));
+
             imageUploadInput.addEventListener('change', (e) => handleImageUpload(e, false));
             imageChatBtn.addEventListener('click', () => imageChatUpload.click());
             imageChatUpload.addEventListener('change', (e) => handleImageUpload(e, true));
@@ -1209,7 +1230,7 @@
             [editorName, editorAge, editorTraits, editorNationality].forEach(el => el.addEventListener('input', validateEditorInputs));
 
             resetBtn.addEventListener('click', () => {
-                showConfirmationModal('Ste prepričani, da želite zamenjati spremljevalca? Vsa sporočila bodo izbrisana.', () => {
+                showConfirmationModal('Are you sure you want to change your companion? All messages will be deleted.', () => {
                     localStorage.removeItem('alterraProfile');
                     if(currentProfile) localStorage.removeItem(`chatHistory_${currentProfile.name}`);
                     currentProfile = null;
@@ -1219,7 +1240,7 @@
                     editorImgPreview.classList.add('hidden');
                     imageUploadLabel.style.display = 'flex';
                     imageUploadInput.value = "";
-                    showGenderSelectionScreen();
+                    showScreen(genderSelectionScreen);
                 });
             });
 
@@ -1284,3 +1305,4 @@
     </script>
 </body>
 </html>
+�
