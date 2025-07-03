@@ -12,6 +12,7 @@
         :root {
             --user-bubble-color: #0084ff;
             --vh: 1vh;
+            --bg-color: #000000;
         }
 
         * {
@@ -23,7 +24,7 @@
             height: calc(var(--vh, 1vh) * 100);
             overflow: hidden;
             font-family: 'Inter', sans-serif;
-            background: #000;
+            background: var(--bg-color);
             margin: 0;
             padding: 0;
         }
@@ -33,7 +34,7 @@
             width: 100vw;
             display: flex;
             flex-direction: column;
-            background: #000;
+            background: var(--bg-color);
             position: relative;
             overflow: hidden;
         }
@@ -166,7 +167,7 @@
         }
 
         /* Modal styling */
-        .modal-backdrop {
+        .modal {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
         }
@@ -183,6 +184,30 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            background: #262626;
+            border: 1px solid #404040;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Theme classes */
+        .theme-dark {
+            --bg-color: #000000;
+        }
+
+        .theme-blue {
+            --bg-color: #0f1419;
+        }
+
+        .theme-purple {
+            --bg-color: #1a0d2e;
+        }
+
+        .theme-green {
+            --bg-color: #0d1b0d;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 768px) {
             .chat-bubble-user, .chat-bubble-ai {
@@ -192,7 +217,7 @@
         }
     </style>
 </head>
-<body class="bg-black">
+<body class="theme-dark">
 
     <div id="app-container">
         
@@ -295,7 +320,7 @@
         <!-- Chat Screen - Instagram Style -->
         <div id="chat-screen" class="hidden flex flex-col h-full">
             <!-- Chat Header - Instagram Style -->
-            <div class="flex items-center justify-between p-4 border-b border-gray-800 bg-black">
+            <div class="flex items-center justify-between p-4 border-b border-gray-800">
                 <div class="flex items-center">
                     <button id="reset-btn" class="p-2 mr-3 hover:bg-gray-800 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -322,23 +347,25 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                     </button>
-                    <button id="chat-menu-btn" class="p-2 hover:bg-gray-800 rounded-full transition-colors relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                    <div class="relative">
+                        <button id="chat-menu-btn" class="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                        </button>
                         
                         <!-- Dropdown Menu -->
-                        <div id="chat-dropdown-menu" class="absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 z-20 hidden">
-                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">View Profile</button>
-                            <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Color</button>
-                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Theme</button>
+                        <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 z-50 hidden">
+                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">View Profile</button>
+                            <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">Change Color</button>
+                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">Change Theme</button>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Messages Area - Instagram Style -->
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-black">
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3">
                 <!-- Messages will be injected here -->
             </div>
             
@@ -355,7 +382,7 @@
             </div>
             
             <!-- Input Area - Instagram Style -->
-            <div class="p-4 bg-black border-t border-gray-800">
+            <div class="p-4 border-t border-gray-800">
                 <form id="chat-form" class="flex items-center bg-gray-900 rounded-full px-4 py-2">
                     <button type="button" id="image-chat-btn" class="p-2 text-gray-400 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -389,8 +416,7 @@
     </div>
     
     <!-- Modals -->
-    <div id="confirmation-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-backdrop absolute inset-0"></div>
+    <div id="confirmation-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl text-center">
             <p id="confirmation-message" class="mb-6 text-lg text-white">Are you sure?</p>
             <div class="flex gap-3">
@@ -400,24 +426,21 @@
         </div>
     </div>
 
-    <div id="info-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-backdrop absolute inset-0"></div>
+    <div id="info-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div id="info-modal-content" class="modal-content relative w-full max-w-sm p-6 rounded-2xl"></div>
     </div>
 
-    <div id="color-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-backdrop absolute inset-0"></div>
+    <div id="color-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-xs p-6 rounded-2xl">
             <h2 class="text-xl font-bold text-center mb-6 text-white">Choose Chat Color</h2>
             <div id="color-swatches" class="grid grid-cols-3 gap-3"></div>
         </div>
     </div>
 
-    <div id="theme-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-backdrop absolute inset-0"></div>
+    <div id="theme-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl">
             <h2 class="text-xl font-bold text-center mb-6 text-white">Choose Theme</h2>
-            <div id="theme-swatches" class="grid grid-cols-2 gap-3"></div>
+            <div id="theme-swatches" class="grid grid-cols-2 gap-3 mb-4"></div>
         </div>
     </div>
 
@@ -519,6 +542,13 @@
                 '#ffbe0b', // Yellow
             ];
 
+            const themes = [
+                { name: 'Dark', class: 'theme-dark', color: '#000000' },
+                { name: 'Blue', class: 'theme-blue', color: '#0f1419' },
+                { name: 'Purple', class: 'theme-purple', color: '#1a0d2e' },
+                { name: 'Green', class: 'theme-green', color: '#0d1b0d' },
+            ];
+
             // App State
             let currentProfile = null;
             let chatHistory = [];
@@ -541,6 +571,7 @@
                 window.addEventListener('resize', setRealViewportHeight);
 
                 loadChatColor();
+                loadTheme();
                 const savedProfile = localStorage.getItem('alterraProfile');
                 if (savedProfile) {
                     try {
@@ -864,15 +895,49 @@
                 colorModal.classList.remove('hidden');
             }
 
+            function showThemeModal() {
+                themeSwatches.innerHTML = '';
+                themes.forEach(theme => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold';
+                    swatch.style.backgroundColor = theme.color;
+                    swatch.textContent = theme.name;
+                    swatch.addEventListener('click', () => {
+                        setTheme(theme);
+                        themeModal.classList.add('hidden');
+                    });
+                    themeSwatches.appendChild(swatch);
+                });
+                themeModal.classList.remove('hidden');
+            }
+
             function setChatColor(color) {
                 document.documentElement.style.setProperty('--user-bubble-color', color);
                 localStorage.setItem('chatColor', color);
+            }
+
+            function setTheme(theme) {
+                document.body.className = theme.class;
+                document.documentElement.style.setProperty('--bg-color', theme.color);
+                localStorage.setItem('selectedTheme', JSON.stringify(theme));
             }
 
             function loadChatColor() {
                 const savedColor = localStorage.getItem('chatColor');
                 if (savedColor) {
                     setChatColor(savedColor);
+                }
+            }
+
+            function loadTheme() {
+                const savedTheme = localStorage.getItem('selectedTheme');
+                if (savedTheme) {
+                    try {
+                        const theme = JSON.parse(savedTheme);
+                        setTheme(theme);
+                    } catch (e) {
+                        console.error('Error loading theme:', e);
+                    }
                 }
             }
             
@@ -960,17 +1025,33 @@
                 toggleChatMenu();
             });
             
-            viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
-            changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
+            viewInfoBtn.addEventListener('click', () => { 
+                chatDropdownMenu.classList.add('hidden');
+                showInfoModal(); 
+            });
+            changeColorBtn.addEventListener('click', () => { 
+                chatDropdownMenu.classList.add('hidden');
+                showColorModal(); 
+            });
+            changeThemeBtn.addEventListener('click', () => { 
+                chatDropdownMenu.classList.add('hidden');
+                showThemeModal(); 
+            });
 
+            // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target)) {
-                    toggleChatMenu();
+                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target) && !chatDropdownMenu.contains(e.target)) {
+                    chatDropdownMenu.classList.add('hidden');
                 }
-                const activeModal = document.querySelector('.modal:not(.hidden)');
-                if (activeModal && e.target.classList.contains('modal-backdrop')) {
-                    activeModal.classList.add('hidden');
-                }
+            });
+
+            // Close modals when clicking backdrop
+            [confirmationModal, infoModal, colorModal, themeModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
             });
 
             init();
