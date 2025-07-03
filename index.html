@@ -39,6 +39,110 @@
             overflow: hidden;
         }
 
+        /* Animated Gradient Backgrounds */
+        .bg-animated-blue-purple {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #667eea, #764ba2);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .bg-animated-peach-yellow {
+            background: linear-gradient(-45deg, #ffcc70, #ff6b35, #ffa726, #ff8f00);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+        }
+
+        .bg-animated-red-orange {
+            background: linear-gradient(-45deg, #ff416c, #ff4b2b, #ff6b35, #ff8f00);
+            background-size: 400% 400%;
+            animation: gradientShift 18s ease infinite;
+        }
+
+        .bg-animated-cosmic {
+            background: linear-gradient(-45deg, #0c0c0c, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        .bg-animated-aurora {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 14s ease infinite;
+        }
+
+        .bg-animated-sunset {
+            background: linear-gradient(-45deg, #f093fb, #f5576c, #ff9a9e, #fecfef);
+            background-size: 400% 400%;
+            animation: gradientShift 16s ease infinite;
+        }
+
+        .bg-animated-ocean {
+            background: linear-gradient(-45deg, #4facfe, #00f2fe, #a8edea, #fed6e3);
+            background-size: 400% 400%;
+            animation: gradientShift 13s ease infinite;
+        }
+
+        .bg-animated-forest {
+            background: linear-gradient(-45deg, #43e97b, #38f9d7, #11998e, #38ef7d);
+            background-size: 400% 400%;
+            animation: gradientShift 17s ease infinite;
+        }
+
+        /* Pattern Overlays */
+        .bg-pattern-dots::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: patternMove 30s linear infinite;
+        }
+
+        .bg-pattern-waves::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: patternMove 25s linear infinite;
+        }
+
+        .bg-pattern-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: patternMove 35s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
         /* Instagram-style chat bubbles */
         .chat-bubble-user {
             background: var(--user-bubble-color);
@@ -50,12 +154,14 @@
         }
 
         .chat-bubble-ai {
-            background: #262626;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             color: #ffffff;
             border-radius: 18px;
             padding: 8px 16px;
             max-width: 75%;
             word-wrap: break-word;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Profile images - small like Instagram */
@@ -120,6 +226,26 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* Chat input area styling */
+        .chat-input-area {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header styling */
+        .chat-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -173,7 +299,8 @@
         }
 
         .modal-content {
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -186,26 +313,10 @@
 
         /* Dropdown menu styling */
         .dropdown-menu {
-            background: #262626;
-            border: 1px solid #404040;
+            background: rgba(38, 38, 38, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Theme classes */
-        .theme-dark {
-            --bg-color: #000000;
-        }
-
-        .theme-blue {
-            --bg-color: #0f1419;
-        }
-
-        .theme-purple {
-            --bg-color: #1a0d2e;
-        }
-
-        .theme-green {
-            --bg-color: #0d1b0d;
         }
 
         /* Mobile optimizations */
@@ -214,15 +325,41 @@
                 max-width: 85%;
                 font-size: 16px;
             }
+            
+            /* Fix mobile input area */
+            #chat-screen {
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+            }
+            
+            .chat-input-area {
+                position: sticky;
+                bottom: 0;
+                z-index: 10;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            #chat-messages {
+                padding-bottom: 20px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Safe area for mobile devices */
+        @supports (padding: max(0px)) {
+            .chat-input-area {
+                padding-bottom: max(16px, env(safe-area-inset-bottom));
+            }
         }
     </style>
 </head>
-<body class="theme-dark">
+<body>
 
     <div id="app-container">
         
         <!-- Homepage Screen -->
-        <div id="homepage-screen" class="flex items-center justify-center h-full p-6">
+        <div id="homepage-screen" class="flex items-center justify-center h-full p-6 bg-animated-cosmic">
             <div class="text-center fade-in max-w-md mx-auto">
                 <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-6">
                     Alterra
@@ -238,7 +375,7 @@
         </div>
 
         <!-- Gender Selection Screen -->
-        <div id="gender-selection-screen" class="flex items-center justify-center h-full p-6 hidden">
+        <div id="gender-selection-screen" class="flex items-center justify-center h-full p-6 hidden bg-animated-aurora">
             <div class="text-center fade-in max-w-md mx-auto">
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Choose Your Companion</h1>
                 <p class="text-gray-300 mb-10">Who would you like to connect with?</p>
@@ -268,7 +405,7 @@
         </div>
 
         <!-- Creation Screen -->
-        <div id="creation-screen" class="flex items-center justify-center h-full p-6 hidden overflow-y-auto">
+        <div id="creation-screen" class="flex items-center justify-center h-full p-6 hidden overflow-y-auto bg-animated-sunset">
             <div class="w-full max-w-md mx-auto fade-in">
                 <h1 id="creation-title" class="text-2xl md:text-3xl font-bold text-center text-white mb-8"></h1>
                 
@@ -318,11 +455,11 @@
         </div>
 
         <!-- Chat Screen - Instagram Style -->
-        <div id="chat-screen" class="hidden flex flex-col h-full">
+        <div id="chat-screen" class="hidden flex flex-col h-full bg-animated-blue-purple">
             <!-- Chat Header - Instagram Style -->
-            <div class="flex items-center justify-between p-4 border-b border-gray-800">
+            <div class="chat-header flex items-center justify-between p-4 shrink-0">
                 <div class="flex items-center">
-                    <button id="reset-btn" class="p-2 mr-3 hover:bg-gray-800 rounded-full transition-colors">
+                    <button id="reset-btn" class="p-2 mr-3 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
@@ -332,23 +469,23 @@
                     
                     <div>
                         <h2 id="chat-name" class="text-white font-semibold text-lg"></h2>
-                        <p id="chat-status" class="text-gray-400 text-sm">Active now</p>
+                        <p id="chat-status" class="text-gray-300 text-sm">Active now</p>
                     </div>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <button class="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                    <button class="p-2 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                     </button>
-                    <button class="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                    <button class="p-2 hover:bg-white/10 rounded-full transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                     </button>
                     <div class="relative">
-                        <button id="chat-menu-btn" class="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                        <button id="chat-menu-btn" class="p-2 hover:bg-white/10 rounded-full transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
@@ -356,9 +493,9 @@
                         
                         <!-- Dropdown Menu -->
                         <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 z-50 hidden">
-                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">View Profile</button>
-                            <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">Change Color</button>
-                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">Change Theme</button>
+                            <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">View Profile</button>
+                            <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Change Color</button>
+                            <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Change Theme</button>
                         </div>
                     </div>
                 </div>
@@ -373,7 +510,7 @@
             <div id="typing-indicator" class="px-4 pb-2 hidden">
                 <div class="flex items-center">
                     <img id="typing-avatar" src="/placeholder.svg" class="profile-img-small mr-2">
-                    <div class="bg-gray-800 rounded-full px-3 py-2">
+                    <div class="bg-white/20 backdrop-blur-sm rounded-full px-3 py-2">
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
@@ -382,30 +519,30 @@
             </div>
             
             <!-- Input Area - Instagram Style -->
-            <div class="p-4 border-t border-gray-800">
-                <form id="chat-form" class="flex items-center bg-gray-900 rounded-full px-4 py-2">
-                    <button type="button" id="image-chat-btn" class="p-2 text-gray-400 hover:text-white transition-colors">
+            <div class="chat-input-area p-4 shrink-0">
+                <form id="chat-form" class="chat-input-form flex items-center rounded-full px-4 py-2">
+                    <button type="button" id="image-chat-btn" class="p-2 text-gray-300 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z" />
                         </svg>
                     </button>
                     
-                    <input type="text" id="message-input" placeholder="Message..." class="flex-1 bg-transparent text-white focus:outline-none px-3 py-2">
+                    <input type="text" id="message-input" placeholder="Message..." class="flex-1 bg-transparent text-white focus:outline-none px-3 py-2 placeholder-gray-300">
                     <input type="file" id="image-chat-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
                     
-                    <button type="button" id="voice-btn" class="p-2 text-gray-400 hover:text-white transition-colors">
+                    <button type="button" id="voice-btn" class="p-2 text-gray-300 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                         </svg>
                     </button>
                     
-                    <button type="submit" id="send-btn" class="p-2 text-blue-500 hover:text-blue-400 transition-colors hidden">
+                    <button type="submit" id="send-btn" class="p-2 text-blue-400 hover:text-blue-300 transition-colors hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
                         </svg>
                     </button>
                     
-                    <button type="button" class="p-2 text-gray-400 hover:text-white transition-colors">
+                    <button type="button" class="p-2 text-gray-300 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
@@ -543,10 +680,16 @@
             ];
 
             const themes = [
-                { name: 'Dark', class: 'theme-dark', color: '#000000' },
-                { name: 'Blue', class: 'theme-blue', color: '#0f1419' },
-                { name: 'Purple', class: 'theme-purple', color: '#1a0d2e' },
-                { name: 'Green', class: 'theme-green', color: '#0d1b0d' },
+                { name: 'Blue Purple', class: 'bg-animated-blue-purple', pattern: '' },
+                { name: 'Peach Yellow', class: 'bg-animated-peach-yellow', pattern: '' },
+                { name: 'Red Orange', class: 'bg-animated-red-orange', pattern: '' },
+                { name: 'Cosmic', class: 'bg-animated-cosmic', pattern: '' },
+                { name: 'Aurora', class: 'bg-animated-aurora', pattern: '' },
+                { name: 'Sunset', class: 'bg-animated-sunset', pattern: '' },
+                { name: 'Ocean Dots', class: 'bg-animated-ocean', pattern: 'bg-pattern-dots' },
+                { name: 'Forest Waves', class: 'bg-animated-forest', pattern: 'bg-pattern-waves' },
+                { name: 'Cosmic Grid', class: 'bg-animated-cosmic', pattern: 'bg-pattern-grid' },
+                { name: 'Aurora Dots', class: 'bg-animated-aurora', pattern: 'bg-pattern-dots' },
             ];
 
             // App State
@@ -899,8 +1042,7 @@
                 themeSwatches.innerHTML = '';
                 themes.forEach(theme => {
                     const swatch = document.createElement('div');
-                    swatch.className = 'h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold';
-                    swatch.style.backgroundColor = theme.color;
+                    swatch.className = `h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold text-sm relative overflow-hidden ${theme.class} ${theme.pattern}`;
                     swatch.textContent = theme.name;
                     swatch.addEventListener('click', () => {
                         setTheme(theme);
@@ -917,8 +1059,13 @@
             }
 
             function setTheme(theme) {
-                document.body.className = theme.class;
-                document.documentElement.style.setProperty('--bg-color', theme.color);
+                // Remove all theme classes
+                chatScreen.className = chatScreen.className.replace(/bg-animated-\S+/g, '').replace(/bg-pattern-\S+/g, '');
+                // Add new theme classes
+                chatScreen.classList.add(theme.class);
+                if (theme.pattern) {
+                    chatScreen.classList.add(theme.pattern);
+                }
                 localStorage.setItem('selectedTheme', JSON.stringify(theme));
             }
 
