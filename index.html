@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Alterra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,7 @@
 
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
@@ -27,10 +28,14 @@
             background: var(--bg-color);
             margin: 0;
             padding: 0;
+            position: fixed;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         #app-container {
             height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
             width: 100vw;
             display: flex;
             flex-direction: column;
@@ -100,6 +105,7 @@
             background-size: 20px 20px;
             animation: patternMove 30s linear infinite;
             pointer-events: none;
+            z-index: 1;
         }
 
         .bg-pattern-waves::before {
@@ -118,6 +124,7 @@
             );
             animation: patternMove 25s linear infinite;
             pointer-events: none;
+            z-index: 1;
         }
 
         .bg-pattern-grid::before {
@@ -133,6 +140,7 @@
             background-size: 30px 30px;
             animation: patternMove 35s linear infinite;
             pointer-events: none;
+            z-index: 1;
         }
 
         @keyframes gradientShift {
@@ -154,6 +162,8 @@
             padding: 8px 16px;
             max-width: 75%;
             word-wrap: break-word;
+            position: relative;
+            z-index: 2;
         }
 
         .chat-bubble-ai {
@@ -165,6 +175,8 @@
             max-width: 75%;
             word-wrap: break-word;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
         }
 
         /* Profile images - small like Instagram */
@@ -231,9 +243,11 @@
 
         /* Chat input area styling */
         .chat-input-area {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 50;
         }
 
         .chat-input-form {
@@ -244,9 +258,11 @@
 
         /* Header styling */
         .chat-header {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 40;
         }
 
         /* Scrollbar */
@@ -299,6 +315,7 @@
         .modal {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
         .modal-content {
@@ -312,14 +329,47 @@
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1100;
         }
 
         /* Dropdown menu styling */
         .dropdown-menu {
-            background: rgba(38, 38, 38, 0.95);
+            background: rgba(38, 38, 38, 0.98);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            z-index: 200;
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                position: fixed;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+            }
+            
+            #chat-screen {
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+            }
+            
+            .chat-input-area {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            #chat-messages {
+                padding-bottom: 120px;
+                height: calc(100vh - 140px);
+                height: calc(calc(var(--vh, 1vh) * 100) - 140px);
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
         }
 
         /* Mobile optimizations */
@@ -329,7 +379,6 @@
                 font-size: 16px;
             }
             
-            /* Fix mobile input area and keyboard handling */
             #chat-screen {
                 height: 100vh;
                 height: calc(var(--vh, 1vh) * 100);
@@ -337,28 +386,35 @@
             }
             
             .chat-input-area {
-                position: fixed;
+                position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                z-index: 100;
+                z-index: 50;
                 padding-bottom: env(safe-area-inset-bottom);
-                transition: transform 0.3s ease;
             }
             
             #chat-messages {
-                padding-bottom: 100px; /* Space for fixed input */
+                padding-bottom: 100px;
+                height: calc(100vh - 120px);
+                height: calc(calc(var(--vh, 1vh) * 100) - 120px);
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                position: relative;
+                z-index: 2;
             }
             
-            /* Handle keyboard show/hide */
-            .keyboard-open #chat-messages {
-                padding-bottom: 120px;
+            .dropdown-menu {
+                z-index: 300;
+                position: fixed;
             }
             
-            .keyboard-open .chat-input-area {
-                transform: translateY(0);
+            /* Prevent body scroll when modal is open */
+            body.modal-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
             }
         }
 
@@ -367,6 +423,41 @@
             .chat-input-area {
                 padding-bottom: max(16px, env(safe-area-inset-bottom));
             }
+        }
+
+        /* Theme swatch preview styles */
+        .theme-swatch {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .theme-swatch:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-swatch.selected {
+            border-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .color-swatch {
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.selected {
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -508,7 +599,7 @@
                         </button>
                         
                         <!-- Dropdown Menu -->
-                        <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 z-50 hidden">
+                        <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 hidden">
                             <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">View Profile</button>
                             <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Change Color</button>
                             <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition-colors">Change Theme</button>
@@ -569,7 +660,7 @@
     </div>
     
     <!-- Modals -->
-    <div id="confirmation-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="confirmation-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl text-center">
             <p id="confirmation-message" class="mb-6 text-lg text-white">Are you sure?</p>
             <div class="flex gap-3">
@@ -579,21 +670,23 @@
         </div>
     </div>
 
-    <div id="info-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="info-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div id="info-modal-content" class="modal-content relative w-full max-w-sm p-6 rounded-2xl"></div>
     </div>
 
-    <div id="color-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="color-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-xs p-6 rounded-2xl">
             <h2 class="text-xl font-bold text-center mb-6 text-white">Choose Chat Color</h2>
-            <div id="color-swatches" class="grid grid-cols-3 gap-3"></div>
+            <div id="color-swatches" class="grid grid-cols-3 gap-4"></div>
+            <button id="close-color-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Close</button>
         </div>
     </div>
 
-    <div id="theme-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="theme-modal" class="modal hidden fixed inset-0 flex items-center justify-center p-4">
         <div class="modal-content relative w-full max-w-sm p-6 rounded-2xl">
             <h2 class="text-xl font-bold text-center mb-6 text-white">Choose Theme</h2>
             <div id="theme-swatches" class="grid grid-cols-2 gap-3 mb-4"></div>
+            <button id="close-theme-modal" class="mt-6 w-full btn-primary py-2 px-4 rounded-lg font-semibold">Close</button>
         </div>
     </div>
 
@@ -652,6 +745,8 @@
             const colorSwatches = document.getElementById('color-swatches');
             const themeModal = document.getElementById('theme-modal');
             const themeSwatches = document.getElementById('theme-swatches');
+            const closeColorModal = document.getElementById('close-color-modal');
+            const closeThemeModal = document.getElementById('close-theme-modal');
 
             // --- Data ---
             const countries = [
@@ -719,44 +814,63 @@
 
             // --- Functions ---
             
-            // Fix for 100vh on mobile browsers
+            // Fix for 100vh on mobile browsers with iOS specific handling
             function setRealViewportHeight() {
                 let vh = window.innerHeight * 0.01;
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
+                
+                // iOS specific viewport lock
+                if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    document.body.style.height = window.innerHeight + 'px';
+                    setTimeout(() => {
+                        window.scrollTo(0, 1);
+                    }, 100);
+                }
             }
 
-            // Mobile keyboard handling
+            // Enhanced mobile keyboard handling for iOS
             function handleMobileKeyboard() {
                 if (window.innerWidth <= 768) {
-                    const initialViewportHeight = window.innerHeight;
+                    let initialViewportHeight = window.innerHeight;
+                    let isKeyboardOpen = false;
                     
-                    window.addEventListener('resize', () => {
-                        const currentViewportHeight = window.innerHeight;
-                        const keyboardHeight = initialViewportHeight - currentViewportHeight;
-                        
-                        if (keyboardHeight > 150) { // Keyboard is open
-                            document.body.classList.add('keyboard-open');
-                            chatMessages.scrollTop = chatMessages.scrollHeight;
-                        } else { // Keyboard is closed
-                            document.body.classList.remove('keyboard-open');
+                    // iOS specific handling
+                    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                        messageInput.addEventListener('focus', () => {
                             setTimeout(() => {
+                                document.body.style.position = 'fixed';
+                                document.body.style.width = '100%';
                                 chatMessages.scrollTop = chatMessages.scrollHeight;
                             }, 300);
-                        }
-                    });
-                    
-                    // Handle input focus/blur
-                    messageInput.addEventListener('focus', () => {
-                        setTimeout(() => {
-                            chatMessages.scrollTop = chatMessages.scrollHeight;
-                        }, 300);
-                    });
-                    
-                    messageInput.addEventListener('blur', () => {
-                        setTimeout(() => {
-                            document.body.classList.remove('keyboard-open');
-                        }, 100);
-                    });
+                        });
+                        
+                        messageInput.addEventListener('blur', () => {
+                            setTimeout(() => {
+                                document.body.style.position = '';
+                                document.body.style.width = '';
+                                setRealViewportHeight();
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }, 100);
+                        });
+                    } else {
+                        // Android handling
+                        window.addEventListener('resize', () => {
+                            const currentViewportHeight = window.innerHeight;
+                            const keyboardHeight = initialViewportHeight - currentViewportHeight;
+                            
+                            if (keyboardHeight > 150 && !isKeyboardOpen) {
+                                isKeyboardOpen = true;
+                                setTimeout(() => {
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }, 100);
+                            } else if (keyboardHeight <= 150 && isKeyboardOpen) {
+                                isKeyboardOpen = false;
+                                setTimeout(() => {
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }, 300);
+                            }
+                        });
+                    }
                 }
             }
 
@@ -764,6 +878,9 @@
                 setRealViewportHeight();
                 handleMobileKeyboard();
                 window.addEventListener('resize', setRealViewportHeight);
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(setRealViewportHeight, 100);
+                });
 
                 loadChatColor();
                 loadTheme();
@@ -923,7 +1040,11 @@
 
                 if (isNew) messageWrapper.classList.add('message-slide');
                 chatMessages.appendChild(messageWrapper);
-                if (isNew) chatMessages.scrollTop = chatMessages.scrollHeight;
+                if (isNew) {
+                    setTimeout(() => {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 100);
+                }
             }
             
             async function sendAiResponse(prompt, parts = []) {
@@ -946,17 +1067,23 @@
             }
 
             async function sendWelcomeMessage() {
-                // Don't add the system prompt to chat history, just send it to API
+                // Send welcome message without adding system prompt to UI
                 setTyping(true);
                 const prompt = `Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`;
-                const aiResponse = await callGeminiAPI(prompt, [], []);
-                const typingDuration = calculateTypingDuration(aiResponse || "");
-                setTimeout(() => {
+                
+                try {
+                    const aiResponse = await callGeminiAPI(prompt, [], []);
+                    const typingDuration = calculateTypingDuration(aiResponse || "");
+                    setTimeout(() => {
+                        setTyping(false);
+                        const responseText = aiResponse || 'Hey there! 👋';
+                        addMessageToUI('model', { type: 'text', content: responseText }, true);
+                        updateChatHistory('model', { type: 'text', content: responseText });
+                    }, typingDuration);
+                } catch (error) {
                     setTyping(false);
-                    const responseText = aiResponse || 'Hey there! 👋';
-                    addMessageToUI('model', { type: 'text', content: responseText }, true);
-                    updateChatHistory('model', { type: 'text', content: responseText });
-                }, typingDuration);
+                    console.error('Welcome message error:', error);
+                }
             }
             
             chatForm.addEventListener('submit', async (e) => {
@@ -1050,6 +1177,7 @@
                 confirmationMessage.textContent = message;
                 confirmCallback = onConfirm;
                 confirmationModal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
             }
 
             // --- Menu & Modal Logic ---
@@ -1082,58 +1210,93 @@
                     </div>
                 `;
                 infoModal.classList.remove('hidden');
-                document.getElementById('close-info-modal').addEventListener('click', () => infoModal.classList.add('hidden'));
+                document.body.classList.add('modal-open');
+                document.getElementById('close-info-modal').addEventListener('click', () => {
+                    infoModal.classList.add('hidden');
+                    document.body.classList.remove('modal-open');
+                });
             }
 
             function showColorModal() {
                 colorSwatches.innerHTML = '';
+                const currentColor = getComputedStyle(document.documentElement).getPropertyValue('--user-bubble-color').trim();
+                
                 chatColors.forEach(color => {
                     const swatch = document.createElement('div');
-                    swatch.className = 'w-12 h-12 rounded-full cursor-pointer hover:scale-110 transition-transform border-2 border-transparent';
+                    swatch.className = 'color-swatch w-12 h-12';
                     swatch.style.backgroundColor = color;
                     
-                    // Show current selection
-                    const currentColor = getComputedStyle(document.documentElement).getPropertyValue('--user-bubble-color').trim();
                     if (currentColor === color) {
-                        swatch.classList.add('border-white');
+                        swatch.classList.add('selected');
                     }
                     
-                    swatch.addEventListener('click', () => {
+                    swatch.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         setChatColor(color);
                         colorModal.classList.add('hidden');
+                        document.body.classList.remove('modal-open');
                         showToast(errorToast, 'Chat color changed!', 2000);
                     });
+                    
+                    swatch.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setChatColor(color);
+                        colorModal.classList.add('hidden');
+                        document.body.classList.remove('modal-open');
+                        showToast(errorToast, 'Chat color changed!', 2000);
+                    });
+                    
                     colorSwatches.appendChild(swatch);
                 });
                 colorModal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
             }
 
             function showThemeModal() {
                 themeSwatches.innerHTML = '';
+                const savedTheme = localStorage.getItem('selectedTheme');
+                let currentThemeName = 'Blue Purple'; // default
+                
+                if (savedTheme) {
+                    try {
+                        const theme = JSON.parse(savedTheme);
+                        currentThemeName = theme.name;
+                    } catch (e) {}
+                }
+                
                 themes.forEach(theme => {
                     const swatch = document.createElement('div');
-                    swatch.className = `h-16 rounded-lg cursor-pointer hover:scale-105 transition-transform flex items-center justify-center text-white font-semibold text-sm relative overflow-hidden border-2 border-transparent ${theme.class} ${theme.pattern}`;
+                    swatch.className = `theme-swatch h-16 flex items-center justify-center text-white font-semibold text-sm relative ${theme.class} ${theme.pattern}`;
                     swatch.textContent = theme.name;
                     
-                    // Show current selection
-                    const savedTheme = localStorage.getItem('selectedTheme');
-                    if (savedTheme) {
-                        try {
-                            const currentTheme = JSON.parse(savedTheme);
-                            if (currentTheme.name === theme.name) {
-                                swatch.classList.add('border-white');
-                            }
-                        } catch (e) {}
+                    if (currentThemeName === theme.name) {
+                        swatch.classList.add('selected');
                     }
                     
-                    swatch.addEventListener('click', () => {
+                    swatch.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         setTheme(theme);
                         themeModal.classList.add('hidden');
+                        document.body.classList.remove('modal-open');
                         showToast(errorToast, 'Theme changed!', 2000);
                     });
+                    
+                    swatch.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setTheme(theme);
+                        themeModal.classList.add('hidden');
+                        document.body.classList.remove('modal-open');
+                        showToast(errorToast, 'Theme changed!', 2000);
+                    });
+                    
                     themeSwatches.appendChild(swatch);
                 });
                 themeModal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
             }
 
             function setChatColor(color) {
@@ -1247,11 +1410,13 @@
             confirmYesBtn.addEventListener('click', () => {
                 if (confirmCallback) confirmCallback();
                 confirmationModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
                 confirmCallback = null;
             });
 
             confirmNoBtn.addEventListener('click', () => {
                 confirmationModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
                 confirmCallback = null;
             });
             
@@ -1273,6 +1438,16 @@
                 showThemeModal(); 
             });
 
+            closeColorModal.addEventListener('click', () => {
+                colorModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            });
+
+            closeThemeModal.addEventListener('click', () => {
+                themeModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            });
+
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target) && !chatDropdownMenu.contains(e.target)) {
@@ -1285,9 +1460,17 @@
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.add('hidden');
+                        document.body.classList.remove('modal-open');
                     }
                 });
             });
+
+            // Prevent scrolling when modal is open
+            document.addEventListener('touchmove', (e) => {
+                if (document.body.classList.contains('modal-open')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
 
             init();
         });
