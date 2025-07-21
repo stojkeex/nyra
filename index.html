@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --user-bubble-color-start: #6a5af9;
-            --user-bubble-color-end: #d66efd;
+            --user-bubble-color: #7A42F4;
             --vh: 1vh;
         }
         html, body {
@@ -50,16 +49,9 @@
         .man-gradient { background: linear-gradient(315deg, #a8e063 0%, #56ab2f 74%); }
         .neutral-gradient { background: linear-gradient(315deg, #1e293b 0%, #4c1d95 74%); }
         
-        @keyframes instagram-gradient-animation {
-            0%{background-position:0% 50%}
-            50%{background-position:100% 50%}
-            100%{background-position:0% 50%}
-        }
         .chat-bubble-user {
             color: white;
-            background: linear-gradient(90deg, var(--user-bubble-color-start), var(--user-bubble-color-end), var(--user-bubble-color-start));
-            background-size: 200% 200%;
-            animation: instagram-gradient-animation 6s ease infinite;
+            background-color: var(--user-bubble-color);
         }
         .chat-bubble-ai {
             background-color: #262626; 
@@ -283,7 +275,7 @@
                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <img id="chat-avatar" src="" class="w-11 h-11 rounded-full object-cover ml-2 mr-4 shadow-md">
+                <img id="chat-avatar" src="" class="w-11 h-11 rounded-full object-cover ml-2 mr-4 shadow-md cursor-pointer">
                 <div class="mr-auto">
                     <h2 id="chat-name" data-theme-contrast="text" class="text-lg font-bold text-white flex items-center gap-2"></h2>
                     <div id="chat-status-container" class="flex items-center text-xs text-gray-400" data-theme-contrast="text">
@@ -298,23 +290,10 @@
                  <button id="video-call-btn" class="p-2 rounded-full hover:bg-gray-800 transition-colors hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                 </button>
-                <div class="relative">
-                    <button id="chat-menu-btn" class="p-2 rounded-full hover:bg-gray-800 transition-colors">
-                         <svg data-theme-contrast="icon-fill" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                        </svg>
-                    </button>
-                    <div id="chat-dropdown-menu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-1 z-20 hidden origin-top-right scale-95 opacity-0">
-                       <button id="view-info-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">View Info</button>
-                       <button id="change-color-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Color</button>
-                       <button id="change-theme-btn" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Change Theme</button>
-                       <button id="end-chat-btn" class="w-full text-left block px-4 py-2 text-sm text-red-400 hover:bg-gray-800">End Chat</button>
-                    </div>
-                </div>
             </div>
 
             <!-- Messages -->
-            <div id="chat-messages" class="flex-grow p-4 sm:p-6 overflow-y-auto space-y-4">
+            <div id="chat-messages" class="flex-grow p-4 sm:p-6 overflow-y-auto space-y-2">
                 <!-- Messages will be injected here -->
             </div>
             
@@ -323,13 +302,16 @@
                  <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
                      <span id="typing-name"></span> is typing...
                  </div>
-                <form id="chat-form" class="flex items-center gap-2 bg-gray-800 rounded-full p-1.5 transition-all duration-300">
-                    <input type="text" id="message-input" placeholder="Message..." class="flex-grow bg-transparent text-white focus:outline-none px-4" autocomplete="off">
+                <form id="chat-form" class="flex items-center gap-2 bg-[#262626] rounded-2xl p-1.5 transition-all duration-300">
+                     <button type="button" id="camera-btn" class="p-2 text-white hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21a9 9 0 110-18 9 9 0 010 18zm0-2a7 7 0 100-14 7 7 0 000 14zm0-2.5a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-2a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg>
+                    </button>
+                    <input type="text" id="message-input" placeholder="Message..." class="flex-grow bg-transparent text-white focus:outline-none px-2" autocomplete="off">
                     <input type="file" id="image-chat-upload" class="hidden" accept="image/png, image/jpeg, image/webp">
-                    <button type="button" id="image-chat-btn" class="p-2 text-gray-400 hover:text-white">
+                    <button type="button" id="image-chat-btn" class="p-2 text-white hover:text-gray-300">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     </button>
-                    <button type="button" id="voice-btn" class="p-2 text-gray-400 hover:text-white">
+                    <button type="button" id="voice-btn" class="p-2 text-white hover:text-gray-300">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
                     </button>
                     <button type="submit" id="send-btn" class="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-110 hidden">
@@ -460,12 +442,6 @@
             const confirmationMessage = document.getElementById('confirmation-message');
             const confirmYesBtn = document.getElementById('confirm-yes-btn');
             const confirmNoBtn = document.getElementById('confirm-no-btn');
-            const chatMenuBtn = document.getElementById('chat-menu-btn');
-            const chatDropdownMenu = document.getElementById('chat-dropdown-menu');
-            const viewInfoBtn = document.getElementById('view-info-btn');
-            const changeColorBtn = document.getElementById('change-color-btn');
-            const changeThemeBtn = document.getElementById('change-theme-btn');
-            const endChatBtn = document.getElementById('end-chat-btn');
             const infoModal = document.getElementById('info-modal');
             const infoModalContent = document.getElementById('info-modal-content');
             const colorModal = document.getElementById('color-modal');
@@ -481,7 +457,7 @@
             // --- Data ---
             const countries = [ { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' }, { name: 'Argentina', code: 'AR' }, { name: 'Australia', code: 'AU' }, { name: 'Austria', code: 'AT' }, { name: 'Belgium', code: 'BE' }, { name: 'Brazil', code: 'BR' }, { name: 'Canada', code: 'CA' }, { name: 'China', code: 'CN' }, { name: 'Colombia', code: 'CO' }, { name: 'Croatia', code: 'HR' }, { name: 'Denmark', code: 'DK' }, { name: 'Egypt', code: 'EG' }, { name: 'Finland', code: 'FI' }, { name: 'France', code: 'FR' }, { name: 'Germany', code: 'DE' }, { name: 'Greece', code: 'GR' }, { name: 'Hungary', code: 'HU' }, { name: 'Iceland', code: 'IS' }, { name: 'India', code: 'IN' }, { name: 'Indonesia', code: 'ID' }, { name: 'Ireland', code: 'IE' }, { name: 'Italy', code: 'IT' }, { name: 'Japan', code: 'JP' }, { name: 'Mexico', code: 'MX' }, { name: 'Netherlands', code: 'NL' }, { name: 'New Zealand', code: 'NZ' }, { name: 'Nigeria', code: 'NG' }, { name: 'Norway', code: 'NO' }, { name: 'Poland', code: 'PL' }, { name: 'Portugal', code: 'PT' }, { name: 'Russia', code: 'RU' }, { name: 'Saudi Arabia', code: 'SA' }, { name: 'Serbia', code: 'RS' }, { name: 'Slovenia', code: 'SI' }, { name: 'South Africa', code: 'ZA' }, { name: 'South Korea', code: 'KR' }, { name: 'Spain', code: 'ES' }, { name: 'Sweden', code: 'SE' }, { name: 'Switzerland', code: 'CH' }, { name: 'Turkey', code: 'TR' }, { name: 'United Kingdom', code: 'GB' }, { name: 'USA', code: 'US' } ];
             const languageKnowledge = { 'Slovenia': { native: 'sl', fluent: ['en', 'hr', 'sr', 'bs'], basic: ['de', 'it'] }, 'Serbia': { native: 'sr', fluent: ['en'], basic: ['ru', 'de'] }, 'Italy': { native: 'it', fluent: ['en'], basic: ['es', 'fr'] }, 'Germany': { native: 'de', fluent: ['en'], basic: ['fr'] }, 'USA': { native: 'en', fluent: [], basic: ['es'] }, 'China': { native: 'zh', fluent: [], basic: ['en'] }, 'Japan': { native: 'ja', fluent: [], basic: ['en'] }, 'France': { native: 'fr', fluent: ['en'], basic: ['es', 'de'] }, 'Spain': { native: 'es', fluent: ['en'], basic: ['fr', 'pt'] }, 'Brazil': { native: 'pt', fluent: ['es'], basic: ['en'] }, 'Albania': { native: 'sq', fluent: ['it'], basic: ['en', 'el'] }, };
-            const chatColors = [ { start: '#833ab4', end: '#5851db' }, { start: '#2563eb', end: '#1d4ed8' }, { start: '#16a34a', end: '#15803d' }, { start: '#db2777', end: '#be185d' }, { start: '#f97316', end: '#ea580c' }, ];
+            const chatColors = [ { start: '#7A42F4' }, { start: '#2563eb' }, { start: '#16a34a' }, { start: '#db2777' }, { start: '#f97316' }, ];
             const freeThemes = [ { name: 'Default', style: 'black', isLight: false }, { name: 'Dusk', style: 'linear-gradient(to top, #09203f 0%, #537895 100%)', isLight: false }, { name: 'Mint', style: 'linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)', isLight: true }, { name: 'Sunrise', style: 'linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)', isLight: true }, ];
 
             // App State
@@ -1023,33 +999,12 @@
             [editorName, editorAge, editorTraits, editorNationality].forEach(el => el.addEventListener('input', validateEditorInputs));
 
             backBtn.addEventListener('click', showGenderSelectionScreen);
-
-            endChatBtn.addEventListener('click', () => {
-                toggleChatMenu();
-                showConfirmationModal('Are you sure you want to end this chat? All messages will be deleted.', () => {
-                    localStorage.removeItem('aiPartnerProfile');
-                    if(currentProfile) localStorage.removeItem(`chatHistory_${currentProfile.name}`);
-                    currentProfile = null; chatHistory = [];
-                    editorName.value = ''; editorAge.value = ''; editorTraits.value = ''; editorNationality.value = '';
-                    uploadedImageData = null;
-                    editorImgPreview.classList.add('hidden');
-                    imageUploadLabel.style.display = 'flex';
-                    imageUploadInput.value = "";
-                    showGenderSelectionScreen();
-                });
+            
+            chatAvatar.addEventListener('click', () => {
+                showInfoModal();
             });
 
-            confirmYesBtn.addEventListener('click', () => { if (confirmCallback) confirmCallback(); confirmationModal.classList.add('hidden'); confirmCallback = null; });
-            confirmNoBtn.addEventListener('click', () => { confirmationModal.classList.add('hidden'); confirmCallback = null; });
-            
-            chatMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleChatMenu(); });
-            
-            viewInfoBtn.addEventListener('click', () => { toggleChatMenu(); showInfoModal(); });
-            changeColorBtn.addEventListener('click', () => { toggleChatMenu(); showColorModal(); });
-            changeThemeBtn.addEventListener('click', () => { toggleChatMenu(); showThemeModal(); });
-
             document.addEventListener('click', (e) => {
-                if (!chatDropdownMenu.classList.contains('hidden') && !chatMenuBtn.contains(e.target)) toggleChatMenu();
                 const activeModal = document.querySelector('.modal:not(.hidden)');
                 if (activeModal && e.target.classList.contains('modal-backdrop')) activeModal.classList.add('hidden');
             });
@@ -1059,16 +1014,33 @@
                 confirmCallback = onConfirm;
                 confirmationModal.classList.remove('hidden');
             }
-            function showInfoModal() { infoModal.classList.remove('hidden'); infoModalContent.innerHTML = `<h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2><div class="space-y-3 text-gray-300"><p><strong>Age:</strong> ${currentProfile.age}</p><p><strong>Nationality:</strong> ${currentProfile.nationality}</p><p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p></div><button onclick="document.getElementById('info-modal').classList.add('hidden')" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Close</button>`; }
+            function showInfoModal() { 
+                infoModalContent.innerHTML = `
+                    <h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2>
+                    <div class="space-y-3 text-gray-300">
+                        <p><strong>Age:</strong> ${currentProfile.age}</p>
+                        <p><strong>Nationality:</strong> ${currentProfile.nationality}</p>
+                        <p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p>
+                    </div>
+                    <div class="mt-6 border-t border-gray-700 pt-6 space-y-4">
+                        <button id="modal-change-color-btn" class="w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Change Chat Color</button>
+                        <button id="modal-change-theme-btn" class="w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Change Chat Theme</button>
+                    </div>
+                    <button onclick="document.getElementById('info-modal').classList.add('hidden')" class="mt-8 w-full bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-500 transition">Close</button>
+                `;
+                infoModal.classList.remove('hidden');
+                document.getElementById('modal-change-color-btn').addEventListener('click', () => { infoModal.classList.add('hidden'); showColorModal(); });
+                document.getElementById('modal-change-theme-btn').addEventListener('click', () => { infoModal.classList.add('hidden'); showThemeModal(); });
+            }
             
             function showColorModal() {
                 colorSwatches.innerHTML = '';
                 chatColors.forEach(color => {
                     const swatch = document.createElement('div');
                     swatch.className = 'w-10 h-10 rounded-full cursor-pointer ring-2 ring-transparent hover:ring-white';
-                    swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end})`;
+                    swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end || color.start})`;
                     swatch.addEventListener('click', () => {
-                        setChatColor(color.start, color.end);
+                        setChatColor(color.start);
                         colorModal.classList.add('hidden');
                     });
                     colorSwatches.appendChild(swatch);
@@ -1100,15 +1072,14 @@
                 themeModal.classList.remove('hidden');
             }
 
-            function toggleChatMenu() { chatDropdownMenu.classList.toggle('hidden'); chatDropdownMenu.classList.toggle('opacity-0'); chatDropdownMenu.classList.toggle('scale-95'); }
             function checkPremiumStatus() { const expiry = localStorage.getItem('premiumExpiry'); if (expiry && new Date() < new Date(expiry)) isPremium = true; else isPremium = false; }
             function activatePremium() { const now = new Date(); const expiryDate = new Date(now.setMonth(now.getMonth() + 1)); localStorage.setItem('premiumExpiry', expiryDate.toISOString()); checkPremiumStatus(); showToast(successToast, 'Premium activated for 1 month!'); promoModal.classList.add('hidden'); showGenderSelectionScreen(); }
             function handleThemeImageUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { setChatTheme({ style: e.target.result, isLight: false, isCustom: true }); themeModal.classList.add('hidden'); }; reader.readAsDataURL(file); }
             function setChatTheme(theme) { const bg = theme.isCustom ? `url(${theme.style})` : theme.style; appContainer.style.backgroundImage = bg; localStorage.setItem('chatTheme', theme.style); localStorage.setItem('chatThemeIsLight', theme.isLight); localStorage.setItem('chatThemeIsCustom', theme.isCustom || false); updateThemeContrast(theme.isLight); }
             function loadChatTheme() { const theme = localStorage.getItem('chatTheme'); if (theme) { appContainer.style.backgroundImage = localStorage.getItem('chatThemeIsCustom') === 'true' ? `url(${theme})` : theme; updateThemeContrast(localStorage.getItem('chatThemeIsLight') === 'true'); } }
             function updateThemeContrast(isLight) { document.querySelectorAll('[data-theme-contrast]').forEach(el => el.classList.toggle(el.dataset.themeContrast === 'text' ? 'text-theme-contrast' : 'icon-theme-contrast', isLight)); }
-            function setChatColor(start, end) { document.documentElement.style.setProperty('--user-bubble-color-start', start); document.documentElement.style.setProperty('--user-bubble-color-end', end); localStorage.setItem('chatColor', JSON.stringify({start, end})); }
-            function loadChatColor() { const c = localStorage.getItem('chatColor'); if (c) { const {start, end} = JSON.parse(c); setChatColor(start, end); } }
+            function setChatColor(color) { document.documentElement.style.setProperty('--user-bubble-color', color); localStorage.setItem('chatColor', color); }
+            function loadChatColor() { const c = localStorage.getItem('chatColor'); if (c) { setChatColor(c); } }
 
             init();
         });
