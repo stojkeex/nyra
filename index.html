@@ -548,36 +548,35 @@
                 messageWrapper.className = `flex w-full ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
                 
                 const bubble = document.createElement('div');
-                bubble.className = `max-w-[70%] rounded-2xl shadow relative ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+                bubble.className = `max-w-[70%] rounded-2xl shadow ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
 
                 if (content.type === 'text') {
-                    // Prilagojen padding za prostor za metapodatke
-                    bubble.classList.add('px-3.5', 'pt-2', 'pb-5'); 
+                    bubble.classList.add('px-3.5', 'py-2');
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'flex items-end gap-2';
 
                     const textSpan = document.createElement('span');
                     textSpan.textContent = content.content;
                     textSpan.className = 'break-words';
-                    bubble.appendChild(textSpan);
+                    contentWrapper.appendChild(textSpan);
                     
                     if (sender === 'user') {
                         const metaDiv = document.createElement('div');
-                        // Absolutno pozicioniranje metapodatkov
-                        metaDiv.className = 'message-meta absolute bottom-1.5 right-3'; 
+                        metaDiv.className = 'message-meta shrink-0'; 
                         
                         const timeSpan = document.createElement('span');
-                        timeSpan.className = 'message-time';
+                        timeSpan.className = 'message-time whitespace-nowrap';
                         timeSpan.textContent = content.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                         const statusDiv = document.createElement('div');
-                        statusDiv.className = `status-icon ${content.status || 'sent'}`; // Privzeto je 'sent'
+                        statusDiv.className = `status-icon ${content.status || 'sent'}`;
                         statusDiv.innerHTML = `<svg width="18" height="12" viewBox="0 0 18 12"><path class="check1" d="M1 6.5L5 10.5L11 1.5" stroke="gray" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path class="check2" d="M7 6.5L11 10.5L17 1.5" stroke="gray" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
                         
                         metaDiv.appendChild(timeSpan);
                         metaDiv.appendChild(statusDiv);
-                        bubble.appendChild(metaDiv);
+                        contentWrapper.appendChild(metaDiv);
                     }
-                } else if (content.type === 'image' || content.type === 'voice') {
-                    // TODO: Dodaj podobno logiko za slike in glasovna sporočila, če je potrebno
+                    bubble.appendChild(contentWrapper);
                 }
 
                 if (isNew) messageWrapper.classList.add('message-bubble');
@@ -589,11 +588,6 @@
             function getRandomDelay(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
             async function sendAiResponse(prompt, parts = [], autoPlayVoice = false) {
-                const isVoiceRequest = prompt.includes('[User sent a voice message]');
-                if(!isVoiceRequest) {
-                   updateChatHistory('user', { type: 'text', content: prompt });
-                }
-                
                 setTyping(true);
                 const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
                 const typingDuration = calculateTypingDuration(aiResponse || ""); 
@@ -622,20 +616,16 @@
                 messageInput.value = '';
                 toggleSendButton(false);
                 
-                // 1. Poslano (Sent)
                 addMessageToUI('user', { id: messageId, type: 'text', content: userMessage, time: timestamp, status: 'sent' }, true);
                 updateChatHistory('user', { type: 'text', content: userMessage, time: timestamp });
 
-                // 2. Dostavljeno (Delivered)
                 setTimeout(() => {
                     const msgElement = document.querySelector(`#${messageId} .status-icon`);
                     if (msgElement) msgElement.className = 'status-icon delivered';
 
-                    // 3. Prebrano (Read)
                     setTimeout(() => {
                         if (msgElement) msgElement.className = 'status-icon read';
                         
-                        // 4. Začni AI odgovor po zakasnitvi
                         const readDelay = getRandomDelay(1000, 3000);
                         setTimeout(() => {
                             const wasInactive = currentStatus !== 'active';
