@@ -161,6 +161,32 @@
             opacity: 0.8;
             font-variant-numeric: tabular-nums;
         }
+
+        /* NOVO: Stili za indikator tipkanja */
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #9ca3af; /* gray-400 */
+            border-radius: 50%;
+            animation: typing-bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-of-type(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-of-type(2) {
+            animation-delay: -0.16s;
+        }
+        
+        @keyframes typing-bounce {
+          0%, 80%, 100% {
+            transform: scale(0);
+          }
+          40% {
+            transform: scale(1.0);
+          }
+        }
     </style>
 </head>
 <body class="bg-black">
@@ -297,10 +323,16 @@
             </div>
             
             <!-- Input Area -->
-            <div class="p-3 shrink-0">
-                 <div id="typing-indicator" class="text-sm text-gray-400 mb-2 hidden h-5 pl-4">
-                     <span id="typing-name"></span> is typing...
-                 </div>
+            <div class="p-3 shrink-0 relative">
+                <!-- NOVO: Indikator tipkanja z animacijo pikic -->
+                <div id="typing-indicator" class="hidden absolute bottom-full left-3 mb-1">
+                    <div class="bg-gray-700 rounded-2xl p-2.5 flex items-center space-x-1.5">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
                 <form id="chat-form" class="flex items-center gap-2 bg-[#262626] rounded-2xl p-1.5 transition-all duration-300">
                     <button type="button" id="camera-btn" class="p-2 text-white hover:text-gray-300">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21a9 9 0 110-18 9 9 0 010 18zm0-2a7 7 0 100-14 7 7 0 000 14zm0-2.5a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-2a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg>
@@ -414,7 +446,6 @@
             const backBtn = document.getElementById('back-btn');
             const chatMessages = document.getElementById('chat-messages');
             const typingIndicator = document.getElementById('typing-indicator');
-            const typingName = document.getElementById('typing-name');
             const chatForm = document.getElementById('chat-form');
             const messageInput = document.getElementById('message-input');
             const sendBtn = document.getElementById('send-btn');
@@ -657,21 +688,32 @@
                 }
             }
             
+            function getRandomDelay() {
+                return Math.floor(Math.random() * 10000) + 2000;
+            }
+
             async function sendAiResponse(prompt, parts = [], autoPlayVoice = false) {
                 const isVoiceRequest = prompt.includes('[User sent a voice message]');
                 if(!isVoiceRequest) {
                    updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
                 }
-                setTyping(true);
-                const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
-                const typingDuration = calculateTypingDuration(aiResponse || "");
-                setTimeout(() => {
-                    setTyping(false);
-                    const responseText = aiResponse || 'Oops, something is glitching...';
-                    addMessageToUI('model', { type: 'text', content: responseText, autoPlay: isVoiceRequest }, true);
-                    updateChatHistory('model', { type: 'text', content: responseText });
-                    resetActivityTimers();
-                }, typingDuration);
+
+                const readDelay = getRandomDelay();
+
+                setTimeout(async () => {
+                    setTyping(true);
+                    const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
+                    
+                    const typingDuration = calculateTypingDuration(aiResponse || ""); 
+
+                    setTimeout(() => {
+                        setTyping(false);
+                        const responseText = aiResponse || 'Oops, something is glitching...';
+                        addMessageToUI('model', { type: 'text', content: responseText, autoPlay: isVoiceRequest }, true);
+                        updateChatHistory('model', { type: 'text', content: responseText });
+                        resetActivityTimers();
+                    }, typingDuration);
+                }, readDelay);
             }
             
             async function sendAiImageResponse(imageData, mimeType) {
@@ -718,7 +760,8 @@
             messageInput.addEventListener('input', () => toggleSendButton(messageInput.value.trim() !== ''));
 
             function calculateTypingDuration(text) {
-                return Math.max(500, Math.min(3000, text.length * 40));
+                const duration = text.length * 100;
+                return Math.max(1000, Math.min(8000, duration));
             }
             
             async function callGeminiAPI(prompt, history = [], extraParts = []) {
@@ -758,8 +801,8 @@
                 }
             }
             
+            // NOVO: Posodobljena funkcija za prikaz/skrivanje indikatorja
             function setTyping(isTyping) {
-                typingName.textContent = isTyping ? currentProfile.name : '';
                 typingIndicator.classList.toggle('hidden', !isTyping);
             }
 
