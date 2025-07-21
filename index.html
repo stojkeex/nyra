@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --user-bubble-color: #7A42F4;
             --vh: 1vh;
         }
         html, body {
@@ -51,7 +50,7 @@
         
         .chat-bubble-user {
             color: white;
-            background-color: var(--user-bubble-color);
+            background-image: linear-gradient(to right, #2563eb, #7c3aed); /* Blue to violet gradient */
         }
         .chat-bubble-ai {
             background-color: #262626; 
@@ -190,7 +189,7 @@
                     <span class="text-white">Voice Calls</span>
                 </div>
                 <div class="flex items-center gap-4">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     <span class="text-white">Video Calls</span>
                 </div>
                 <div class="flex items-center gap-4">
@@ -202,7 +201,7 @@
             <div class="flex flex-col gap-4 w-full max-w-sm">
                 <button class="bg-amber-500 text-white font-bold py-3 px-8 rounded-xl hover:bg-amber-600 transition w-full">Subscribe Now</button>
                 <button id="promo-code-btn" class="text-amber-400 hover:text-amber-300 transition">Have a promo code?</button>
-                 <button id="back-to-home-btn" class="text-gray-400 hover:text-white transition mt-4">Back to Home</button>
+                <button id="back-to-home-btn" class="text-gray-400 hover:text-white transition mt-4">Back to Home</button>
             </div>
         </div>
 
@@ -303,7 +302,7 @@
                      <span id="typing-name"></span> is typing...
                  </div>
                 <form id="chat-form" class="flex items-center gap-2 bg-[#262626] rounded-2xl p-1.5 transition-all duration-300">
-                     <button type="button" id="camera-btn" class="p-2 text-white hover:text-gray-300">
+                    <button type="button" id="camera-btn" class="p-2 text-white hover:text-gray-300">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21a9 9 0 110-18 9 9 0 010 18zm0-2a7 7 0 100-14 7 7 0 000 14zm0-2.5a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-2a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg>
                     </button>
                     <input type="text" id="message-input" placeholder="Message..." class="flex-grow bg-transparent text-white focus:outline-none px-2" autocomplete="off">
@@ -350,14 +349,6 @@
     <div id="info-modal" class="hidden modal">
         <div class="modal-backdrop"></div>
         <div id="info-modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50"></div>
-    </div>
-
-    <div id="color-modal" class="hidden modal">
-        <div class="modal-backdrop"></div>
-        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xs bg-gray-800 text-white p-8 rounded-2xl shadow-2xl z-50">
-            <h2 class="text-xl font-bold text-center mb-6">Change Chat Color</h2>
-            <div id="color-swatches" class="grid grid-cols-4 gap-4"></div>
-        </div>
     </div>
 
     <div id="theme-modal" class="hidden modal">
@@ -444,8 +435,6 @@
             const confirmNoBtn = document.getElementById('confirm-no-btn');
             const infoModal = document.getElementById('info-modal');
             const infoModalContent = document.getElementById('info-modal-content');
-            const colorModal = document.getElementById('color-modal');
-            const colorSwatches = document.getElementById('color-swatches');
             const themeModal = document.getElementById('theme-modal');
             const themeSwatches = document.getElementById('theme-swatches');
             const themeUploadInput = document.getElementById('theme-upload-input');
@@ -457,7 +446,6 @@
             // --- Data ---
             const countries = [ { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' }, { name: 'Argentina', code: 'AR' }, { name: 'Australia', code: 'AU' }, { name: 'Austria', code: 'AT' }, { name: 'Belgium', code: 'BE' }, { name: 'Brazil', code: 'BR' }, { name: 'Canada', code: 'CA' }, { name: 'China', code: 'CN' }, { name: 'Colombia', code: 'CO' }, { name: 'Croatia', code: 'HR' }, { name: 'Denmark', code: 'DK' }, { name: 'Egypt', code: 'EG' }, { name: 'Finland', code: 'FI' }, { name: 'France', code: 'FR' }, { name: 'Germany', code: 'DE' }, { name: 'Greece', code: 'GR' }, { name: 'Hungary', code: 'HU' }, { name: 'Iceland', code: 'IS' }, { name: 'India', code: 'IN' }, { name: 'Indonesia', code: 'ID' }, { name: 'Ireland', code: 'IE' }, { name: 'Italy', code: 'IT' }, { name: 'Japan', code: 'JP' }, { name: 'Mexico', code: 'MX' }, { name: 'Netherlands', code: 'NL' }, { name: 'New Zealand', code: 'NZ' }, { name: 'Nigeria', code: 'NG' }, { name: 'Norway', code: 'NO' }, { name: 'Poland', code: 'PL' }, { name: 'Portugal', code: 'PT' }, { name: 'Russia', code: 'RU' }, { name: 'Saudi Arabia', code: 'SA' }, { name: 'Serbia', code: 'RS' }, { name: 'Slovenia', code: 'SI' }, { name: 'South Africa', code: 'ZA' }, { name: 'South Korea', code: 'KR' }, { name: 'Spain', code: 'ES' }, { name: 'Sweden', code: 'SE' }, { name: 'Switzerland', code: 'CH' }, { name: 'Turkey', code: 'TR' }, { name: 'United Kingdom', code: 'GB' }, { name: 'USA', code: 'US' } ];
             const languageKnowledge = { 'Slovenia': { native: 'sl', fluent: ['en', 'hr', 'sr', 'bs'], basic: ['de', 'it'] }, 'Serbia': { native: 'sr', fluent: ['en'], basic: ['ru', 'de'] }, 'Italy': { native: 'it', fluent: ['en'], basic: ['es', 'fr'] }, 'Germany': { native: 'de', fluent: ['en'], basic: ['fr'] }, 'USA': { native: 'en', fluent: [], basic: ['es'] }, 'China': { native: 'zh', fluent: [], basic: ['en'] }, 'Japan': { native: 'ja', fluent: [], basic: ['en'] }, 'France': { native: 'fr', fluent: ['en'], basic: ['es', 'de'] }, 'Spain': { native: 'es', fluent: ['en'], basic: ['fr', 'pt'] }, 'Brazil': { native: 'pt', fluent: ['es'], basic: ['en'] }, 'Albania': { native: 'sq', fluent: ['it'], basic: ['en', 'el'] }, };
-            const chatColors = [ { start: '#7A42F4' }, { start: '#2563eb' }, { start: '#16a34a' }, { start: '#db2777' }, { start: '#f97316' }, ];
             const freeThemes = [ { name: 'Default', style: 'black', isLight: false }, { name: 'Dusk', style: 'linear-gradient(to top, #09203f 0%, #537895 100%)', isLight: false }, { name: 'Mint', style: 'linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)', isLight: true }, { name: 'Sunrise', style: 'linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)', isLight: true }, ];
 
             // App State
@@ -488,7 +476,6 @@
                     synth.onvoiceschanged = loadVoices;
                 }
                 checkPremiumStatus();
-                loadChatColor();
                 const savedProfile = localStorage.getItem('aiPartnerProfile');
                 if (savedProfile) {
                     try {
@@ -525,8 +512,8 @@
             }
             
             function showPremiumScreen() {
-                 showScreen(premiumScreen);
-                 backgroundWrap.className = 'neutral-gradient';
+                showScreen(premiumScreen);
+                backgroundWrap.className = 'neutral-gradient';
             }
 
             function showGenderSelectionScreen() {
@@ -673,7 +660,7 @@
             async function sendAiResponse(prompt, parts = [], autoPlayVoice = false) {
                 const isVoiceRequest = prompt.includes('[User sent a voice message]');
                 if(!isVoiceRequest) {
-                  updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
+                   updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
                 }
                 setTyping(true);
                 const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
@@ -688,9 +675,9 @@
             }
             
             async function sendAiImageResponse(imageData, mimeType) {
-                 const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
-                 const prompt = `I'm sending you an image. Please react to it in your native language, which is '${currentProfile.languages.native}'.`;
-                 await sendAiResponse(prompt, parts);
+                const parts = [{ inlineData: { data: imageData, mimeType: mimeType } }];
+                const prompt = `I'm sending you an image. Please react to it in your native language, which is '${currentProfile.languages.native}'.`;
+                await sendAiResponse(prompt, parts);
             }
 
             async function sendWelcomeMessage() {
@@ -757,7 +744,7 @@
                     { role: "user", parts: userParts }
                 ];
                 const payload = { contents: fullHistory };
-                const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0";
+                const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; // API key will be managed by the environment
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
                 try {
@@ -1023,29 +1010,12 @@
                         <p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p>
                     </div>
                     <div class="mt-6 border-t border-gray-700 pt-6 space-y-4">
-                        <button id="modal-change-color-btn" class="w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Change Chat Color</button>
                         <button id="modal-change-theme-btn" class="w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Change Chat Theme</button>
                     </div>
                     <button onclick="document.getElementById('info-modal').classList.add('hidden')" class="mt-8 w-full bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-500 transition">Close</button>
                 `;
                 infoModal.classList.remove('hidden');
-                document.getElementById('modal-change-color-btn').addEventListener('click', () => { infoModal.classList.add('hidden'); showColorModal(); });
                 document.getElementById('modal-change-theme-btn').addEventListener('click', () => { infoModal.classList.add('hidden'); showThemeModal(); });
-            }
-            
-            function showColorModal() {
-                colorSwatches.innerHTML = '';
-                chatColors.forEach(color => {
-                    const swatch = document.createElement('div');
-                    swatch.className = 'w-10 h-10 rounded-full cursor-pointer ring-2 ring-transparent hover:ring-white';
-                    swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end || color.start})`;
-                    swatch.addEventListener('click', () => {
-                        setChatColor(color.start);
-                        colorModal.classList.add('hidden');
-                    });
-                    colorSwatches.appendChild(swatch);
-                });
-                colorModal.classList.remove('hidden');
             }
             
             function showThemeModal() {
@@ -1078,8 +1048,6 @@
             function setChatTheme(theme) { const bg = theme.isCustom ? `url(${theme.style})` : theme.style; appContainer.style.backgroundImage = bg; localStorage.setItem('chatTheme', theme.style); localStorage.setItem('chatThemeIsLight', theme.isLight); localStorage.setItem('chatThemeIsCustom', theme.isCustom || false); updateThemeContrast(theme.isLight); }
             function loadChatTheme() { const theme = localStorage.getItem('chatTheme'); if (theme) { appContainer.style.backgroundImage = localStorage.getItem('chatThemeIsCustom') === 'true' ? `url(${theme})` : theme; updateThemeContrast(localStorage.getItem('chatThemeIsLight') === 'true'); } }
             function updateThemeContrast(isLight) { document.querySelectorAll('[data-theme-contrast]').forEach(el => el.classList.toggle(el.dataset.themeContrast === 'text' ? 'text-theme-contrast' : 'icon-theme-contrast', isLight)); }
-            function setChatColor(color) { document.documentElement.style.setProperty('--user-bubble-color', color); localStorage.setItem('chatColor', color); }
-            function loadChatColor() { const c = localStorage.getItem('chatColor'); if (c) { setChatColor(c); } }
 
             init();
         });
