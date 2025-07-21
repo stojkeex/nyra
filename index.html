@@ -121,8 +121,8 @@
         .typing-dot:nth-of-type(2) { animation-delay: -0.16s; }
         @keyframes typing-bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
-        /* NOVO: Stili za status sporočila (kljukice) */
-        .message-meta { display: flex; align-items: flex-end; gap: 4px; align-self: flex-end; }
+        /* Stili za status sporočila (kljukice) */
+        .message-meta { display: flex; align-items: center; gap: 4px; }
         .message-time { font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
         .status-icon .check2 { display: none; }
         .status-icon.sent .check1 { stroke: #9ca3af; }
@@ -390,12 +390,10 @@
             const promoInput = document.getElementById('promo-input');
             const promoCancelBtn = document.getElementById('promo-cancel-btn');
 
-            // --- Data ---
+            // --- Data & State ---
             const countries = [ { name: 'Afghanistan', code: 'AF' }, { name: 'Albania', code: 'AL' }, { name: 'Algeria', code: 'DZ' }, { name: 'Argentina', code: 'AR' }, { name: 'Australia', code: 'AU' }, { name: 'Austria', code: 'AT' }, { name: 'Belgium', code: 'BE' }, { name: 'Brazil', code: 'BR' }, { name: 'Canada', code: 'CA' }, { name: 'China', code: 'CN' }, { name: 'Colombia', code: 'CO' }, { name: 'Croatia', code: 'HR' }, { name: 'Denmark', code: 'DK' }, { name: 'Egypt', code: 'EG' }, { name: 'Finland', code: 'FI' }, { name: 'France', code: 'FR' }, { name: 'Germany', code: 'DE' }, { name: 'Greece', code: 'GR' }, { name: 'Hungary', code: 'HU' }, { name: 'Iceland', code: 'IS' }, { name: 'India', code: 'IN' }, { name: 'Indonesia', code: 'ID' }, { name: 'Ireland', code: 'IE' }, { name: 'Italy', code: 'IT' }, { name: 'Japan', code: 'JP' }, { name: 'Mexico', code: 'MX' }, { name: 'Netherlands', code: 'NL' }, { name: 'New Zealand', code: 'NZ' }, { name: 'Nigeria', code: 'NG' }, { name: 'Norway', code: 'NO' }, { name: 'Poland', code: 'PL' }, { name: 'Portugal', code: 'PT' }, { name: 'Russia', code: 'RU' }, { name: 'Saudi Arabia', code: 'SA' }, { name: 'Serbia', code: 'RS' }, { name: 'Slovenia', code: 'SI' }, { name: 'South Africa', code: 'ZA' }, { name: 'South Korea', code: 'KR' }, { name: 'Spain', code: 'ES' }, { name: 'Sweden', code: 'SE' }, { name: 'Switzerland', code: 'CH' }, { name: 'Turkey', code: 'TR' }, { name: 'United Kingdom', code: 'GB' }, { name: 'USA', code: 'US' } ];
             const languageKnowledge = { 'Slovenia': { native: 'sl', fluent: ['en', 'hr', 'sr', 'bs'], basic: ['de', 'it'] }, 'Serbia': { native: 'sr', fluent: ['en'], basic: ['ru', 'de'] }, 'Italy': { native: 'it', fluent: ['en'], basic: ['es', 'fr'] }, 'Germany': { native: 'de', fluent: ['en'], basic: ['fr'] }, 'USA': { native: 'en', fluent: [], basic: ['es'] }, 'China': { native: 'zh', fluent: [], basic: ['en'] }, 'Japan': { native: 'ja', fluent: [], basic: ['en'] }, 'France': { native: 'fr', fluent: ['en'], basic: ['es', 'de'] }, 'Spain': { native: 'es', fluent: ['en'], basic: ['fr', 'pt'] }, 'Brazil': { native: 'pt', fluent: ['es'], basic: ['en'] }, 'Albania': { native: 'sq', fluent: ['it'], basic: ['en', 'el'] }, };
             const freeThemes = [ { name: 'Default', style: 'black', isLight: false }, { name: 'Dusk', style: 'linear-gradient(to top, #09203f 0%, #537895 100%)', isLight: false }, { name: 'Mint', style: 'linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)', isLight: true }, { name: 'Sunrise', style: 'linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)', isLight: true }, ];
-
-            // App State
             let currentProfile = null, chatHistory = [], currentGender = null, uploadedImageData = null, confirmCallback = null;
             let isPremium = false, premiumExpiry = null;
             let activityTimer, inactiveInterval, currentStatus = 'active', minutesInactive = 0;
@@ -550,39 +548,36 @@
                 messageWrapper.className = `flex w-full ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
                 
                 const bubble = document.createElement('div');
-                bubble.className = `max-w-[70%] rounded-2xl shadow ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+                bubble.className = `max-w-[70%] rounded-2xl shadow relative ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
 
                 if (content.type === 'text') {
-                    bubble.classList.add('px-3.5', 'py-2');
-                    const contentWrapper = document.createElement('div');
-                    contentWrapper.className = 'flex items-end gap-2';
+                    // Prilagojen padding za prostor za metapodatke
+                    bubble.classList.add('px-3.5', 'pt-2', 'pb-5'); 
+
                     const textSpan = document.createElement('span');
                     textSpan.textContent = content.content;
                     textSpan.className = 'break-words';
-                    contentWrapper.appendChild(textSpan);
+                    bubble.appendChild(textSpan);
                     
                     if (sender === 'user') {
                         const metaDiv = document.createElement('div');
-                        metaDiv.className = 'message-meta';
+                        // Absolutno pozicioniranje metapodatkov
+                        metaDiv.className = 'message-meta absolute bottom-1.5 right-3'; 
                         
                         const timeSpan = document.createElement('span');
                         timeSpan.className = 'message-time';
                         timeSpan.textContent = content.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                         const statusDiv = document.createElement('div');
-                        statusDiv.className = `status-icon ${content.status || 'read'}`;
+                        statusDiv.className = `status-icon ${content.status || 'sent'}`; // Privzeto je 'sent'
                         statusDiv.innerHTML = `<svg width="18" height="12" viewBox="0 0 18 12"><path class="check1" d="M1 6.5L5 10.5L11 1.5" stroke="gray" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path class="check2" d="M7 6.5L11 10.5L17 1.5" stroke="gray" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
                         
                         metaDiv.appendChild(timeSpan);
                         metaDiv.appendChild(statusDiv);
-                        contentWrapper.appendChild(metaDiv);
+                        bubble.appendChild(metaDiv);
                     }
-                    bubble.appendChild(contentWrapper);
-
-                } else if (content.type === 'image') {
-                    // Similar logic for image messages if they need status too
-                } else if (content.type === 'voice') {
-                    // Similar logic for voice messages
+                } else if (content.type === 'image' || content.type === 'voice') {
+                    // TODO: Dodaj podobno logiko za slike in glasovna sporočila, če je potrebno
                 }
 
                 if (isNew) messageWrapper.classList.add('message-bubble');
@@ -598,28 +593,20 @@
                 if(!isVoiceRequest) {
                    updateChatHistory('user', { type: 'text', content: prompt });
                 }
-
-                const readDelay = getRandomDelay(1000, 3000); // Delay before typing starts
                 
-                setTimeout(async () => {
-                    setTyping(true);
-                    const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
-                    const typingDuration = calculateTypingDuration(aiResponse || ""); 
+                setTyping(true);
+                const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
+                const typingDuration = calculateTypingDuration(aiResponse || ""); 
 
-                    setTimeout(() => {
-                        setTyping(false);
-                        const responseText = aiResponse || 'Oops, something is glitching...';
-                        addMessageToUI('model', { type: 'text', content: responseText, autoPlay: isVoiceRequest }, true);
-                        updateChatHistory('model', { type: 'text', content: responseText });
-                        resetActivityTimers();
-                    }, typingDuration);
-                }, readDelay);
+                setTimeout(() => {
+                    setTyping(false);
+                    const responseText = aiResponse || 'Oops, something is glitching...';
+                    addMessageToUI('model', { type: 'text', content: responseText, autoPlay: isVoiceRequest }, true);
+                    updateChatHistory('model', { type: 'text', content: responseText });
+                    resetActivityTimers();
+                }, typingDuration);
             }
             
-            async function sendAiImageResponse(imageData, mimeType) {
-                // ... (logic remains the same)
-            }
-
             async function sendWelcomeMessage() {
                 await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
             }
@@ -637,7 +624,7 @@
                 
                 // 1. Poslano (Sent)
                 addMessageToUI('user', { id: messageId, type: 'text', content: userMessage, time: timestamp, status: 'sent' }, true);
-                updateChatHistory('user', { type: 'text', content: userMessage, time: timestamp }); // Save to history
+                updateChatHistory('user', { type: 'text', content: userMessage, time: timestamp });
 
                 // 2. Dostavljeno (Delivered)
                 setTimeout(() => {
@@ -648,22 +635,25 @@
                     setTimeout(() => {
                         if (msgElement) msgElement.className = 'status-icon read';
                         
-                        // 4. Začni AI odgovor
-                        const wasInactive = currentStatus !== 'active';
-                        clearTimeout(activityTimer);
-                        clearInterval(inactiveInterval);
+                        // 4. Začni AI odgovor po zakasnitvi
+                        const readDelay = getRandomDelay(1000, 3000);
+                        setTimeout(() => {
+                            const wasInactive = currentStatus !== 'active';
+                            clearTimeout(activityTimer);
+                            clearInterval(inactiveInterval);
 
-                        if (wasInactive) {
-                            setTimeout(async () => {
+                            if (wasInactive) {
+                                setTimeout(async () => {
+                                    resetActivityTimers();
+                                    await sendAiResponse(userMessage);
+                                }, 10000);
+                            } else {
                                 resetActivityTimers();
-                                await sendAiResponse(userMessage);
-                            }, 10000);
-                        } else {
-                            resetActivityTimers();
-                            sendAiResponse(userMessage);
-                        }
-                    }, getRandomDelay(1000, 3000)); // Naključni čas branja
-                }, 1000); // Fiksni čas dostave
+                                sendAiResponse(userMessage);
+                            }
+                        }, readDelay);
+                    }, getRandomDelay(1000, 2000));
+                }, 1000);
             }
 
             function toggleSendButton(show) {
@@ -675,7 +665,7 @@
             messageInput.addEventListener('input', () => toggleSendButton(messageInput.value.trim() !== ''));
 
             function calculateTypingDuration(text) {
-                const duration = text.length * 80; // Prilagojena hitrost
+                const duration = text.length * 80;
                 return Math.max(1000, Math.min(6000, duration));
             }
             
