@@ -694,7 +694,9 @@
             
             async function sendAiResponse(prompt, parts = [], autoPlayVoice = false) {
                 const isVoiceRequest = prompt.includes('[User sent a voice message]');
-                updateChatHistory('user', { type: parts.length > 0 ? 'image' : (isVoiceRequest ? 'voice' : 'text'), content: prompt, parts: parts });
+                if(!isVoiceRequest) {
+                  updateChatHistory('user', { type: parts.length > 0 ? 'image' : 'text', content: prompt, parts: parts });
+                }
                 setTyping(true);
                 const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
                 const typingDuration = calculateTypingDuration(aiResponse || "");
@@ -714,7 +716,7 @@
             }
 
             async function sendWelcomeMessage() {
-                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
+                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`, [], false, true);
             }
             
             async function handleFormSubmit(e) {
@@ -777,7 +779,7 @@
                     { role: "user", parts: userParts }
                 ];
                 const payload = { contents: fullHistory };
-                const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; 
+                const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
                 try {
@@ -1056,8 +1058,46 @@
                 confirmationModal.classList.remove('hidden');
             }
             function showInfoModal() { infoModal.classList.remove('hidden'); infoModalContent.innerHTML = `<h2 class="text-2xl font-bold text-center mb-6">${currentProfile.name}</h2><div class="space-y-3 text-gray-300"><p><strong>Age:</strong> ${currentProfile.age}</p><p><strong>Nationality:</strong> ${currentProfile.nationality}</p><p><strong>Traits:</strong> ${currentProfile.traits.length > 0 ? currentProfile.traits.join(', ') : 'Not set'}</p></div><button onclick="document.getElementById('info-modal').classList.add('hidden')" class="mt-8 w-full bg-gray-700 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-gray-600 transition">Close</button>`; }
-            function showColorModal() { colorModal.classList.remove('hidden'); }
-            function showThemeModal() { themeModal.classList.remove('hidden'); }
+            
+            function showColorModal() {
+                colorSwatches.innerHTML = '';
+                chatColors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'w-10 h-10 rounded-full cursor-pointer ring-2 ring-transparent hover:ring-white';
+                    swatch.style.background = `linear-gradient(to right, ${color.start}, ${color.end})`;
+                    swatch.addEventListener('click', () => {
+                        setChatColor(color.start, color.end);
+                        colorModal.classList.add('hidden');
+                    });
+                    colorSwatches.appendChild(swatch);
+                });
+                colorModal.classList.remove('hidden');
+            }
+            
+            function showThemeModal() {
+                themeSwatches.innerHTML = '';
+                const currentTheme = localStorage.getItem('chatTheme') || 'black';
+                freeThemes.forEach(theme => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'theme-swatch h-16 rounded-lg cursor-pointer bg-cover bg-center flex items-center justify-center';
+                    if (currentTheme === theme.style) swatch.classList.add('selected');
+                    swatch.style.background = theme.style;
+                    swatch.addEventListener('click', () => {
+                        setChatTheme(theme);
+                        themeModal.classList.add('hidden');
+                    });
+                    themeSwatches.appendChild(swatch);
+                });
+                if (isPremium) {
+                    const uploadSwatch = document.createElement('div');
+                    uploadSwatch.className = 'theme-swatch h-16 rounded-lg cursor-pointer bg-gray-700 flex flex-col items-center justify-center text-gray-400 hover:bg-gray-600';
+                    uploadSwatch.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg><span class="text-xs">Upload</span>`;
+                    uploadSwatch.addEventListener('click', () => themeUploadInput.click());
+                    themeSwatches.appendChild(uploadSwatch);
+                }
+                themeModal.classList.remove('hidden');
+            }
+
             function toggleChatMenu() { chatDropdownMenu.classList.toggle('hidden'); chatDropdownMenu.classList.toggle('opacity-0'); chatDropdownMenu.classList.toggle('scale-95'); }
             function checkPremiumStatus() { const expiry = localStorage.getItem('premiumExpiry'); if (expiry && new Date() < new Date(expiry)) isPremium = true; else isPremium = false; }
             function activatePremium() { const now = new Date(); const expiryDate = new Date(now.setMonth(now.getMonth() + 1)); localStorage.setItem('premiumExpiry', expiryDate.toISOString()); checkPremiumStatus(); showToast(successToast, 'Premium activated for 1 month!'); promoModal.classList.add('hidden'); showGenderSelectionScreen(); }
