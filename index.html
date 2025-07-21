@@ -620,13 +620,13 @@
                     localStorage.setItem('aiPartnerProfile', JSON.stringify(currentProfile));
                     chatHistory = [];
                     localStorage.removeItem(`chatHistory_${currentProfile.name}`);
-                    setupChatScreen();
+                    setupChatScreen(true); // Pass true to indicate it's the first setup
                 } catch(e) {
                     showToast(errorToast, e.name === 'QuotaExceededError' ? "Image too large." : "An unknown error occurred.");
                 }
             });
 
-            function setupChatScreen() {
+            function setupChatScreen(isFirstSetup = false) {
                 checkPremiumStatus();
                 loadChatTheme();
                 showScreen(chatScreen);
@@ -638,7 +638,9 @@
                 callBtn.classList.toggle('hidden', !isPremium);
                 videoCallBtn.classList.toggle('hidden', !isPremium);
                 renderChatHistory();
-                if (chatHistory.length === 0) sendWelcomeMessage();
+                if (isFirstSetup) {
+                    sendWelcomeMessage();
+                }
                 resetActivityTimers();
             }
 
@@ -716,7 +718,7 @@
             }
 
             async function sendWelcomeMessage() {
-                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`, [], false, true);
+                await sendAiResponse(`Greet me casually, like you know me. You MUST speak in your native language ('${currentProfile.languages.native}').`);
             }
             
             async function handleFormSubmit(e) {
