@@ -1,497 +1,490 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insight Assistant</title>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>BizMind AI - Your Personal AI Business Partner</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Tailwind Config (for dark mode) -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        bounce: 'bounce 1s infinite',
-                    },
-                    keyframes: {
-                        bounce: {
-                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
-                            '50%': { transform: 'none', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom Styles -->
     <style>
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar {
-            width: 6px;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        ::-webkit-scrollbar-track {
-            background: transparent;
+        .bg-hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(circle at 1px 1px, #d1d5db 1px, transparent 0);
+            background-size: 2rem 2rem;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #4a5568;
-            border-radius: 3px;
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        html.light ::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
+        .cta-button {
+            transition: all 0.3s ease;
         }
-        .prose { max-width: 100%; }
-        .prose strong { color: inherit; }
-        .prose em { color: inherit; }
-        .prose code { font-size: 0.9em; padding: 0.2em 0.4em; margin: 0; border-radius: 6px; background-color: rgba(139, 145, 157, 0.2); }
-        .prose ul { padding-left: 1.5rem; }
-        .prose li { margin-top: 0.25em; margin-bottom: 0.25em; }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card, .pricing-card, .testimonial-card {
+             transition: all 0.3s ease;
+        }
+        .feature-card:hover, .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        /* Hide pages by default */
+        .page {
+            display: none;
+        }
+        /* Show the active page */
+        .page.active {
+            display: block;
+        }
+        /* Mobile menu transition */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* FAQ Accordion */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary .accordion-icon { transform: rotate(180deg); }
+
+        /* Modal Styles */
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e3a8a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans antialiased">
+<body class="bg-gray-50 text-gray-800">
 
-    <div class="flex h-screen w-screen">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="relative flex flex-col bg-gray-50 dark:bg-gray-800/50 border-r border-gray-200 dark:border-gray-700/50 transition-all duration-300 w-64">
-            <div class="flex-1 flex flex-col p-2 space-y-2 overflow-y-auto">
-                <div class="flex items-center justify-between p-2">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="brain-circuit" class="text-indigo-500"></i>
-                        <h1 class="text-lg font-semibold">Insight Assistant</h1>
-                    </div>
-                </div>
-                <button id="new-chat-btn" class="flex items-center justify-between w-full p-2 text-sm bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">
-                    <span>New Chat</span>
-                    <i data-lucide="plus" class="w-4 h-4"></i>
+    <!-- Header -->
+    <header class="fixed w-full z-50 glass-effect">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" onclick="handleNav(event, 'home')" class="flex items-center cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A3 3 0 1 0 12 18Z"/><path d="M12 12a4 4 0 0 0 3.474 3.944A3 3 0 1 0 17 9.5a4 4 0 0 0-4.854-3.875Z"/><path d="M12 5a3 3 0 0 1 3 3"/><path d="M12 18a3 3 0 0 0 3-3"/><path d="M12 12a4 4 0 0 0-4 4"/><path d="M12 12a4 4 0 0 1 4-4"/></svg>
+                <h1 class="text-2xl font-bold text-[#1e3a8a] ml-2">BizMind AI</h1>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" onclick="handleNav(event, 'home')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Home</a>
+                <a href="#planner" onclick="handleNav(event, 'planner')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">AI Planner</a>
+                <a href="#chat" onclick="handleNav(event, 'chat')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Chat Bot</a>
+                <a href="#premium" onclick="handleNav(event, 'premium')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Pricing</a>
+                <a href="#about" onclick="handleNav(event, 'about')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">About Us</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="hamburger-button" class="text-gray-800 focus:outline-none">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
-                
-                <div class="flex-grow pt-4">
-                    <h2 class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">History</h2>
-                    <nav id="chat-list" class="mt-2 space-y-1">
-                        <!-- Chat list is generated by JavaScript -->
-                    </nav>
-                </div>
             </div>
+        </div>
+    </header>
 
-            <div class="p-2 border-t border-gray-200 dark:border-gray-700/50">
-                <div id="theme-switcher" class="p-2 flex items-center justify-between text-sm cursor-pointer rounded-lg hover:bg-gray-200/50 dark:hover:bg-gray-700/50">
-                    <div class="flex items-center gap-2">
-                        <span id="theme-icon-container">
-                            <i data-lucide="moon" class="w-4 h-4"></i>
-                        </span>
-                        <span id="theme-text">Dark Mode</span>
-                    </div>
-                    <div id="theme-toggle-bg" class="w-10 h-5 flex items-center rounded-full p-1 transition-colors bg-indigo-500">
-                        <div id="theme-toggle-dot" class="bg-white w-3.5 h-3.5 rounded-full shadow-md transform transition-transform translate-x-5"></div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main id="main-content" class="flex-1 flex flex-col transition-all duration-300">
-            <!-- Content is generated by JavaScript (landing page or chat interface) -->
-        </main>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white z-40 transform -translate-x-full md:hidden">
+        <div class="flex justify-end p-6">
+             <button id="close-menu-button" class="text-gray-800 focus:outline-none">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center justify-center h-full -mt-16 space-y-8 text-2xl">
+            <a href="#home" onclick="handleNav(event, 'home', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Home</a>
+            <a href="#planner" onclick="handleNav(event, 'planner', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">AI Planner</a>
+            <a href="#chat" onclick="handleNav(event, 'chat', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Chat Bot</a>
+            <a href="#premium" onclick="handleNav(event, 'premium', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Pricing</a>
+            <a href="#about" onclick="handleNav(event, 'about', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">About Us</a>
+            <a href="#premium" onclick="handleNav(event, 'premium', true)" class="mt-8 inline-block bg-[#1e3a8a] text-white px-8 py-3 rounded-lg font-semibold cta-button">Get Started</a>
+        </nav>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Elements ---
-            const mainContent = document.getElementById('main-content');
-            const newChatBtn = document.getElementById('new-chat-btn');
-            const chatList = document.getElementById('chat-list');
-            const themeSwitcher = document.getElementById('theme-switcher');
-            const themeIconContainer = document.getElementById('theme-icon-container');
-            const themeText = document.getElementById('theme-text');
-            const themeToggleBg = document.getElementById('theme-toggle-bg');
-            const themeToggleDot = document.getElementById('theme-toggle-dot');
-            const htmlTag = document.documentElement;
-
-            // --- App State ---
-            let state = {
-                theme: 'dark',
-                chats: [],
-                currentChatId: null,
-            };
-
-            // --- Render Functions ---
-
-            const renderLandingPage = () => {
-                mainContent.innerHTML = `
-                    <div class="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 text-center">
-                        <div class="max-w-4xl mx-auto">
-                            <div class="flex items-center justify-center gap-3 mb-4">
-                                <i data-lucide="brain-circuit" class="w-10 h-10 text-indigo-500"></i>
-                                <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Insight Assistant</h1>
-                            </div>
-                            <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-10">
-                                Your AI-powered partner for entrepreneurial success. Get business coaching, find collaborators, and unlock growth strategies.
-                            </p>
-                            <div class="grid md:grid-cols-2 gap-6 mb-12 text-left">
-                                <div class="bg-white dark:bg-gray-800/50 p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-transparent hover:border-indigo-500/50">
-                                    <div class="flex items-center justify-center w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg mb-4">
-                                        <i data-lucide="search" class="w-6 h-6 text-indigo-500"></i>
-                                    </div>
-                                    <h3 class="text-lg font-semibold mb-2">People & Business Finder</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Get public info on companies and leaders. Understand their strategies and find collaboration opportunities.</p>
-                                </div>
-                                <div class="bg-white dark:bg-gray-800/50 p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-transparent hover:border-indigo-500/50">
-                                    <div class="flex items-center justify-center w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg mb-4">
-                                        <i data-lucide="bot" class="w-6 h-6 text-indigo-500"></i>
-                                    </div>
-                                    <h3 class="text-lg font-semibold mb-2">AI Business Coach</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Receive personalized advice, from marketing tips and SWOT analysis to step-by-step strategic guidance.</p>
-                                </div>
-                            </div>
-                            <button id="start-chat-from-landing" class="px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                                Start a New Chat
-                            </button>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('start-chat-from-landing').addEventListener('click', createNewChat);
-                lucide.createIcons();
-            };
-
-            const renderChatInterface = () => {
-                const chat = state.chats.find(c => c.id === state.currentChatId);
-                if (!chat) {
-                    renderLandingPage();
-                    return;
-                }
-                
-                mainContent.innerHTML = `
-                    <div class="flex flex-col h-full">
-                        <div id="messages-container" class="flex-1 overflow-y-auto p-4 md:p-6">
-                            <div class="max-w-3xl mx-auto">
-                                <!-- Messages are added here -->
-                            </div>
-                        </div>
-                        <div class="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700/50 bg-gray-100 dark:bg-gray-900">
-                            <div class="max-w-3xl mx-auto">
-                                <div class="relative">
-                                    <textarea id="chat-input" placeholder="Ask about a business leader, or request a marketing plan..." class="w-full pl-4 pr-12 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none" rows="1" style="min-height: 52px; max-height: 200px;"></textarea>
-                                    <button id="send-btn" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-indigo-600 text-white rounded-lg disabled:bg-indigo-400 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors">
-                                        <i data-lucide="send" class="w-5 h-5"></i>
-                                    </button>
-                                </div>
-                                <p class="text-xs text-center text-gray-400 dark:text-gray-500 mt-2">
-                                    Insight Assistant can make mistakes. Consider checking important information.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                renderMessages();
-                setupChatInput();
-                lucide.createIcons();
-            };
-            
-            const renderMessages = () => {
-                const chat = state.chats.find(c => c.id === state.currentChatId);
-                if (!chat) return;
-
-                const messagesContainer = document.querySelector('#messages-container .max-w-3xl');
-                messagesContainer.innerHTML = chat.messages.map(msg => renderMessage(msg)).join('');
-                
-                if (chat.isLoading) {
-                    messagesContainer.innerHTML += renderTypingIndicator();
-                }
-
-                lucide.createIcons();
-                scrollToBottom();
-            };
-            
-            const renderMessage = (message) => {
-                const isUser = message.role === 'user';
-                const contentHtml = message.content
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                    .replace(/`([^`]+)`/g, '<code>$1</code>')
-                    .replace(/^- (.*)/gm, '<ul><li class="list-disc ml-4">$1</li></ul>')
-                    .replace(/<\/ul>\s*<ul>/g, ''); // Merge adjacent lists
-
-                return `
-                    <div class="flex items-start gap-4 my-6 ${isUser ? 'justify-end' : ''}">
-                        ${!isUser ? `
-                        <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-indigo-500 rounded-full text-white">
-                            <i data-lucide="bot" class="w-5 h-5"></i>
-                        </div>` : ''}
-                        <div class="p-4 rounded-xl max-w-xl ${isUser ? 'bg-indigo-500 text-white rounded-br-none' : 'bg-white dark:bg-gray-800 rounded-bl-none shadow-sm'}">
-                            <div class="prose prose-sm dark:prose-invert">${contentHtml}</div>
-                        </div>
-                        ${isUser ? `
-                        <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-300 dark:bg-gray-600 rounded-full text-gray-800 dark:text-gray-200">
-                            <i data-lucide="user" class="w-5 h-5"></i>
-                        </div>` : ''}
-                    </div>
-                `;
-            };
-            
-            const renderTypingIndicator = () => `
-                <div class="flex items-start gap-4 my-6">
-                    <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-indigo-500 rounded-full text-white">
-                        <i data-lucide="bot" class="w-5 h-5"></i>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white dark:bg-gray-800 rounded-bl-none shadow-sm flex items-center space-x-1">
-                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
-                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+    <main>
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <section class="bg-hero-pattern pt-32 pb-20 md:pt-48 md:pb-32 text-center">
+                <div class="container mx-auto px-6">
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">Your Personal <span class="text-[#1e3a8a]">AI Business Partner</span></h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Get real-time insights, automated strategies, and intelligent tools to build, launch, and grow your business – all powered by a single, business-focused AI.</p>
+                    <div class="mt-10 flex justify-center items-center space-x-4">
+                        <a href="#premium" onclick="handleNav(event, 'premium')" class="cta-button bg-[#1e3a8a] text-white px-8 py-4 rounded-lg font-bold text-lg">Get Started Free</a>
+                        <a href="#planner" onclick="handleNav(event, 'planner')" class="cta-button bg-white text-[#1e3a8a] px-8 py-4 rounded-lg font-bold text-lg border border-gray-200 flex items-center">
+                            Generate Your Business Plan
+                            <i data-lucide="file-text" class="ml-2"></i>
+                        </a>
                     </div>
                 </div>
-            `;
+            </section>
+        </div>
 
-            const renderChatList = () => {
-                chatList.innerHTML = state.chats.map(chat => `
-                    <div data-id="${chat.id}" class="chat-item group flex items-center justify-between p-2 text-sm rounded-lg cursor-pointer ${state.currentChatId === chat.id ? 'bg-gray-200 dark:bg-gray-700' : 'hover:bg-gray-200/50 dark:hover:bg-gray-700/50'}">
-                        <span class="truncate flex-1">${chat.title}</span>
-                        <i data-lucide="trash-2" class="delete-chat-btn w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-red-500 transition-opacity" data-id="${chat.id}"></i>
+        <!-- AI Business Planner Page -->
+        <div id="page-planner" class="page">
+            <section class="pt-32 pb-20 bg-white min-h-screen">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Business Tools</h1>
+                            <p class="mt-4 text-lg text-gray-600">From a full business plan to creative logo ideas, let our AI do the heavy lifting.</p>
+                        </div>
+
+                        <!-- Business Plan Generator -->
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">Business Plan Generator</h2>
+                            <div class="mb-4">
+                                <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">1. Describe your business idea:</label>
+                                <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys', 'A mobile app that connects local farmers with restaurants', 'A consulting service for small businesses wanting to improve their online presence'"></textarea>
+                            </div>
+                            <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="wand-2" class="mr-2"></i>
+                                Generate My Plan ($1.99)
+                            </button>
+                        </div>
+                        
+                        <div id="plan-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is building your custom plan...</p>
+                        </div>
+                        <div id="plan-output" class="mt-12 space-y-8"></div>
+
+                        <!-- AI Logo Idea Generator -->
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">AI Logo Idea Generator</h2>
+                            <div class="mb-4">
+                                <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">2. Describe your brand for logo ideas:</label>
+                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet". It's for eco-friendly pet products. I want a logo that feels natural, playful, and trustworthy.'"></textarea>
+                            </div>
+                            <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="image" class="mr-2"></i>
+                                Generate Logo Ideas (Free)
+                            </button>
+                        </div>
+
+                        <div id="logo-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is brainstorming creative logo concepts...</p>
+                        </div>
+                        <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                     </div>
-                `).join('');
-                
-                document.querySelectorAll('.chat-item').forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('delete-chat-btn')) return;
-                        selectChat(Number(item.dataset.id));
-                    });
-                });
-                document.querySelectorAll('.delete-chat-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        deleteChat(Number(btn.dataset.id));
-                    });
-                });
-                lucide.createIcons();
-            };
+                </div>
+            </section>
+        </div>
 
-            const renderTheme = () => {
-                if (state.theme === 'dark') {
-                    htmlTag.classList.add('dark');
-                    themeIconContainer.innerHTML = `<i data-lucide="moon" class="w-4 h-4"></i>`;
-                    themeText.textContent = 'Dark Mode';
-                    themeToggleBg.classList.add('bg-indigo-500');
-                    themeToggleBg.classList.remove('bg-gray-300');
-                    themeToggleDot.classList.add('translate-x-5');
+        <!-- Other pages (Chat, Premium, About) -->
+        <div id="page-chat" class="page"></div>
+        <div id="page-premium" class="page"></div>
+        <div id="page-about" class="page"></div>
+    </main>
+
+    <!-- Footer, Live Support Bubble, and Modal remain the same -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <span class="text-sm text-gray-400 sm:text-center">© 2024 <a href="#" class="hover:underline">BizMind AI™</a>. All Rights Reserved.</span>
+                <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <button id="open-support-chat" class="fixed bottom-6 right-6 bg-[#1e3a8a] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center cta-button z-40">
+        <i data-lucide="message-square" class="w-8 h-8"></i>
+    </button>
+    <div id="live-support-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl h-full max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-xl font-bold flex items-center"><i data-lucide="users" class="mr-2 text-[#1e3a8a]"></i>Live Support</h2>
+                <button id="close-support-chat" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="support-chat-window" class="flex-1 p-6 space-y-4 overflow-y-auto">
+                <div class="flex items-start gap-3">
+                    <div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div>
+                    <div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700">
+                        <p class="font-bold text-green-800">Admin</p>
+                        <p>Welcome to BizMind AI support! How can we help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50 border-t">
+                <div class="flex items-center space-x-3">
+                    <input type="text" id="support-chat-input" placeholder="Type your message..." class="flex-1 w-full border-gray-300 rounded-lg focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
+                    <button id="send-support-chat-button" class="bg-[#1e3a8a] text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition-colors font-semibold">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promo Code Modal -->
+    <div id="promo-modal" class="modal-backdrop fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-6 text-center">
+            <i data-lucide="gift" class="w-16 h-16 text-blue-500 mx-auto mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-900">Free Promo</h3>
+            <p class="text-lg text-gray-600 mt-2">Enter your password to generate the plan for free.</p>
+            <div class="mt-4">
+                <input type="password" id="promo-password-input" class="w-full border-gray-300 rounded-lg p-3 text-center" placeholder="Enter password">
+                <p id="promo-error" class="text-red-500 text-sm mt-1 hidden">Incorrect password. Please try again.</p>
+            </div>
+            <div class="mt-6 flex flex-col space-y-3">
+                <button id="submit-promo-button" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-bold cta-button hover:bg-blue-600">Apply Promo</button>
+                <button id="no-promo-button" class="text-gray-500 text-sm hover:underline">No Promo Code?</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        lucide.createIcons();
+
+        const pages = document.querySelectorAll('.page');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.remove('active'));
+            const newPage = document.getElementById(`page-${pageId}`);
+            if (newPage) newPage.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        function handleNav(event, pageId, fromMobile = false) {
+            event.preventDefault();
+            showPage(pageId);
+            if (fromMobile) mobileMenu.classList.add('-translate-x-full');
+            history.pushState(null, null, `#${pageId}`);
+        }
+
+        hamburgerButton.addEventListener('click', () => mobileMenu.classList.remove('-translate-x-full'));
+        closeMenuButton.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
+
+        // --- AI Planner Page Functionality ---
+        const generatePlanButton = document.getElementById('generate-plan-button');
+        const businessDescriptionInput = document.getElementById('business-description');
+        const planOutputContainer = document.getElementById('plan-output');
+        const planLoader = document.getElementById('plan-loader');
+        
+        const promoModal = document.getElementById('promo-modal');
+        const submitPromoButton = document.getElementById('submit-promo-button');
+        const noPromoButton = document.getElementById('no-promo-button');
+        const promoPasswordInput = document.getElementById('promo-password-input');
+        const promoError = document.getElementById('promo-error');
+
+        const generateLogoButton = document.getElementById('generate-logo-button');
+        const logoDescriptionInput = document.getElementById('logo-description');
+        const logoOutputContainer = document.getElementById('logo-output');
+        const logoLoader = document.getElementById('logo-loader');
+        
+        function togglePromoModal(show) {
+            promoError.classList.add('hidden'); // Hide error on toggle
+            promoPasswordInput.value = ''; // Clear input on toggle
+            if (show) {
+                promoModal.classList.remove('hidden');
+                setTimeout(() => promoModal.classList.remove('opacity-0'), 10);
+            } else {
+                promoModal.classList.add('opacity-0');
+                setTimeout(() => promoModal.classList.add('hidden'), 300);
+            }
+        }
+        
+        if (generatePlanButton) {
+            generatePlanButton.addEventListener('click', () => {
+                const description = businessDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your business idea first.');
+                    return;
+                }
+                togglePromoModal(true);
+            });
+        }
+
+        if (submitPromoButton) {
+            submitPromoButton.addEventListener('click', () => {
+                const correctPassword = "MSTYCFREE";
+                if (promoPasswordInput.value === correctPassword) {
+                    togglePromoModal(false);
+                    handlePlanGeneration();
                 } else {
-                    htmlTag.classList.remove('dark');
-                    themeIconContainer.innerHTML = `<i data-lucide="sun" class="w-4 h-4"></i>`;
-                    themeText.textContent = 'Light Mode';
-                    themeToggleBg.classList.remove('bg-indigo-500');
-                    themeToggleBg.classList.add('bg-gray-300');
-                    themeToggleDot.classList.remove('translate-x-5');
+                    promoError.classList.remove('hidden');
                 }
-                lucide.createIcons();
-            };
+            });
+        }
+        
+        if (noPromoButton) {
+            noPromoButton.addEventListener('click', () => {
+                // For now, just close the modal. Later, this can redirect.
+                togglePromoModal(false);
+                alert("Payment gateway integration is coming soon!");
+            });
+        }
 
-            // --- App Logic ---
 
-            const createNewChat = () => {
-                const newChat = {
-                    id: Date.now(),
-                    title: `New Chat ${state.chats.length + 1}`,
-                    messages: [],
-                    isLoading: false,
-                };
-                state.chats.unshift(newChat);
-                state.currentChatId = newChat.id;
-                renderChatList();
-                renderChatInterface();
-            };
+        // --- Gemini API Call for Business Plan ---
+        async function handlePlanGeneration() {
+            if (!businessDescriptionInput) return;
+            const description = businessDescriptionInput.value.trim();
             
-            const selectChat = (id) => {
-                state.currentChatId = id;
-                renderChatList();
-                renderChatInterface();
-            };
+            generatePlanButton.disabled = true;
+            planOutputContainer.innerHTML = '';
+            planLoader.classList.remove('hidden');
 
-            const deleteChat = (id) => {
-                state.chats = state.chats.filter(c => c.id !== id);
-                if (state.currentChatId === id) {
-                    state.currentChatId = null;
-                    renderLandingPage();
-                }
-                renderChatList();
-            };
-
-            const handleSend = async () => {
-                const chatInput = document.getElementById('chat-input');
-                const sendBtn = document.getElementById('send-btn');
-                const prompt = chatInput.value.trim();
-                const chat = state.chats.find(c => c.id === state.currentChatId);
-
-                if (prompt === '' || !chat || chat.isLoading) return;
-
-                chat.messages.push({ role: 'user', content: prompt });
-                if (chat.messages.length === 1) {
-                    chat.title = prompt.substring(0, 30);
-                    renderChatList();
-                }
-                chat.isLoading = true;
-                chatInput.value = '';
-                chatInput.style.height = 'auto';
-                sendBtn.disabled = true;
-
-                renderMessages();
-
-                const aiResponse = await getMockAIResponse(prompt);
-                chat.messages.push({ role: 'assistant', content: aiResponse });
-                chat.isLoading = false;
-                sendBtn.disabled = false;
-                
-                renderMessages();
-            };
-
-            const getMockAIResponse = async (prompt) => {
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                const lowerCasePrompt = prompt.toLowerCase();
-
-                if (lowerCasePrompt.includes('who is') || lowerCasePrompt.includes('tell me about') || lowerCasePrompt.includes('what is')) {
-                    let entity = 'the requested entity';
-                    if (lowerCasePrompt.includes('elon musk')) entity = 'Elon Musk';
-                    if (lowerCasePrompt.includes('openai')) entity = 'OpenAI';
-                    if (lowerCasePrompt.includes('notion')) entity = 'Notion';
-
-                    if (entity !== 'the requested entity') {
-                        return `
-**Summary of ${entity}:**
-Based on publicly available information, ${entity} is a prominent figure/company in the tech industry.
-- *Key Achievements:* Known for revolutionizing their respective fields, from electric vehicles and space exploration to AI research and productivity software.
-- *Business Strategy:* They often employ a strategy of rapid innovation, vertical integration, and building strong brand ecosystems.
-- *Relevance:* Their work is highly relevant for understanding modern business trends, product development, and market disruption.
-
-**Collaboration/Learning Opportunities:**
-- *Learn:* Study their product launch strategies and how they build community around their products.
-- *Collaborate:* For a small business, collaborating might be indirect, such as building a product that integrates with their ecosystem (e.g., a Notion integration).
-
-*Disclaimer: This is a high-level summary based on public data and should not be considered financial or investment advice.*
-                        `;
-                    }
-                }
-
-                if (lowerCasePrompt.includes('marketing tips') || lowerCasePrompt.includes('how to grow') || lowerCasePrompt.includes('marketing plan')) {
-                    return `
-Of course! Here is a foundational marketing plan for a new small business:
-
-**Step-by-Step Marketing Guidance:**
-
-1.  **Define Your Target Audience:**
-    - Who are you selling to? Be specific about demographics, interests, and pain points.
-    - Create a "customer persona" to guide your messaging.
-
-2.  **Develop Your Core Message (Value Proposition):**
-    - What makes you unique? Clearly state the problem you solve and why you're the best solution.
-    - Use the format: "We help [Target Audience] do [Job-to-be-done] by providing [Your Solution]."
-
-3.  **Choose Your Channels (Start Small):**
-    - *Content Marketing:* Start a blog or a newsletter providing value related to your industry. This builds trust and SEO.
-    - *Social Media:* Pick one or two platforms where your audience is most active (e.g., LinkedIn for B2B, Instagram for visual products).
-    - *Email Marketing:* Build an email list from day one. It's a direct line to your most engaged customers.
-
-4.  **Create a Simple Content Calendar:**
-    - Plan 2-3 pieces of content per week. This could be a blog post, a social media update, or a short video. Consistency is key.
-
-**Actionable Tip:** For the next 7 days, try posting one piece of helpful advice on your chosen social media platform each day. Track the engagement to see what resonates.
-                    `;
-                }
-
-                if (lowerCasePrompt.includes('swot analysis')) {
-                    return `
-Certainly. A SWOT analysis is a great tool. Let's create a template for a hypothetical new e-commerce business.
-
-**SWOT Analysis Framework:**
-
-- **S (Strengths - Internal, Positive):**
-  - *What do you do well?*
-  - Example: Unique product design, strong supplier relationships, expertise in the niche.
-
-- **W (Weaknesses - Internal, Negative):**
-  - *Where could you improve?*
-  - Example: Limited marketing budget, no brand recognition, small team.
-
-- **O (Opportunities - External, Positive):**
-  - *What market trends can you leverage?*
-  - Example: Growing interest in sustainable products, a competitor is failing, a new social media platform is emerging.
-
-- **T (Threats - External, Negative):**
-  - *What obstacles do you face?*
-  - Example: Established competitors, changing regulations, negative economic trends.
-
-**How to Use This:**
-Fill this out for your own business. Then, focus on strategies that use your **Strengths** to capitalize on **Opportunities** and minimize your **Threats**.
-                    `;
-                }
-
-                return `
-I can help with that. Could you please provide more specific details about your business or the person you're interested in? 
-
-For example, you can ask me to:
-- "Create a marketing plan for a local coffee shop."
-- "Tell me about the business strategy of Shopify."
-- "Give me growth ideas for a freelance web developer."
-                `;
-            };
-
-            const setupChatInput = () => {
-                const chatInput = document.getElementById('chat-input');
-                const sendBtn = document.getElementById('send-btn');
-                
-                chatInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSend();
+            const prompt = `You are an expert business consultant AI. A user has provided the following business idea: '${description}'. Based on this idea, and using your knowledge and access to real-time information, generate a comprehensive business plan. Please provide the output in a structured JSON format. The JSON object should have a single key 'plan', which is an array of objects. Each object in the array should represent a section of the business plan and have the following properties: 'title' (a string), 'icon' (a relevant Lucide icon name as a string, e.g., 'search', 'megaphone', 'lightbulb', 'file-text', 'sliders-horizontal'), and 'content' (a detailed string for that section, formatted with paragraphs). The plan must include at least these sections: Executive Summary, Market Analysis, Social Media & Marketing Strategy, Operations & Automation, and Key Advice & Next Steps. The content should be insightful, actionable, and tailored specifically to the user's idea.`;
+            
+            try {
+                const planSections = await callGemini(prompt, {
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: { "plan": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "icon": { "type": "STRING" }, "content": { "type": "STRING" } }, required: ["title", "icon", "content"] } } },
+                        required: ["plan"]
                     }
                 });
 
-                chatInput.addEventListener('input', (e) => {
-                    e.target.style.height = 'auto';
-                    e.target.style.height = `${e.target.scrollHeight}px`;
-                    sendBtn.disabled = e.target.value.trim() === '';
+                planLoader.classList.add('hidden');
+                const delay = ms => new Promise(res => setTimeout(res, ms));
+
+                for (const section of planSections.plan) {
+                    await delay(500);
+                    const sectionEl = document.createElement('div');
+                    sectionEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    sectionEl.innerHTML = `<h3 class="text-2xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="${section.icon || 'file-text'}" class="mr-3"></i>${section.title}</h3><p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${section.content}</p>`;
+                    planOutputContainer.appendChild(sectionEl);
+                    lucide.createIcons();
+                    sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } catch (error) {
+                console.error("Error generating plan:", error);
+                planLoader.classList.add('hidden');
+                planOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+            } finally {
+                generatePlanButton.disabled = false;
+            }
+        }
+
+        // --- Gemini API Call for Logo Ideas ---
+        async function handleLogoGeneration() {
+            if (!logoDescriptionInput) return;
+            const description = logoDescriptionInput.value.trim();
+            if (!description) {
+                alert('Please describe your brand first.');
+                return;
+            }
+
+            generateLogoButton.disabled = true;
+            logoOutputContainer.innerHTML = '';
+            logoLoader.classList.remove('hidden');
+
+            const prompt = `You are a creative branding expert AI. A user has described their brand: '${description}'. Generate 3 distinct and creative logo concepts. For each concept, provide a title, a detailed description of the visual elements, and the reasoning behind the design choices. Output this as a JSON object with a key 'logo_ideas', which is an array of objects. Each object should have 'title' and 'description' properties.`;
+            
+            try {
+                const logoIdeas = await callGemini(prompt, {
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: { "logo_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["title", "description"] } } },
+                        required: ["logo_ideas"]
+                    }
                 });
 
-                sendBtn.addEventListener('click', handleSend);
-                sendBtn.disabled = chatInput.value.trim() === '';
-            };
-            
-            const scrollToBottom = () => {
-                const messagesContainer = document.getElementById('messages-container');
-                if (messagesContainer) {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }
-            };
-            
-            const toggleTheme = () => {
-                state.theme = state.theme === 'dark' ? 'light' : 'dark';
-                renderTheme();
-            };
+                logoLoader.classList.add('hidden');
+                logoIdeas.logo_ideas.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.title}</h3><p class="text-gray-700">${idea.description}</p>`;
+                    logoOutputContainer.appendChild(ideaEl);
+                });
 
-            // --- Initialization ---
-            const init = () => {
-                renderLandingPage();
-                renderTheme();
-                newChatBtn.addEventListener('click', createNewChat);
-                themeSwitcher.addEventListener('click', toggleTheme);
-                lucide.createIcons();
-            };
+            } catch (error) {
+                console.error("Error generating logo ideas:", error);
+                logoLoader.classList.add('hidden');
+                logoOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+            } finally {
+                generateLogoButton.disabled = false;
+            }
+        }
+        
+        // --- Centralized Gemini API Fetch Function ---
+        async function callGemini(prompt, generationConfig) {
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory, generationConfig: { responseMimeType: "application/json", ...generationConfig } };
+            const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; // Handled by environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-            init();
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+            const result = await response.json();
+
+            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
+                return JSON.parse(result.candidates[0].content.parts[0].text);
+            } else {
+                throw new Error("Invalid response structure from API.");
+            }
+        }
+
+        if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
+        
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }`;
+        document.head.appendChild(styleSheet);
+
+        // --- Live Support Chat Functionality ---
+        const openSupportButton = document.getElementById('open-support-chat');
+        const closeSupportButton = document.getElementById('close-support-chat');
+        const supportModal = document.getElementById('live-support-modal');
+        
+        function toggleSupportModal(show) {
+            if (!supportModal) return;
+            if (show) {
+                supportModal.classList.remove('hidden');
+                setTimeout(() => supportModal.classList.remove('opacity-0'), 10);
+            } else {
+                supportModal.classList.add('opacity-0');
+                setTimeout(() => supportModal.classList.add('hidden'), 300);
+            }
+        }
+
+        if(openSupportButton && closeSupportButton) {
+            openSupportButton.addEventListener('click', () => toggleSupportModal(true));
+            closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
+        }
+
+        // Initial page load and history handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialPage = window.location.hash.substring(1) || 'home';
+            showPage(initialPage);
         });
-    </script>
+        
+        window.onpopstate = () => {
+            const pageId = window.location.hash.substring(1) || 'home';
+            showPage(pageId);
+        };
 
+    </script>
 </body>
 </html>
