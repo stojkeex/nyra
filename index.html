@@ -588,6 +588,8 @@
             function getRandomDelay(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
             async function sendAiResponse(prompt, parts = [], autoPlayVoice = false) {
+                const isVoiceRequest = prompt.includes('[User sent a voice message]');
+                
                 setTyping(true);
                 const aiResponse = await callGeminiAPI(prompt, chatHistory.slice(0, -1), parts);
                 const typingDuration = calculateTypingDuration(aiResponse || ""); 
