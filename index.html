@@ -74,6 +74,20 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -87,7 +101,8 @@
             </a>
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="#home" onclick="handleNav(event, 'home')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Home</a>
-                <a href="#planner" onclick="handleNav(event, 'planner')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">AI Planner</a>
+                <a href="#networking" onclick="handleNav(event, 'networking')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Networking</a>
+                <a href="#planner" onclick="handleNav(event, 'planner')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">AI Tools</a>
                 <a href="#chat" onclick="handleNav(event, 'chat')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Chat Bot</a>
                 <a href="#premium" onclick="handleNav(event, 'premium')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Pricing</a>
                 <a href="#about" onclick="handleNav(event, 'about')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">About Us</a>
@@ -109,7 +124,8 @@
         </div>
         <nav class="flex flex-col items-center justify-center h-full -mt-16 space-y-8 text-2xl">
             <a href="#home" onclick="handleNav(event, 'home', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Home</a>
-            <a href="#planner" onclick="handleNav(event, 'planner', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">AI Planner</a>
+            <a href="#networking" onclick="handleNav(event, 'networking', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Networking</a>
+            <a href="#planner" onclick="handleNav(event, 'planner', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">AI Tools</a>
             <a href="#chat" onclick="handleNav(event, 'chat', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Chat Bot</a>
             <a href="#premium" onclick="handleNav(event, 'premium', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Pricing</a>
             <a href="#about" onclick="handleNav(event, 'about', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">About Us</a>
@@ -127,13 +143,13 @@
                     <div class="mt-10 flex justify-center items-center space-x-4">
                         <a href="#premium" onclick="handleNav(event, 'premium')" class="cta-button bg-[#1e3a8a] text-white px-8 py-4 rounded-lg font-bold text-lg">Get Started Free</a>
                         <a href="#planner" onclick="handleNav(event, 'planner')" class="cta-button bg-white text-[#1e3a8a] px-8 py-4 rounded-lg font-bold text-lg border border-gray-200 flex items-center">
-                            Generate Your Business Plan
-                            <i data-lucide="file-text" class="ml-2"></i>
+                            Explore AI Tools
+                            <i data-lucide="sparkles" class="ml-2"></i>
                         </a>
                     </div>
                 </div>
             </section>
-            <section id="how-it-works" class="py-20 bg-white">
+             <section id="how-it-works" class="py-20 bg-white">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Get Started in 3 Simple Steps</h2>
@@ -156,7 +172,7 @@
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="search"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Market Research AI</h3><p class="text-gray-600">Uncover market size, trends, and customer demographics. Analyze competitors and find your unique selling proposition.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="lightbulb"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3><p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="megaphone"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3><p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="bot-message-square"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Investor Outreach AI</h3><p class="text-gray-600">Identifies potential investors from our database and drafts personalized outreach emails to get you funded.</p></div>
+                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="users"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3><p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="sliders-horizontal"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Operations Automator</h3><p class="text-gray-600">Analyzes your workflow and suggests automations for repetitive tasks, helping you save time and reduce costs.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="scale"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3><p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p></div>
                     </div>
@@ -181,47 +197,129 @@
             </section>
         </div>
 
-        <!-- AI Business Planner Page -->
+        <!-- Networking Page -->
+        <div id="page-networking" class="page">
+            <section class="pt-32 pb-20 bg-white min-h-screen">
+                <div class="container mx-auto px-6">
+                    <div id="profile-form-section">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="text-center mb-12">
+                                <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Connect with Others</h1>
+                                <p class="mt-4 text-lg text-gray-600">Create your profile and find co-founders, partners, or mentors with similar interests.</p>
+                            </div>
+                            <form id="profile-form" class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="profile-first-name" class="block text-lg font-semibold mb-2 text-gray-800">First Name</label>
+                                        <input type="text" id="profile-first-name" required class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
+                                    </div>
+                                    <div>
+                                        <label for="profile-last-name" class="block text-lg font-semibold mb-2 text-gray-800">Last Name</label>
+                                        <input type="text" id="profile-last-name" required class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="profile-age" class="block text-lg font-semibold mb-2 text-gray-800">Age</label>
+                                        <input type="number" id="profile-age" required class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
+                                    </div>
+                                    <div>
+                                        <label for="profile-location" class="block text-lg font-semibold mb-2 text-gray-800">Your Location</label>
+                                        <input type="text" id="profile-location" required class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Ljubljana, Slovenia">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="profile-bio" class="block text-lg font-semibold mb-2 text-gray-800">Short Bio (interests, experience, etc.)</label>
+                                    <textarea id="profile-bio" rows="5" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="Describe your business interests, what you're looking for, and your experience..."></textarea>
+                                    <p id="bio-error" class="text-red-500 text-sm mt-1 hidden">Bio must be at least 50 characters long.</p>
+                                </div>
+                                <button type="submit" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="user-plus" class="mr-2"></i>
+                                    Create Profile & Connect
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="profile-list-section" class="hidden">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Entrepreneur Network</h1>
+                            <p class="mt-4 text-lg text-gray-600">Here are other users with ambitious ideas. Connect with them!</p>
+                        </div>
+                        <div id="profile-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <!-- User profiles will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- AI Planner Page -->
         <div id="page-planner" class="page">
             <section class="pt-32 pb-20 bg-white min-h-screen">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto">
                         <div class="text-center mb-12">
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Business Tools</h1>
-                            <p class="mt-4 text-lg text-gray-600">From a full business plan to creative logo ideas, let our AI do the heavy lifting.</p>
+                            <p class="mt-4 text-lg text-gray-600">From a creative name to a full business plan, let our AI do the heavy lifting.</p>
                         </div>
                         <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">Business Plan Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Business Name Generator</h2>
                             <div class="mb-4">
-                                <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">1. Describe your business idea:</label>
-                                <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys', 'A mobile app that connects local farmers with restaurants', 'A consulting service for small businesses wanting to improve their online presence'"></textarea>
+                                <label for="name-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business to get name ideas:</label>
+                                <textarea id="name-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys'"></textarea>
+                            </div>
+                            <button id="generate-name-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="lightbulb" class="mr-2"></i>
+                                Generate Names (Free)
+                            </button>
+                        </div>
+                        <div id="name-loader" class="text-center py-12 hidden"></div>
+                        <div id="name-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Plan Generator</h2>
+                            <div class="mb-4">
+                                <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business idea in detail:</label>
+                                <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My business, named Pawsitive Planet, will be an eco-friendly subscription box for dog toys...'"></textarea>
                             </div>
                             <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="wand-2" class="mr-2"></i>
-                                Generate My Plan ($1.99)
+                                Generate My Plan ($1.99 Payable)
                             </button>
                         </div>
-                        <div id="plan-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is building your custom plan...</p>
-                        </div>
+                        <div id="plan-loader" class="text-center py-12 hidden"></div>
                         <div id="plan-output" class="mt-12 space-y-8"></div>
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">AI Logo Idea Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
                             <div class="mb-4">
-                                <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">2. Describe your brand for logo ideas:</label>
-                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet". It's for eco-friendly pet products. I want a logo that feels natural, playful, and trustworthy.'"></textarea>
+                                <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
+                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet".'"></textarea>
                             </div>
                             <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="image" class="mr-2"></i>
                                 Generate Logo Ideas (Free)
                             </button>
                         </div>
-                        <div id="logo-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is brainstorming creative logo concepts...</p>
-                        </div>
+                        <div id="logo-loader" class="text-center py-12 hidden"></div>
                         <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Supplier Finder</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label for="supplier-business-type" class="block text-lg font-semibold mb-2 text-gray-800">Your Business Type:</label>
+                                    <input type="text" id="supplier-business-type" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Coffee Shop">
+                                </div>
+                                <div>
+                                    <label for="supplier-location" class="block text-lg font-semibold mb-2 text-gray-800">Your Location:</label>
+                                    <input type="text" id="supplier-location" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Ljubljana, Slovenia">
+                                </div>
+                            </div>
+                            <button id="generate-supplier-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="search" class="mr-2"></i>
+                                Find Suppliers (Free)
+                            </button>
+                        </div>
+                        <div id="supplier-loader" class="text-center py-12 hidden"></div>
+                        <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
                 </div>
             </section>
@@ -360,6 +458,38 @@
     <script>
         lucide.createIcons();
 
+        // --- Centralized Gemini API Fetch Function ---
+        async function callGemini(prompt, isJson = false) {
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            let payload = { contents: chatHistory };
+            if (isJson) {
+                payload.generationConfig = { responseMimeType: "application/json", responseSchema: isJson.responseSchema };
+            }
+            
+            const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; // Handled by environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+            const result = await response.json();
+
+            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
+                const textResponse = result.candidates[0].content.parts[0].text;
+                return isJson ? JSON.parse(textResponse) : textResponse;
+            } else {
+                console.log("Unexpected API response:", result);
+                throw new Error("Invalid response structure from API.");
+            }
+        }
+
+        // --- Page Navigation ---
         const pages = document.querySelectorAll('.page');
         const mobileMenu = document.getElementById('mobile-menu');
         const hamburgerButton = document.getElementById('hamburger-button');
@@ -368,40 +498,155 @@
         function showPage(pageId) {
             pages.forEach(page => page.classList.remove('active'));
             const newPage = document.getElementById(`page-${pageId}`);
-            if (newPage) {
-                newPage.classList.add('active');
-            }
+            if (newPage) newPage.classList.add('active');
             window.scrollTo(0, 0); 
+            if (pageId === 'networking') {
+                initializeNetworkingPage();
+            }
         }
         
         function handleNav(event, pageId, fromMobile = false) {
             event.preventDefault();
             showPage(pageId);
-            if (fromMobile) {
-                mobileMenu.classList.add('-translate-x-full');
-            }
+            if (fromMobile) mobileMenu.classList.add('-translate-x-full');
             history.pushState(null, null, `#${pageId}`);
         }
 
-        hamburgerButton.addEventListener('click', () => mobileMenu.classList.remove('-translate-x-full'));
-        closeMenuButton.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
+        // --- Typing Indicator ---
+        function showTypingIndicator(chatWindowElement, sender) {
+            const typingEl = document.createElement('div');
+            typingEl.id = 'typing-indicator';
+            typingEl.className = 'flex items-start gap-3';
+            let iconHtml = `<div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div>`;
+            if (sender === 'admin') {
+                iconHtml = `<div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div>`;
+            }
+            typingEl.innerHTML = `${iconHtml}<div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
+            chatWindowElement.appendChild(typingEl);
+            lucide.createIcons();
+            chatWindowElement.scrollTop = chatWindowElement.scrollHeight;
+        }
+
+        function removeTypingIndicator(chatWindowElement) {
+            const indicator = chatWindowElement.querySelector('#typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        // --- Main Chatbot Functionality ---
+        const chatInput = document.getElementById('chat-input');
+        const sendChatButton = document.getElementById('send-chat-button');
+        const chatWindow = document.getElementById('chat-window');
+        const chatPromptButtons = document.querySelectorAll('.chat-prompt-btn');
+
+        function addChatMessage(message, sender) {
+            if (!chatWindow) return;
+            const messageElement = document.createElement('div');
+            if (sender === 'user') {
+                messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-xs break-words"><p>${message}</p></div></div>`;
+            } else { // AI
+                 messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700 max-w-xs break-words"><p>${message}</p></div></div>`;
+            }
+            chatWindow.appendChild(messageElement);
+            lucide.createIcons();
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        async function handleMainChat() {
+            const userInput = chatInput.value.trim();
+            if (!userInput) return;
+            
+            addChatMessage(userInput, 'user');
+            chatInput.value = '';
+            showTypingIndicator(chatWindow, 'ai');
+
+            const prompt = `You are BizMind AI, a helpful and concise business assistant. A user said: "${userInput}". Respond helpfully.`;
+            try {
+                const aiResponse = await callGemini(prompt);
+                removeTypingIndicator(chatWindow);
+                addChatMessage(aiResponse, 'ai');
+            } catch (error) {
+                console.error("Chatbot error:", error);
+                removeTypingIndicator(chatWindow);
+                addChatMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'ai');
+            }
+        }
+
+        // --- Live Support Chat Functionality ---
+        const openSupportButton = document.getElementById('open-support-chat');
+        const closeSupportButton = document.getElementById('close-support-chat');
+        const supportModal = document.getElementById('live-support-modal');
+        const supportChatInput = document.getElementById('support-chat-input');
+        const sendSupportChatButton = document.getElementById('send-support-chat-button');
+        const supportChatWindow = document.getElementById('support-chat-window');
+
+        function toggleSupportModal(show) {
+            if (!supportModal) return;
+            if (show) {
+                supportModal.classList.remove('hidden');
+                setTimeout(() => supportModal.classList.remove('opacity-0'), 10);
+            } else {
+                supportModal.classList.add('opacity-0');
+                setTimeout(() => supportModal.classList.add('hidden'), 300);
+            }
+        }
+        
+        function addSupportChatMessage(message, sender) {
+            if(!supportChatWindow) return;
+            const messageElement = document.createElement('div');
+            if (sender === 'user') {
+                messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-md break-words"><p>${message}</p></div></div>`;
+            } else { // Admin/AI
+                 messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div><div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700 max-w-md break-words"><p class="font-bold text-green-800">Support AI</p><p>${message}</p></div></div>`;
+            }
+            supportChatWindow.appendChild(messageElement);
+            lucide.createIcons();
+            supportChatWindow.scrollTop = supportChatWindow.scrollHeight;
+        }
+
+        async function handleSupportChat() {
+            if(!supportChatInput) return;
+            const userInput = supportChatInput.value.trim();
+            if (!userInput) return;
+            
+            addSupportChatMessage(userInput, 'user');
+            supportChatInput.value = '';
+            showTypingIndicator(supportChatWindow, 'admin');
+
+            const prompt = `You are a friendly and helpful AI support agent for BizMind AI. A user needs help and said: "${userInput}". Provide a helpful first response and mention that a human agent will be connected if needed.`;
+            try {
+                const aiResponse = await callGemini(prompt);
+                removeTypingIndicator(supportChatWindow);
+                addSupportChatMessage(aiResponse, 'ai');
+            } catch (error) {
+                console.error("Support chat error:", error);
+                removeTypingIndicator(supportChatWindow);
+                addSupportChatMessage("I'm having trouble connecting to our systems. A human agent has been notified and will be with you shortly.", 'ai');
+            }
+        }
 
         // --- AI Planner Page Functionality ---
         const generatePlanButton = document.getElementById('generate-plan-button');
         const businessDescriptionInput = document.getElementById('business-description');
         const planOutputContainer = document.getElementById('plan-output');
         const planLoader = document.getElementById('plan-loader');
-        
         const promoModal = document.getElementById('promo-modal');
         const submitPromoButton = document.getElementById('submit-promo-button');
         const noPromoButton = document.getElementById('no-promo-button');
         const promoPasswordInput = document.getElementById('promo-password-input');
         const promoError = document.getElementById('promo-error');
-
         const generateLogoButton = document.getElementById('generate-logo-button');
         const logoDescriptionInput = document.getElementById('logo-description');
         const logoOutputContainer = document.getElementById('logo-output');
         const logoLoader = document.getElementById('logo-loader');
+        const nameDescriptionInput = document.getElementById('name-description');
+        const generateNameButton = document.getElementById('generate-name-button');
+        const nameLoader = document.getElementById('name-loader');
+        const nameOutputContainer = document.getElementById('name-output');
+        const supplierBusinessTypeInput = document.getElementById('supplier-business-type');
+        const supplierLocationInput = document.getElementById('supplier-location');
+        const generateSupplierButton = document.getElementById('generate-supplier-button');
+        const supplierLoader = document.getElementById('supplier-loader');
+        const supplierOutputContainer = document.getElementById('supplier-output');
         
         function togglePromoModal(show) {
             if (!promoModal) return;
@@ -414,36 +659,6 @@
                 promoModal.classList.add('opacity-0');
                 setTimeout(() => promoModal.classList.add('hidden'), 300);
             }
-        }
-        
-        if (generatePlanButton) {
-            generatePlanButton.addEventListener('click', () => {
-                const description = businessDescriptionInput.value.trim();
-                if (!description) {
-                    alert('Please describe your business idea first.');
-                    return;
-                }
-                togglePromoModal(true);
-            });
-        }
-
-        if (submitPromoButton) {
-            submitPromoButton.addEventListener('click', () => {
-                const correctPassword = "MSTYCFREE";
-                if (promoPasswordInput.value === correctPassword) {
-                    togglePromoModal(false);
-                    handlePlanGeneration();
-                } else {
-                    promoError.classList.remove('hidden');
-                }
-            });
-        }
-        
-        if (noPromoButton) {
-            noPromoButton.addEventListener('click', () => {
-                togglePromoModal(false);
-                alert("Payment gateway integration is coming soon!");
-            });
         }
 
         async function handlePlanGeneration() {
@@ -526,67 +741,235 @@
             }
         }
         
-        async function callGemini(prompt, generationConfig) {
-            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            const payload = { contents: chatHistory, generationConfig: { responseMimeType: "application/json", ...generationConfig } };
-            const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; // Handled by environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        async function handleNameGeneration() {
+            if (!nameDescriptionInput) return;
+            const description = nameDescriptionInput.value.trim();
+            if (!description) {
+                alert('Please describe your business for name ideas first.');
+                return;
+            }
 
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+            generateNameButton.disabled = true;
+            nameOutputContainer.innerHTML = '';
+            nameLoader.classList.remove('hidden');
+
+            const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
+            
+            try {
+                const nameIdeas = await callGemini(prompt, {
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
+                        required: ["name_ideas"]
+                    }
+                });
+
+                nameLoader.classList.add('hidden');
+                nameIdeas.name_ideas.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
+                    nameOutputContainer.appendChild(ideaEl);
+                });
+
+            } catch (error) {
+                console.error("Error generating names:", error);
+                nameLoader.classList.add('hidden');
+                nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+            } finally {
+                generateNameButton.disabled = false;
+            }
+        }
+
+        async function handleSupplierGeneration() {
+            if (!supplierBusinessTypeInput || !supplierLocationInput) return;
+            const businessType = supplierBusinessTypeInput.value.trim();
+            const location = supplierLocationInput.value.trim();
+            if (!businessType || !location) {
+                alert('Please provide both a business type and a location.');
+                return;
+            }
+
+            generateSupplierButton.disabled = true;
+            supplierOutputContainer.innerHTML = '';
+            supplierLoader.classList.remove('hidden');
+
+            const prompt = `As a procurement specialist AI, identify potential categories of suppliers for a '${businessType}' located in '${location}'. Do not list specific company names. Instead, provide a list of supplier *types* and a brief description of what to look for in each. For example, for a coffee shop, you might suggest "Coffee Bean Roasters" and "Local Bakeries". Output this as a JSON object with a key 'supplier_categories', which is an array of objects. Each object should have 'type' and 'description' properties.`;
+            
+            try {
+                const supplierIdeas = await callGemini(prompt, {
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: { "supplier_categories": { type: "ARRAY", items: { type: "OBJECT", properties: { "type": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["type", "description"] } } },
+                        required: ["supplier_categories"]
+                    }
+                });
+
+                supplierLoader.classList.add('hidden');
+                supplierIdeas.supplier_categories.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.type}</h3><p class="text-gray-600 text-sm">${idea.description}</p>`;
+                    supplierOutputContainer.appendChild(ideaEl);
+                });
+
+            } catch (error) {
+                console.error("Error generating suppliers:", error);
+                supplierLoader.classList.add('hidden');
+                supplierOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+            } finally {
+                generateSupplierButton.disabled = false;
+            }
+        }
+        
+        // --- Networking Page ---
+        function initializeNetworkingPage() {
+            const profileFormSection = document.getElementById('profile-form-section');
+            const profileListSection = document.getElementById('profile-list-section');
+            const profileForm = document.getElementById('profile-form');
+            const bioInput = document.getElementById('profile-bio');
+            const bioError = document.getElementById('bio-error');
+            
+            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+            if (userProfile) {
+                profileFormSection.classList.add('hidden');
+                profileListSection.classList.remove('hidden');
+                displayProfiles();
+            } else {
+                profileFormSection.classList.remove('hidden');
+                profileListSection.classList.add('hidden');
+            }
+
+            if (!profileForm.dataset.listenerAttached) {
+                profileForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (bioInput.value.length < 50) {
+                        bioError.classList.remove('hidden');
+                        return;
+                    }
+                    bioError.classList.add('hidden');
+
+                    const newProfile = {
+                        firstName: document.getElementById('profile-first-name').value,
+                        lastName: document.getElementById('profile-last-name').value,
+                        age: document.getElementById('profile-age').value,
+                        location: document.getElementById('profile-location').value,
+                        bio: bioInput.value
+                    };
+                    localStorage.setItem('userProfile', JSON.stringify(newProfile));
+                    profileFormSection.classList.add('hidden');
+                    profileListSection.classList.remove('hidden');
+                    displayProfiles();
+                });
+                profileForm.dataset.listenerAttached = 'true';
+            }
+        }
+
+        function displayProfiles() {
+            const profileListContainer = document.getElementById('profile-list-container');
+            const currentUser = JSON.parse(localStorage.getItem('userProfile'));
+
+            const mockProfiles = [
+                { firstName: 'Ana', lastName: 'Kovač', age: 28, location: 'Maribor, Slovenia', bio: 'I am looking for a partner to develop a sustainable fashion brand. I have experience in marketing and e-commerce, and I need someone with design and production knowledge.' },
+                { firstName: 'Luka', lastName: 'Novak', age: 35, location: 'Koper, Slovenia', bio: 'I am developing a mobile app for tourists on the Slovenian coast. I am a programmer and am looking for someone to take over the business and marketing side. I want to create something truly useful.' },
+                { firstName: 'Eva', lastName: 'Horvat', age: 42, location: 'Celje, Slovenia', bio: 'I am an experienced manager in the hospitality industry and want to open my own restaurant with locally sourced food. I am looking for investors and perhaps a head chef with the same vision.' }
+            ];
+            
+            const allProfiles = [currentUser, ...mockProfiles];
+
+            profileListContainer.innerHTML = ''; // Clear previous list
+            allProfiles.forEach(profile => {
+                const profileCard = document.createElement('div');
+                profileCard.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm';
+                profileCard.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/64x64/1e3a8a/ffffff?text=${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}" alt="Profile picture" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">${profile.firstName} ${profile.lastName}</h3>
+                            <p class="text-gray-500">${profile.age} years old, ${profile.location}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">${profile.bio}</p>
+                `;
+                profileListContainer.appendChild(profileCard);
             });
+        }
 
-            if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
+
+        // --- Event Listener Initialization ---
+        function initializeEventListeners() {
+            hamburgerButton.addEventListener('click', () => mobileMenu.classList.remove('-translate-x-full'));
+            closeMenuButton.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
+            
+            if (generatePlanButton) {
+                generatePlanButton.addEventListener('click', () => {
+                    if (!businessDescriptionInput.value.trim()) {
+                        alert('Please describe your business idea first.');
+                        return;
+                    }
+                    togglePromoModal(true);
+                });
             }
-            const result = await response.json();
-
-            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
-                return JSON.parse(result.candidates[0].content.parts[0].text);
-            } else {
-                throw new Error("Invalid response structure from API.");
+            if (submitPromoButton) {
+                submitPromoButton.addEventListener('click', () => {
+                    const correctPassword = "MSTYCFREE";
+                    if (promoPasswordInput.value === correctPassword) {
+                        togglePromoModal(false);
+                        handlePlanGeneration();
+                    } else {
+                        promoError.classList.remove('hidden');
+                    }
+                });
+            }
+            if (noPromoButton) {
+                noPromoButton.addEventListener('click', () => {
+                    togglePromoModal(false);
+                    alert("Payment gateway integration is coming soon!");
+                });
+            }
+            if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
+            if (generateNameButton) generateNameButton.addEventListener('click', handleNameGeneration);
+            if (generateSupplierButton) generateSupplierButton.addEventListener('click', handleSupplierGeneration);
+            
+            if (sendChatButton) {
+                sendChatButton.addEventListener('click', handleMainChat);
+                chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleMainChat(); });
+            }
+            if (chatPromptButtons) {
+                chatPromptButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        if(chatInput) {
+                            chatInput.value = button.textContent;
+                            chatInput.focus();
+                        }
+                    });
+                });
+            }
+            if (openSupportButton) openSupportButton.addEventListener('click', () => toggleSupportModal(true));
+            if (closeSupportButton) closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
+            
+            if (sendSupportChatButton) {
+                sendSupportChatButton.addEventListener('click', handleSupportChat);
+                supportChatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSupportChat(); });
             }
         }
 
-        if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
-        
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }`;
-        document.head.appendChild(styleSheet);
-
-        const openSupportButton = document.getElementById('open-support-chat');
-        const closeSupportButton = document.getElementById('close-support-chat');
-        const supportModal = document.getElementById('live-support-modal');
-        
-        function toggleSupportModal(show) {
-            if (!supportModal) return;
-            if (show) {
-                supportModal.classList.remove('hidden');
-                setTimeout(() => supportModal.classList.remove('opacity-0'), 10);
-            } else {
-                supportModal.classList.add('opacity-0');
-                setTimeout(() => supportModal.classList.add('hidden'), 300);
-            }
-        }
-
-        if(openSupportButton && closeSupportButton) {
-            openSupportButton.addEventListener('click', () => toggleSupportModal(true));
-            closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
-        }
-
+        // --- Initial Page Load and History Handling ---
         document.addEventListener('DOMContentLoaded', () => {
             const initialPage = window.location.hash.substring(1) || 'home';
             showPage(initialPage);
+            initializeEventListeners();
+            const styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }`;
+            document.head.appendChild(styleSheet);
         });
         
         window.onpopstate = () => {
             const pageId = window.location.hash.substring(1) || 'home';
             showPage(pageId);
         };
-
     </script>
 </body>
 </html>
