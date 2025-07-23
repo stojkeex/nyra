@@ -103,6 +103,7 @@
                 <a href="#home" onclick="handleNav(event, 'home')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Home</a>
                 <a href="#networking" onclick="handleNav(event, 'networking')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Networking</a>
                 <a href="#planner" onclick="handleNav(event, 'planner')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">AI Tools</a>
+                <a href="#promotion" onclick="handleNav(event, 'promotion')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Promotion</a>
                 <a href="#chat" onclick="handleNav(event, 'chat')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Chat Bot</a>
                 <a href="#premium" onclick="handleNav(event, 'premium')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Pricing</a>
                 <a href="#about" onclick="handleNav(event, 'about')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">About Us</a>
@@ -126,10 +127,10 @@
             <a href="#home" onclick="handleNav(event, 'home', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Home</a>
             <a href="#networking" onclick="handleNav(event, 'networking', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Networking</a>
             <a href="#planner" onclick="handleNav(event, 'planner', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">AI Tools</a>
+            <a href="#promotion" onclick="handleNav(event, 'promotion', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Promotion</a>
             <a href="#chat" onclick="handleNav(event, 'chat', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Chat Bot</a>
             <a href="#premium" onclick="handleNav(event, 'premium', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Pricing</a>
             <a href="#about" onclick="handleNav(event, 'about', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">About Us</a>
-            <a href="#premium" onclick="handleNav(event, 'premium', true)" class="mt-8 inline-block bg-[#1e3a8a] text-white px-8 py-3 rounded-lg font-semibold cta-button">Get Started</a>
         </nav>
     </div>
 
@@ -173,7 +174,7 @@
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="lightbulb"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3><p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="megaphone"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3><p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="users"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3><p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="sliders-horizontal"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Operations Automator</h3><p class="text-gray-600">Analyzes your workflow and suggests automations for repetitive tasks, helping you save time and reduce costs.</p></div>
+                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="volume-2"></i></div><h3 class="text-xl font-bold mt-6 mb-2">AI Promotion Generator</h3><p class="text-gray-600">Describe your business and let our AI generate a compelling advertisement to attract new customers.</p></div>
                         <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="scale"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3><p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p></div>
                     </div>
                 </div>
@@ -262,8 +263,28 @@
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Business Tools</h1>
                             <p class="mt-4 text-lg text-gray-600">From a creative name to a full business plan, let our AI do the heavy lifting.</p>
                         </div>
+
+                        <!-- AI Product Idea Generator -->
                         <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Business Name Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. AI Product Idea Generator</h2>
+                            <div class="mb-4">
+                                <label for="idea-description" class="block text-lg font-semibold mb-2 text-gray-800">Interests, skills, or target market:</label>
+                                <textarea id="idea-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'sustainable fashion for young professionals', 'mobile apps for fitness', 'gourmet food products'"></textarea>
+                            </div>
+                            <button id="generate-idea-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="lightbulb" class="mr-2"></i>
+                                Generate Ideas (Free)
+                            </button>
+                        </div>
+                        <div id="idea-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is searching for new opportunities...</p>
+                        </div>
+                        <div id="idea-output" class="mt-8 grid grid-cols-1 gap-4"></div>
+
+                        <!-- Business Name Generator -->
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Name Generator</h2>
                             <div class="mb-4">
                                 <label for="name-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business to get name ideas:</label>
                                 <textarea id="name-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys'"></textarea>
@@ -275,8 +296,10 @@
                         </div>
                         <div id="name-loader" class="text-center py-12 hidden"></div>
                         <div id="name-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                        
+                        <!-- Business Plan Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Plan Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. Business Plan Generator</h2>
                             <div class="mb-4">
                                 <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business idea in detail:</label>
                                 <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My business, named Pawsitive Planet, will be an eco-friendly subscription box for dog toys...'"></textarea>
@@ -288,8 +311,10 @@
                         </div>
                         <div id="plan-loader" class="text-center py-12 hidden"></div>
                         <div id="plan-output" class="mt-12 space-y-8"></div>
+                        
+                        <!-- AI Logo Idea Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Logo Idea Generator</h2>
                             <div class="mb-4">
                                 <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
                                 <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet".'"></textarea>
@@ -301,8 +326,41 @@
                         </div>
                         <div id="logo-loader" class="text-center py-12 hidden"></div>
                         <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        
+                        <!-- AI Marketing Copy Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Supplier Finder</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">5. AI Marketing Copy Generator</h2>
+                            <div class="mb-4">
+                                <label for="copy-description" class="block text-lg font-semibold mb-2 text-gray-800">Product/Service Description:</label>
+                                <textarea id="copy-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'Handmade leather wallets for men who appreciate quality.'"></textarea>
+                            </div>
+                            <button id="generate-copy-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="pen-square" class="mr-2"></i>
+                                Generate Marketing Copy (Free)
+                            </button>
+                        </div>
+                        <div id="copy-loader" class="text-center py-12 hidden"></div>
+                        <div id="copy-output" class="mt-8 bg-white p-6 rounded-xl border whitespace-pre-wrap"></div>
+
+                        <!-- AI Invoice & Contract Generator -->
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">6. AI Invoice & Contract Generator</h2>
+                            <div class="mb-4">
+                                <label for="document-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe the document you need:</label>
+                                <textarea id="document-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'A simple contract for freelance graphic design services for client John Doe, project scope is a new logo, price is 500 EUR.' or 'An invoice for web development services to Acme Corp for 1500 USD.'"></textarea>
+                            </div>
+                            <button id="generate-document-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="file-text" class="mr-2"></i>
+                                Generate Document (Free)
+                            </button>
+                            <p class="text-xs text-gray-500 mt-4 text-center">Disclaimer: This is not a legal service. Generated documents are templates and should be reviewed by a legal professional.</p>
+                        </div>
+                        <div id="document-loader" class="text-center py-12 hidden"></div>
+                        <div id="document-output" class="mt-8 bg-white p-6 rounded-xl border whitespace-pre-wrap"></div>
+                        
+                        <!-- AI Supplier Finder -->
+                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">7. AI Supplier Finder</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label for="supplier-business-type" class="block text-lg font-semibold mb-2 text-gray-800">Your Business Type:</label>
@@ -320,6 +378,53 @@
                         </div>
                         <div id="supplier-loader" class="text-center py-12 hidden"></div>
                         <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Promotion Page -->
+        <div id="page-promotion" class="page">
+            <section class="pt-32 pb-20 bg-white min-h-screen">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Promotion Generator</h1>
+                            <p class="mt-4 text-lg text-gray-600">Promote your business or brand. Our AI will create a compelling ad for you.</p>
+                        </div>
+
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="promo-name" class="block text-lg font-semibold mb-2 text-gray-800">Company / Brand Name:</label>
+                                    <input type="text" id="promo-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Kava Klub">
+                                </div>
+                                <div>
+                                    <label for="promo-description" class="block text-lg font-semibold mb-2 text-gray-800">Short Description:</label>
+                                    <textarea id="promo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., A cozy coffee shop in the heart of Ljubljana, specializing in artisanal coffee and homemade pastries."></textarea>
+                                </div>
+                            </div>
+                            <button id="generate-promo-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="volume-2" class="mr-2"></i>
+                                Generate Promotion
+                            </button>
+                            <p class="text-sm text-gray-500 mt-4 text-center">Free users can generate one promotion per day. <a href="#premium" onclick="handleNav(event, 'premium')" class="text-blue-600 hover:underline">Upgrade to Pro for unlimited promotions.</a></p>
+                        </div>
+
+                        <div id="promo-loader" class="text-center py-12 hidden">
+                             <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is crafting your promotion...</p>
+                        </div>
+                        
+                        <div id="promo-output" class="mt-12 hidden">
+                             <h2 class="text-2xl font-bold text-center mb-4">Your Generated Ad Preview</h2>
+                             <div class="bg-white p-6 rounded-xl border shadow-md">
+                                <h3 id="promo-headline" class="text-2xl font-bold text-[#1e3a8a]"></h3>
+                                <p id="promo-body" class="mt-2 text-gray-700"></p>
+                                <p id="promo-cta" class="mt-4 font-semibold text-gray-800"></p>
+                             </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -533,302 +638,467 @@
         }
 
         // --- Main Chatbot Functionality ---
-        const chatInput = document.getElementById('chat-input');
-        const sendChatButton = document.getElementById('send-chat-button');
-        const chatWindow = document.getElementById('chat-window');
-        const chatPromptButtons = document.querySelectorAll('.chat-prompt-btn');
+        function initializeChatPageListeners() {
+            const chatInput = document.getElementById('chat-input');
+            const sendChatButton = document.getElementById('send-chat-button');
+            const chatWindow = document.getElementById('chat-window');
+            const chatPromptButtons = document.querySelectorAll('.chat-prompt-btn');
 
-        function addChatMessage(message, sender) {
-            if (!chatWindow) return;
-            const messageElement = document.createElement('div');
-            if (sender === 'user') {
-                messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-xs break-words"><p>${message}</p></div></div>`;
-            } else { // AI
-                 messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700 max-w-xs break-words"><p>${message}</p></div></div>`;
+            function addChatMessage(message, sender) {
+                if (!chatWindow) return;
+                const messageElement = document.createElement('div');
+                if (sender === 'user') {
+                    messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-xs break-words"><p>${message}</p></div></div>`;
+                } else { // AI
+                     messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700 max-w-xs break-words"><p>${message}</p></div></div>`;
+                }
+                chatWindow.appendChild(messageElement);
+                lucide.createIcons();
+                chatWindow.scrollTop = chatWindow.scrollHeight;
             }
-            chatWindow.appendChild(messageElement);
-            lucide.createIcons();
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
 
-        async function handleMainChat() {
-            const userInput = chatInput.value.trim();
-            if (!userInput) return;
+            async function handleMainChat() {
+                const userInput = chatInput.value.trim();
+                if (!userInput) return;
+                
+                addChatMessage(userInput, 'user');
+                chatInput.value = '';
+                showTypingIndicator(chatWindow, 'ai');
+
+                const prompt = `You are BizMind AI, a helpful and concise business assistant. A user said: "${userInput}". Respond helpfully.`;
+                try {
+                    const aiResponse = await callGemini(prompt);
+                    removeTypingIndicator(chatWindow);
+                    addChatMessage(aiResponse, 'ai');
+                } catch (error) {
+                    console.error("Chatbot error:", error);
+                    removeTypingIndicator(chatWindow);
+                    addChatMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'ai');
+                }
+            }
             
-            addChatMessage(userInput, 'user');
-            chatInput.value = '';
-            showTypingIndicator(chatWindow, 'ai');
-
-            const prompt = `You are BizMind AI, a helpful and concise business assistant. A user said: "${userInput}". Respond helpfully.`;
-            try {
-                const aiResponse = await callGemini(prompt);
-                removeTypingIndicator(chatWindow);
-                addChatMessage(aiResponse, 'ai');
-            } catch (error) {
-                console.error("Chatbot error:", error);
-                removeTypingIndicator(chatWindow);
-                addChatMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'ai');
+            if (sendChatButton) {
+                sendChatButton.addEventListener('click', handleMainChat);
+                chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleMainChat(); });
+            }
+            if (chatPromptButtons) {
+                chatPromptButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        if(chatInput) {
+                            chatInput.value = button.textContent;
+                            chatInput.focus();
+                        }
+                    });
+                });
             }
         }
 
         // --- Live Support Chat Functionality ---
-        const openSupportButton = document.getElementById('open-support-chat');
-        const closeSupportButton = document.getElementById('close-support-chat');
-        const supportModal = document.getElementById('live-support-modal');
-        const supportChatInput = document.getElementById('support-chat-input');
-        const sendSupportChatButton = document.getElementById('send-support-chat-button');
-        const supportChatWindow = document.getElementById('support-chat-window');
+        function initializeSupportListeners() {
+            const openSupportButton = document.getElementById('open-support-chat');
+            const closeSupportButton = document.getElementById('close-support-chat');
+            const supportModal = document.getElementById('live-support-modal');
+            const supportChatInput = document.getElementById('support-chat-input');
+            const sendSupportChatButton = document.getElementById('send-support-chat-button');
+            const supportChatWindow = document.getElementById('support-chat-window');
 
-        function toggleSupportModal(show) {
-            if (!supportModal) return;
-            if (show) {
-                supportModal.classList.remove('hidden');
-                setTimeout(() => supportModal.classList.remove('opacity-0'), 10);
-            } else {
-                supportModal.classList.add('opacity-0');
-                setTimeout(() => supportModal.classList.add('hidden'), 300);
+            function toggleSupportModal(show) {
+                if (!supportModal) return;
+                if (show) {
+                    supportModal.classList.remove('hidden');
+                    setTimeout(() => supportModal.classList.remove('opacity-0'), 10);
+                } else {
+                    supportModal.classList.add('opacity-0');
+                    setTimeout(() => supportModal.classList.add('hidden'), 300);
+                }
             }
-        }
-        
-        function addSupportChatMessage(message, sender) {
-            if(!supportChatWindow) return;
-            const messageElement = document.createElement('div');
-            if (sender === 'user') {
-                messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-md break-words"><p>${message}</p></div></div>`;
-            } else { // Admin/AI
-                 messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div><div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700 max-w-md break-words"><p class="font-bold text-green-800">Support AI</p><p>${message}</p></div></div>`;
-            }
-            supportChatWindow.appendChild(messageElement);
-            lucide.createIcons();
-            supportChatWindow.scrollTop = supportChatWindow.scrollHeight;
-        }
-
-        async function handleSupportChat() {
-            if(!supportChatInput) return;
-            const userInput = supportChatInput.value.trim();
-            if (!userInput) return;
             
-            addSupportChatMessage(userInput, 'user');
-            supportChatInput.value = '';
-            showTypingIndicator(supportChatWindow, 'admin');
+            function addSupportChatMessage(message, sender) {
+                if(!supportChatWindow) return;
+                const messageElement = document.createElement('div');
+                if (sender === 'user') {
+                    messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-md break-words"><p>${message}</p></div></div>`;
+                } else { // Admin/AI
+                     messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div><div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700 max-w-md break-words"><p class="font-bold text-green-800">Support AI</p><p>${message}</p></div></div>`;
+                }
+                supportChatWindow.appendChild(messageElement);
+                lucide.createIcons();
+                supportChatWindow.scrollTop = supportChatWindow.scrollHeight;
+            }
 
-            const prompt = `You are a friendly and helpful AI support agent for BizMind AI. A user needs help and said: "${userInput}". Provide a helpful first response and mention that a human agent will be connected if needed.`;
-            try {
-                const aiResponse = await callGemini(prompt);
-                removeTypingIndicator(supportChatWindow);
-                addSupportChatMessage(aiResponse, 'ai');
-            } catch (error) {
-                console.error("Support chat error:", error);
-                removeTypingIndicator(supportChatWindow);
-                addSupportChatMessage("I'm having trouble connecting to our systems. A human agent has been notified and will be with you shortly.", 'ai');
+            async function handleSupportChat() {
+                if(!supportChatInput) return;
+                const userInput = supportChatInput.value.trim();
+                if (!userInput) return;
+                
+                addSupportChatMessage(userInput, 'user');
+                supportChatInput.value = '';
+                showTypingIndicator(supportChatWindow, 'admin');
+
+                const prompt = `You are a friendly and helpful AI support agent for BizMind AI. A user needs help and said: "${userInput}". Provide a helpful first response and mention that a human agent will be connected if needed.`;
+                try {
+                    const aiResponse = await callGemini(prompt);
+                    removeTypingIndicator(supportChatWindow);
+                    addSupportChatMessage(aiResponse, 'ai');
+                } catch (error) {
+                    console.error("Support chat error:", error);
+                    removeTypingIndicator(supportChatWindow);
+                    addSupportChatMessage("I'm having trouble connecting to our systems. A human agent has been notified and will be with you shortly.", 'ai');
+                }
+            }
+            
+            if (openSupportButton) openSupportButton.addEventListener('click', () => toggleSupportModal(true));
+            if (closeSupportButton) closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
+            if (sendSupportChatButton) {
+                sendSupportChatButton.addEventListener('click', handleSupportChat);
+                supportChatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSupportChat(); });
             }
         }
 
         // --- AI Planner Page Functionality ---
-        const generatePlanButton = document.getElementById('generate-plan-button');
-        const businessDescriptionInput = document.getElementById('business-description');
-        const planOutputContainer = document.getElementById('plan-output');
-        const planLoader = document.getElementById('plan-loader');
-        const promoModal = document.getElementById('promo-modal');
-        const submitPromoButton = document.getElementById('submit-promo-button');
-        const noPromoButton = document.getElementById('no-promo-button');
-        const promoPasswordInput = document.getElementById('promo-password-input');
-        const promoError = document.getElementById('promo-error');
-        const generateLogoButton = document.getElementById('generate-logo-button');
-        const logoDescriptionInput = document.getElementById('logo-description');
-        const logoOutputContainer = document.getElementById('logo-output');
-        const logoLoader = document.getElementById('logo-loader');
-        const nameDescriptionInput = document.getElementById('name-description');
-        const generateNameButton = document.getElementById('generate-name-button');
-        const nameLoader = document.getElementById('name-loader');
-        const nameOutputContainer = document.getElementById('name-output');
-        const supplierBusinessTypeInput = document.getElementById('supplier-business-type');
-        const supplierLocationInput = document.getElementById('supplier-location');
-        const generateSupplierButton = document.getElementById('generate-supplier-button');
-        const supplierLoader = document.getElementById('supplier-loader');
-        const supplierOutputContainer = document.getElementById('supplier-output');
-        
-        function togglePromoModal(show) {
-            if (!promoModal) return;
-            promoError.classList.add('hidden');
-            promoPasswordInput.value = '';
-            if (show) {
-                promoModal.classList.remove('hidden');
-                setTimeout(() => promoModal.classList.remove('opacity-0'), 10);
-            } else {
-                promoModal.classList.add('opacity-0');
-                setTimeout(() => promoModal.classList.add('hidden'), 300);
-            }
-        }
-
-        async function handlePlanGeneration() {
-            if (!businessDescriptionInput) return;
-            const description = businessDescriptionInput.value.trim();
+        function initializePlannerPageListeners() {
+            const generatePlanButton = document.getElementById('generate-plan-button');
+            const businessDescriptionInput = document.getElementById('business-description');
+            const planOutputContainer = document.getElementById('plan-output');
+            const planLoader = document.getElementById('plan-loader');
+            const promoModal = document.getElementById('promo-modal');
+            const submitPromoButton = document.getElementById('submit-promo-button');
+            const noPromoButton = document.getElementById('no-promo-button');
+            const promoPasswordInput = document.getElementById('promo-password-input');
+            const promoError = document.getElementById('promo-error');
+            const generateLogoButton = document.getElementById('generate-logo-button');
+            const logoDescriptionInput = document.getElementById('logo-description');
+            const logoOutputContainer = document.getElementById('logo-output');
+            const logoLoader = document.getElementById('logo-loader');
+            const nameDescriptionInput = document.getElementById('name-description');
+            const generateNameButton = document.getElementById('generate-name-button');
+            const nameLoader = document.getElementById('name-loader');
+            const nameOutputContainer = document.getElementById('name-output');
+            const supplierBusinessTypeInput = document.getElementById('supplier-business-type');
+            const supplierLocationInput = document.getElementById('supplier-location');
+            const generateSupplierButton = document.getElementById('generate-supplier-button');
+            const supplierLoader = document.getElementById('supplier-loader');
+            const supplierOutputContainer = document.getElementById('supplier-output');
+            const generateIdeaButton = document.getElementById('generate-idea-button');
+            const ideaDescriptionInput = document.getElementById('idea-description');
+            const ideaLoader = document.getElementById('idea-loader');
+            const ideaOutputContainer = document.getElementById('idea-output');
+            const generateCopyButton = document.getElementById('generate-copy-button');
+            const copyDescriptionInput = document.getElementById('copy-description');
+            const copyLoader = document.getElementById('copy-loader');
+            const copyOutputContainer = document.getElementById('copy-output');
+            const generateDocumentButton = document.getElementById('generate-document-button');
+            const documentDescriptionInput = document.getElementById('document-description');
+            const documentLoader = document.getElementById('document-loader');
+            const documentOutputContainer = document.getElementById('document-output');
             
-            generatePlanButton.disabled = true;
-            planOutputContainer.innerHTML = '';
-            planLoader.classList.remove('hidden');
-
-            const prompt = `You are an expert business consultant AI. A user has provided the following business idea: '${description}'. Based on this idea, and using your knowledge and access to real-time information, generate a comprehensive business plan. Please provide the output in a structured JSON format. The JSON object should have a single key 'plan', which is an array of objects. Each object in the array should represent a section of the business plan and have the following properties: 'title' (a string), 'icon' (a relevant Lucide icon name as a string, e.g., 'search', 'megaphone', 'lightbulb', 'file-text', 'sliders-horizontal'), and 'content' (a detailed string for that section, formatted with paragraphs). The plan must include at least these sections: Executive Summary, Market Analysis, Social Media & Marketing Strategy, Operations & Automation, and Key Advice & Next Steps. The content should be insightful, actionable, and tailored specifically to the user's idea.`;
-            
-            try {
-                const planSections = await callGemini(prompt, {
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: { "plan": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "icon": { "type": "STRING" }, "content": { "type": "STRING" } }, required: ["title", "icon", "content"] } } },
-                        required: ["plan"]
-                    }
-                });
-
-                planLoader.classList.add('hidden');
-                const delay = ms => new Promise(res => setTimeout(res, ms));
-
-                for (const section of planSections.plan) {
-                    await delay(500);
-                    const sectionEl = document.createElement('div');
-                    sectionEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                    sectionEl.innerHTML = `<h3 class="text-2xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="${section.icon || 'file-text'}" class="mr-3"></i>${section.title}</h3><p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${section.content}</p>`;
-                    planOutputContainer.appendChild(sectionEl);
-                    lucide.createIcons();
-                    sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            function togglePromoModal(show) {
+                if (!promoModal) return;
+                promoError.classList.add('hidden');
+                promoPasswordInput.value = '';
+                if (show) {
+                    promoModal.classList.remove('hidden');
+                    setTimeout(() => promoModal.classList.remove('opacity-0'), 10);
+                } else {
+                    promoModal.classList.add('opacity-0');
+                    setTimeout(() => promoModal.classList.add('hidden'), 300);
                 }
-            } catch (error) {
-                console.error("Error generating plan:", error);
-                planLoader.classList.add('hidden');
-                planOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-            } finally {
-                generatePlanButton.disabled = false;
-            }
-        }
-
-        async function handleLogoGeneration() {
-            if (!logoDescriptionInput) return;
-            const description = logoDescriptionInput.value.trim();
-            if (!description) {
-                alert('Please describe your brand first.');
-                return;
             }
 
-            generateLogoButton.disabled = true;
-            logoOutputContainer.innerHTML = '';
-            logoLoader.classList.remove('hidden');
+            async function handlePlanGeneration() {
+                if (!businessDescriptionInput) return;
+                const description = businessDescriptionInput.value.trim();
+                
+                generatePlanButton.disabled = true;
+                planOutputContainer.innerHTML = '';
+                planLoader.classList.remove('hidden');
 
-            const prompt = `You are a creative branding expert AI. A user has described their brand: '${description}'. Generate 3 distinct and creative logo concepts. For each concept, provide a title, a detailed description of the visual elements, and the reasoning behind the design choices. Output this as a JSON object with a key 'logo_ideas', which is an array of objects. Each object should have 'title' and 'description' properties.`;
+                const prompt = `You are an expert business consultant AI. A user has provided the following business idea: '${description}'. Based on this idea, and using your knowledge and access to real-time information, generate a comprehensive business plan. Please provide the output in a structured JSON format. The JSON object should have a single key 'plan', which is an array of objects. Each object in the array should represent a section of the business plan and have the following properties: 'title' (a string), 'icon' (a relevant Lucide icon name as a string, e.g., 'search', 'megaphone', 'lightbulb', 'file-text', 'sliders-horizontal'), and 'content' (a detailed string for that section, formatted with paragraphs). The plan must include at least these sections: Executive Summary, Market Analysis, Social Media & Marketing Strategy, Operations & Automation, and Key Advice & Next Steps. The content should be insightful, actionable, and tailored specifically to the user's idea.`;
+                
+                try {
+                    const planSections = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "plan": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "icon": { "type": "STRING" }, "content": { "type": "STRING" } }, required: ["title", "icon", "content"] } } },
+                            required: ["plan"]
+                        }
+                    });
+
+                    planLoader.classList.add('hidden');
+                    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+                    for (const section of planSections.plan) {
+                        await delay(500);
+                        const sectionEl = document.createElement('div');
+                        sectionEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        sectionEl.innerHTML = `<h3 class="text-2xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="${section.icon || 'file-text'}" class="mr-3"></i>${section.title}</h3><p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${section.content}</p>`;
+                        planOutputContainer.appendChild(sectionEl);
+                        lucide.createIcons();
+                        sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } catch (error) {
+                    console.error("Error generating plan:", error);
+                    planLoader.classList.add('hidden');
+                    planOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generatePlanButton.disabled = false;
+                }
+            }
+
+            async function handleLogoGeneration() {
+                if (!logoDescriptionInput) return;
+                const description = logoDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your brand first.');
+                    return;
+                }
+
+                generateLogoButton.disabled = true;
+                logoOutputContainer.innerHTML = '';
+                logoLoader.classList.remove('hidden');
+
+                const prompt = `You are a creative branding expert AI. A user has described their brand: '${description}'. Generate 3 distinct and creative logo concepts. For each concept, provide a title, a detailed description of the visual elements, and the reasoning behind the design choices. Output this as a JSON object with a key 'logo_ideas', which is an array of objects. Each object should have 'title' and 'description' properties.`;
+                
+                try {
+                    const logoIdeas = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "logo_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["title", "description"] } } },
+                            required: ["logo_ideas"]
+                        }
+                    });
+
+                    logoLoader.classList.add('hidden');
+                    logoIdeas.logo_ideas.forEach(idea => {
+                        const ideaEl = document.createElement('div');
+                        ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.title}</h3><p class="text-gray-700">${idea.description}</p>`;
+                        logoOutputContainer.appendChild(ideaEl);
+                    });
+
+                } catch (error) {
+                    console.error("Error generating logo ideas:", error);
+                    logoLoader.classList.add('hidden');
+                    logoOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generateLogoButton.disabled = false;
+                }
+            }
             
-            try {
-                const logoIdeas = await callGemini(prompt, {
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: { "logo_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["title", "description"] } } },
-                        required: ["logo_ideas"]
+            async function handleNameGeneration() {
+                if (!nameDescriptionInput) return;
+                const description = nameDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your business for name ideas first.');
+                    return;
+                }
+
+                generateNameButton.disabled = true;
+                nameOutputContainer.innerHTML = '';
+                nameLoader.classList.remove('hidden');
+
+                const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
+                
+                try {
+                    const nameIdeas = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
+                            required: ["name_ideas"]
+                        }
+                    });
+
+                    nameLoader.classList.add('hidden');
+                    nameIdeas.name_ideas.forEach(idea => {
+                        const ideaEl = document.createElement('div');
+                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
+                        nameOutputContainer.appendChild(ideaEl);
+                    });
+
+                } catch (error) {
+                    console.error("Error generating names:", error);
+                    nameLoader.classList.add('hidden');
+                    nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generateNameButton.disabled = false;
+                }
+            }
+
+            async function handleSupplierGeneration() {
+                if (!supplierBusinessTypeInput || !supplierLocationInput) return;
+                const businessType = supplierBusinessTypeInput.value.trim();
+                const location = supplierLocationInput.value.trim();
+                if (!businessType || !location) {
+                    alert('Please provide both a business type and a location.');
+                    return;
+                }
+
+                generateSupplierButton.disabled = true;
+                supplierOutputContainer.innerHTML = '';
+                supplierLoader.classList.remove('hidden');
+
+                const prompt = `As a procurement specialist AI, identify potential categories of suppliers for a '${businessType}' located in '${location}'. Do not list specific company names. Instead, provide a list of supplier *types* and a brief description of what to look for in each. For example, for a coffee shop, you might suggest "Coffee Bean Roasters" and "Local Bakeries". Output this as a JSON object with a key 'supplier_categories', which is an array of objects. Each object should have 'type' and 'description' properties.`;
+                
+                try {
+                    const supplierIdeas = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "supplier_categories": { type: "ARRAY", items: { type: "OBJECT", properties: { "type": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["type", "description"] } } },
+                            required: ["supplier_categories"]
+                        }
+                    });
+
+                    supplierLoader.classList.add('hidden');
+                    supplierIdeas.supplier_categories.forEach(idea => {
+                        const ideaEl = document.createElement('div');
+                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.type}</h3><p class="text-gray-600 text-sm">${idea.description}</p>`;
+                        supplierOutputContainer.appendChild(ideaEl);
+                    });
+
+                } catch (error) {
+                    console.error("Error generating suppliers:", error);
+                    supplierLoader.classList.add('hidden');
+                    supplierOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generateSupplierButton.disabled = false;
+                }
+            }
+            
+            async function handleIdeaGeneration() {
+                if (!ideaDescriptionInput) return;
+                const description = ideaDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your interests or target market first.');
+                    return;
+                }
+
+                generateIdeaButton.disabled = true;
+                ideaOutputContainer.innerHTML = '';
+                ideaLoader.classList.remove('hidden');
+
+                const prompt = `You are a business idea generator AI. Based on the user's interests/market: '${description}', generate 3 innovative business or product ideas. For each idea, provide a name and a short, compelling description. Output this as a JSON object with a key 'business_ideas', which is an array of objects. Each object should have 'name' and 'description' properties.`;
+                
+                try {
+                    const ideas = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "business_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["name", "description"] } } },
+                            required: ["business_ideas"]
+                        }
+                    });
+
+                    ideaLoader.classList.add('hidden');
+                    ideas.business_ideas.forEach(idea => {
+                        const ideaEl = document.createElement('div');
+                        ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.name}</h3><p class="text-gray-700">${idea.description}</p>`;
+                        ideaOutputContainer.appendChild(ideaEl);
+                    });
+
+                } catch (error) {
+                    console.error("Error generating ideas:", error);
+                    ideaLoader.classList.add('hidden');
+                    ideaOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generateIdeaButton.disabled = false;
+                }
+            }
+
+            async function handleCopyGeneration() {
+                if (!copyDescriptionInput) return;
+                const description = copyDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your product or service first.');
+                    return;
+                }
+
+                generateCopyButton.disabled = true;
+                copyOutputContainer.innerHTML = '';
+                copyLoader.classList.remove('hidden');
+
+                const prompt = `You are an expert marketing copywriter. A user described their product: '${description}'. Generate a short, compelling marketing copy for a social media ad. It should include a catchy headline, a body explaining the benefits, and a strong call to action.`;
+                
+                try {
+                    const copy = await callGemini(prompt);
+                    copyLoader.classList.add('hidden');
+                    copyOutputContainer.textContent = copy;
+                } catch (error) {
+                    console.error("Error generating copy:", error);
+                    copyLoader.classList.add('hidden');
+                    copyOutputContainer.textContent = "Sorry, there was an error generating the marketing copy. Please try again.";
+                } finally {
+                    generateCopyButton.disabled = false;
+                }
+            }
+
+            async function handleDocumentGeneration() {
+                if (!documentDescriptionInput) return;
+                const description = documentDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe the document you need.');
+                    return;
+                }
+
+                generateDocumentButton.disabled = true;
+                documentOutputContainer.innerHTML = '';
+                documentLoader.classList.remove('hidden');
+
+                const prompt = `You are an AI assistant that generates document templates. A user needs a document based on this description: '${description}'. Generate a simple, clear template for this document. Use placeholders like [Your Name/Company], [Client Name], [Date], etc. where appropriate. Start with a clear title. This is not legal advice.`;
+                
+                try {
+                    const doc = await callGemini(prompt);
+                    documentLoader.classList.add('hidden');
+                    documentOutputContainer.textContent = doc;
+                } catch (error) {
+                    console.error("Error generating document:", error);
+                    documentLoader.classList.add('hidden');
+                    documentOutputContainer.textContent = "Sorry, there was an error generating the document. Please try again.";
+                } finally {
+                    generateDocumentButton.disabled = false;
+                }
+            }
+            
+            if (generatePlanButton) {
+                generatePlanButton.addEventListener('click', () => {
+                    if (!businessDescriptionInput.value.trim()) {
+                        alert('Please describe your business idea first.');
+                        return;
+                    }
+                    togglePromoModal(true);
+                });
+            }
+            if (submitPromoButton) {
+                submitPromoButton.addEventListener('click', () => {
+                    const correctPassword = "MSTYCFREE";
+                    if (promoPasswordInput.value === correctPassword) {
+                        togglePromoModal(false);
+                        handlePlanGeneration();
+                    } else {
+                        promoError.classList.remove('hidden');
                     }
                 });
-
-                logoLoader.classList.add('hidden');
-                logoIdeas.logo_ideas.forEach(idea => {
-                    const ideaEl = document.createElement('div');
-                    ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                    ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.title}</h3><p class="text-gray-700">${idea.description}</p>`;
-                    logoOutputContainer.appendChild(ideaEl);
-                });
-
-            } catch (error) {
-                console.error("Error generating logo ideas:", error);
-                logoLoader.classList.add('hidden');
-                logoOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-            } finally {
-                generateLogoButton.disabled = false;
             }
-        }
-        
-        async function handleNameGeneration() {
-            if (!nameDescriptionInput) return;
-            const description = nameDescriptionInput.value.trim();
-            if (!description) {
-                alert('Please describe your business for name ideas first.');
-                return;
-            }
-
-            generateNameButton.disabled = true;
-            nameOutputContainer.innerHTML = '';
-            nameLoader.classList.remove('hidden');
-
-            const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
-            
-            try {
-                const nameIdeas = await callGemini(prompt, {
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
-                        required: ["name_ideas"]
-                    }
+            if (noPromoButton) {
+                noPromoButton.addEventListener('click', () => {
+                    togglePromoModal(false);
+                    alert("Payment gateway integration is coming soon!");
                 });
-
-                nameLoader.classList.add('hidden');
-                nameIdeas.name_ideas.forEach(idea => {
-                    const ideaEl = document.createElement('div');
-                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
-                    nameOutputContainer.appendChild(ideaEl);
-                });
-
-            } catch (error) {
-                console.error("Error generating names:", error);
-                nameLoader.classList.add('hidden');
-                nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-            } finally {
-                generateNameButton.disabled = false;
             }
+            if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
+            if (generateNameButton) generateNameButton.addEventListener('click', handleNameGeneration);
+            if (generateSupplierButton) generateSupplierButton.addEventListener('click', handleSupplierGeneration);
+            if (generateIdeaButton) generateIdeaButton.addEventListener('click', handleIdeaGeneration);
+            if (generateCopyButton) generateCopyButton.addEventListener('click', handleCopyGeneration);
+            if (generateDocumentButton) generateDocumentButton.addEventListener('click', handleDocumentGeneration);
         }
 
-        async function handleSupplierGeneration() {
-            if (!supplierBusinessTypeInput || !supplierLocationInput) return;
-            const businessType = supplierBusinessTypeInput.value.trim();
-            const location = supplierLocationInput.value.trim();
-            if (!businessType || !location) {
-                alert('Please provide both a business type and a location.');
-                return;
-            }
-
-            generateSupplierButton.disabled = true;
-            supplierOutputContainer.innerHTML = '';
-            supplierLoader.classList.remove('hidden');
-
-            const prompt = `As a procurement specialist AI, identify potential categories of suppliers for a '${businessType}' located in '${location}'. Do not list specific company names. Instead, provide a list of supplier *types* and a brief description of what to look for in each. For example, for a coffee shop, you might suggest "Coffee Bean Roasters" and "Local Bakeries". Output this as a JSON object with a key 'supplier_categories', which is an array of objects. Each object should have 'type' and 'description' properties.`;
-            
-            try {
-                const supplierIdeas = await callGemini(prompt, {
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: { "supplier_categories": { type: "ARRAY", items: { type: "OBJECT", properties: { "type": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["type", "description"] } } },
-                        required: ["supplier_categories"]
-                    }
-                });
-
-                supplierLoader.classList.add('hidden');
-                supplierIdeas.supplier_categories.forEach(idea => {
-                    const ideaEl = document.createElement('div');
-                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.type}</h3><p class="text-gray-600 text-sm">${idea.description}</p>`;
-                    supplierOutputContainer.appendChild(ideaEl);
-                });
-
-            } catch (error) {
-                console.error("Error generating suppliers:", error);
-                supplierLoader.classList.add('hidden');
-                supplierOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-            } finally {
-                generateSupplierButton.disabled = false;
-            }
-        }
-        
         // --- Networking Page ---
         function initializeNetworkingPage() {
             const profileFormSection = document.getElementById('profile-form-section');
             const profileListSection = document.getElementById('profile-list-section');
             const profileForm = document.getElementById('profile-form');
-            const bioInput = document.getElementById('profile-bio');
-            const bioError = document.getElementById('bio-error');
             
             const userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
@@ -841,9 +1111,11 @@
                 profileListSection.classList.add('hidden');
             }
 
-            if (!profileForm.dataset.listenerAttached) {
+            if (profileForm && !profileForm.dataset.listenerAttached) {
                 profileForm.addEventListener('submit', (e) => {
                     e.preventDefault();
+                    const bioInput = document.getElementById('profile-bio');
+                    const bioError = document.getElementById('bio-error');
                     if (bioInput.value.length < 50) {
                         bioError.classList.remove('hidden');
                         return;
@@ -895,6 +1167,73 @@
                 profileListContainer.appendChild(profileCard);
             });
         }
+        
+        // --- Promotion Page ---
+        function initializePromotionPageListeners() {
+            const generatePromoButton = document.getElementById('generate-promo-button');
+            const promoNameInput = document.getElementById('promo-name');
+            const promoDescriptionInput = document.getElementById('promo-description');
+            const promoLoader = document.getElementById('promo-loader');
+            const promoOutputContainer = document.getElementById('promo-output');
+
+            async function handlePromotionGeneration() {
+                const lastPromoDate = localStorage.getItem('lastPromotionDate');
+                const today = new Date().toDateString();
+
+                if (lastPromoDate === today) {
+                    alert('You have already used your free promotion for today. Please upgrade to Pro for unlimited promotions.');
+                    return;
+                }
+
+                const name = promoNameInput.value.trim();
+                const description = promoDescriptionInput.value.trim();
+
+                if (!name || !description) {
+                    alert('Please enter both a company name and a description.');
+                    return;
+                }
+
+                generatePromoButton.disabled = true;
+                promoOutputContainer.classList.add('hidden');
+                promoLoader.classList.remove('hidden');
+
+                const prompt = `You are a marketing expert. Create a short, catchy advertisement for a company named "${name}". The company is described as: "${description}". The ad should have a headline, a body, and a call to action. Output this as a JSON object with keys 'headline', 'body', and 'cta'.`;
+
+                try {
+                    const ad = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "headline": { "type": "STRING" },
+                                "body": { "type": "STRING" },
+                                "cta": { "type": "STRING" }
+                            },
+                            required: ["headline", "body", "cta"]
+                        }
+                    });
+
+                    promoLoader.classList.add('hidden');
+                    document.getElementById('promo-headline').textContent = ad.headline;
+                    document.getElementById('promo-body').textContent = ad.body;
+                    document.getElementById('promo-cta').textContent = ad.cta;
+                    promoOutputContainer.classList.remove('hidden');
+
+                    // Set the date for the free user limit
+                    localStorage.setItem('lastPromotionDate', today);
+
+                } catch (error) {
+                    console.error("Error generating promotion:", error);
+                    promoLoader.classList.add('hidden');
+                    alert("Sorry, there was an error generating your promotion. Please try again.");
+                } finally {
+                    generatePromoButton.disabled = false;
+                }
+            }
+
+            if (generatePromoButton) {
+                generatePromoButton.addEventListener('click', handlePromotionGeneration);
+            }
+        }
 
 
         // --- Event Listener Initialization ---
@@ -902,57 +1241,10 @@
             hamburgerButton.addEventListener('click', () => mobileMenu.classList.remove('-translate-x-full'));
             closeMenuButton.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
             
-            if (generatePlanButton) {
-                generatePlanButton.addEventListener('click', () => {
-                    if (!businessDescriptionInput.value.trim()) {
-                        alert('Please describe your business idea first.');
-                        return;
-                    }
-                    togglePromoModal(true);
-                });
-            }
-            if (submitPromoButton) {
-                submitPromoButton.addEventListener('click', () => {
-                    const correctPassword = "MSTYCFREE";
-                    if (promoPasswordInput.value === correctPassword) {
-                        togglePromoModal(false);
-                        handlePlanGeneration();
-                    } else {
-                        promoError.classList.remove('hidden');
-                    }
-                });
-            }
-            if (noPromoButton) {
-                noPromoButton.addEventListener('click', () => {
-                    togglePromoModal(false);
-                    alert("Payment gateway integration is coming soon!");
-                });
-            }
-            if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
-            if (generateNameButton) generateNameButton.addEventListener('click', handleNameGeneration);
-            if (generateSupplierButton) generateSupplierButton.addEventListener('click', handleSupplierGeneration);
-            
-            if (sendChatButton) {
-                sendChatButton.addEventListener('click', handleMainChat);
-                chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleMainChat(); });
-            }
-            if (chatPromptButtons) {
-                chatPromptButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        if(chatInput) {
-                            chatInput.value = button.textContent;
-                            chatInput.focus();
-                        }
-                    });
-                });
-            }
-            if (openSupportButton) openSupportButton.addEventListener('click', () => toggleSupportModal(true));
-            if (closeSupportButton) closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
-            
-            if (sendSupportChatButton) {
-                sendSupportChatButton.addEventListener('click', handleSupportChat);
-                supportChatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSupportChat(); });
-            }
+            initializePlannerPageListeners(); 
+            initializeChatPageListeners();
+            initializeSupportListeners();
+            initializePromotionPageListeners();
         }
 
         // --- Initial Page Load and History Handling ---
