@@ -101,12 +101,11 @@
             </a>
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="#home" onclick="handleNav(event, 'home')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Home</a>
-                <a href="#about" onclick="handleNav(event, 'about')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">About Us</a>
-                <a href="#networking" onclick="handleNav(event, 'networking')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Networking</a>
+                <a href="#about" onclick="handleNav(event, 'about')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">About & Pricing</a>
+                <a href="#knowledge-hub" onclick="handleNav(event, 'knowledge-hub')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Knowledge Hub</a>
+                <a href="#networking" onclick="handleNav(event, 'networking')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Networking & Promo</a>
                 <a href="#planner" onclick="handleNav(event, 'planner')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">AI Tools</a>
-                <a href="#promotion" onclick="handleNav(event, 'promotion')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Promotion</a>
                 <a href="#chat" onclick="handleNav(event, 'chat')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Chat Bot</a>
-                <a href="#premium" onclick="handleNav(event, 'premium')" class="nav-link text-gray-600 hover:text-[#1e3a8a]">Pricing</a>
             </nav>
             <div class="md:hidden">
                 <button id="hamburger-button" class="text-gray-800 focus:outline-none">
@@ -125,12 +124,11 @@
         </div>
         <nav class="flex flex-col items-center justify-center h-full -mt-16 space-y-8 text-2xl">
             <a href="#home" onclick="handleNav(event, 'home', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Home</a>
-            <a href="#about" onclick="handleNav(event, 'about', true)" class="nav-link-mobile text-gray-600 hover:text-[#1e3a8a]">About Us</a>
-            <a href="#networking" onclick="handleNav(event, 'networking', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Networking</a>
+            <a href="#about" onclick="handleNav(event, 'about', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">About & Pricing</a>
+            <a href="#knowledge-hub" onclick="handleNav(event, 'knowledge-hub', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Knowledge Hub</a>
+            <a href="#networking" onclick="handleNav(event, 'networking', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Networking & Promo</a>
             <a href="#planner" onclick="handleNav(event, 'planner', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">AI Tools</a>
-            <a href="#promotion" onclick="handleNav(event, 'promotion', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Promotion</a>
             <a href="#chat" onclick="handleNav(event, 'chat', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Chat Bot</a>
-            <a href="#premium" onclick="handleNav(event, 'premium', true)" class="nav-link-mobile text-gray-800 hover:text-[#1e3a8a]">Pricing</a>
         </nav>
     </div>
 
@@ -142,7 +140,7 @@
                     <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">Your Personal <span class="text-[#1e3a8a]">AI Business Partner</span></h1>
                     <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Get real-time insights, automated strategies, and intelligent tools to build, launch, and grow your business – all powered by a single, business-focused AI.</p>
                     <div class="mt-10 flex justify-center items-center space-x-4">
-                        <a href="#premium" onclick="handleNav(event, 'premium')" class="cta-button bg-[#1e3a8a] text-white px-8 py-4 rounded-lg font-bold text-lg">Get Started Free</a>
+                        <a href="#about" onclick="handleNav(event, 'about')" class="cta-button bg-[#1e3a8a] text-white px-8 py-4 rounded-lg font-bold text-lg">Get Started Free</a>
                         <a href="#planner" onclick="handleNav(event, 'planner')" class="cta-button bg-white text-[#1e3a8a] px-8 py-4 rounded-lg font-bold text-lg border border-gray-200 flex items-center">
                             Explore AI Tools
                             <i data-lucide="sparkles" class="ml-2"></i>
@@ -193,15 +191,69 @@
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-3xl md:text-4xl font-bold">Ready to Build Your Future?</h2>
                     <p class="mt-4 text-lg text-blue-200 max-w-2xl mx-auto">Join thousands of entrepreneurs growing smarter with BizMind AI. No credit card required to start.</p>
-                    <div class="mt-8"><a href="#premium" onclick="handleNav(event, 'premium')" class="cta-button bg-white text-[#1e3a8a] px-10 py-4 rounded-lg font-bold text-lg">Try BizMind AI Free</a></div>
+                    <div class="mt-8"><a href="#about" onclick="handleNav(event, 'about')" class="cta-button bg-white text-[#1e3a8a] px-10 py-4 rounded-lg font-bold text-lg">Try BizMind AI Free</a></div>
                 </div>
             </section>
         </div>
 
-        <!-- Networking Page -->
+        <!-- Knowledge Hub Page -->
+        <div id="page-knowledge-hub" class="page">
+            <section class="pt-32 pb-20 bg-white min-h-screen">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Knowledge Hub</h1>
+                            <p class="mt-4 text-lg text-gray-600">Your AI-powered business academy. Get personalized guides for your entrepreneurial journey.</p>
+                        </div>
+
+                        <div class="space-y-8">
+                            <!-- Guide 1 -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-2">How to Start a Business (Step-by-Step)</h2>
+                                <p class="text-gray-600 mb-4">A comprehensive guide from idea to launch. Personalize it for your specific industry.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="guide1-niche" placeholder="Your Niche (e.g., 'handmade jewelry')" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="guide1-goals" placeholder="Your Goals (e.g., 'reach 100 sales')" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button onclick="generateGuide('How to Start a Business', 'guide1')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
+                            </div>
+                            <!-- Guide 2 -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-2">How to Dropship with Zero Budget</h2>
+                                <p class="text-gray-600 mb-4">Learn the secrets of dropshipping without upfront investment. Get a guide tailored to your product ideas.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="guide2-niche" placeholder="Product Niche (e.g., 'pet supplies')" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="guide2-goals" placeholder="Your Goals (e.g., 'first sale in 30 days')" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button onclick="generateGuide('How to Dropship with Zero Budget', 'guide2')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
+                            </div>
+                             <!-- Guide 3 -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-2">5 Best Strategies for Instagram Growth</h2>
+                                <p class="text-gray-600 mb-4">Actionable tips to grow your Instagram presence. Personalize them for your brand.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="guide3-niche" placeholder="Your Niche (e.g., 'local coffee shop')" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="guide3-goals" placeholder="Your Goals (e.g., '1000 new followers')" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button onclick="generateGuide('5 Best Strategies for Instagram Growth', 'guide3')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
+                            </div>
+                        </div>
+
+                        <div id="guide-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating your personalized guide...</p>
+                        </div>
+                        <div id="guide-output" class="mt-12"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Networking & Promotion Page -->
         <div id="page-networking" class="page">
             <section class="pt-32 pb-20 bg-white min-h-screen">
                 <div class="container mx-auto px-6">
+                    <!-- Networking Section -->
                     <div id="profile-form-section">
                         <div class="max-w-2xl mx-auto">
                             <div class="text-center mb-12">
@@ -250,6 +302,40 @@
                             <!-- User profiles will be injected here -->
                         </div>
                     </div>
+
+                    <!-- Promotion Section -->
+                    <div class="max-w-3xl mx-auto mt-20">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Promotion Generator</h1>
+                            <p class="mt-4 text-lg text-gray-600">Promote your business or brand. Our AI will create a compelling ad for you.</p>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="promo-name" class="block text-lg font-semibold mb-2 text-gray-800">Company / Brand Name:</label>
+                                    <input type="text" id="promo-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Kava Klub">
+                                </div>
+                                <div>
+                                    <label for="promo-description" class="block text-lg font-semibold mb-2 text-gray-800">Short Description:</label>
+                                    <textarea id="promo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., A cozy coffee shop in the heart of Ljubljana, specializing in artisanal coffee and homemade pastries."></textarea>
+                                </div>
+                            </div>
+                            <button id="generate-promo-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="volume-2" class="mr-2"></i>
+                                Generate Promotion
+                            </button>
+                            <p class="text-sm text-gray-500 mt-4 text-center">Free users can generate one promotion per day. <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Upgrade to Pro for unlimited promotions.</a></p>
+                        </div>
+                        <div id="promo-loader" class="text-center py-12 hidden"></div>
+                        <div id="promo-output" class="mt-12 hidden">
+                             <h2 class="text-2xl font-bold text-center mb-4">Your Generated Ad Preview</h2>
+                             <div class="bg-white p-6 rounded-xl border shadow-md">
+                                <h3 id="promo-headline" class="text-2xl font-bold text-[#1e3a8a]"></h3>
+                                <p id="promo-body" class="mt-2 text-gray-700"></p>
+                                <p id="promo-cta" class="mt-4 font-semibold text-gray-800"></p>
+                             </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -263,28 +349,8 @@
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Business Tools</h1>
                             <p class="mt-4 text-lg text-gray-600">From a creative name to a full business plan, let our AI do the heavy lifting.</p>
                         </div>
-
-                        <!-- AI Product Idea Generator -->
                         <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. AI Product Idea Generator</h2>
-                            <div class="mb-4">
-                                <label for="idea-description" class="block text-lg font-semibold mb-2 text-gray-800">Interests, skills, or target market:</label>
-                                <textarea id="idea-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'sustainable fashion for young professionals', 'mobile apps for fitness', 'gourmet food products'"></textarea>
-                            </div>
-                            <button id="generate-idea-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="lightbulb" class="mr-2"></i>
-                                Generate Ideas (Free)
-                            </button>
-                        </div>
-                        <div id="idea-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is searching for new opportunities...</p>
-                        </div>
-                        <div id="idea-output" class="mt-8 grid grid-cols-1 gap-4"></div>
-
-                        <!-- Business Name Generator -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Name Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Business Name Generator</h2>
                             <div class="mb-4">
                                 <label for="name-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business to get name ideas:</label>
                                 <textarea id="name-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys'"></textarea>
@@ -296,10 +362,8 @@
                         </div>
                         <div id="name-loader" class="text-center py-12 hidden"></div>
                         <div id="name-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                        
-                        <!-- Business Plan Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. Business Plan Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Plan Generator</h2>
                             <div class="mb-4">
                                 <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business idea in detail:</label>
                                 <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My business, named Pawsitive Planet, will be an eco-friendly subscription box for dog toys...'"></textarea>
@@ -311,10 +375,8 @@
                         </div>
                         <div id="plan-loader" class="text-center py-12 hidden"></div>
                         <div id="plan-output" class="mt-12 space-y-8"></div>
-                        
-                        <!-- AI Logo Idea Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Logo Idea Generator</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
                             <div class="mb-4">
                                 <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
                                 <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet".'"></textarea>
@@ -326,41 +388,8 @@
                         </div>
                         <div id="logo-loader" class="text-center py-12 hidden"></div>
                         <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-                        
-                        <!-- AI Marketing Copy Generator -->
                         <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">5. AI Marketing Copy Generator</h2>
-                            <div class="mb-4">
-                                <label for="copy-description" class="block text-lg font-semibold mb-2 text-gray-800">Product/Service Description:</label>
-                                <textarea id="copy-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'Handmade leather wallets for men who appreciate quality.'"></textarea>
-                            </div>
-                            <button id="generate-copy-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="pen-square" class="mr-2"></i>
-                                Generate Marketing Copy (Free)
-                            </button>
-                        </div>
-                        <div id="copy-loader" class="text-center py-12 hidden"></div>
-                        <div id="copy-output" class="mt-8 bg-white p-6 rounded-xl border whitespace-pre-wrap"></div>
-
-                        <!-- AI Invoice & Contract Generator -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">6. AI Invoice & Contract Generator</h2>
-                            <div class="mb-4">
-                                <label for="document-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe the document you need:</label>
-                                <textarea id="document-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'A simple contract for freelance graphic design services for client John Doe, project scope is a new logo, price is 500 EUR.' or 'An invoice for web development services to Acme Corp for 1500 USD.'"></textarea>
-                            </div>
-                            <button id="generate-document-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="file-text" class="mr-2"></i>
-                                Generate Document (Free)
-                            </button>
-                            <p class="text-xs text-gray-500 mt-4 text-center">Disclaimer: This is not a legal service. Generated documents are templates and should be reviewed by a legal professional.</p>
-                        </div>
-                        <div id="document-loader" class="text-center py-12 hidden"></div>
-                        <div id="document-output" class="mt-8 bg-white p-6 rounded-xl border whitespace-pre-wrap"></div>
-                        
-                        <!-- AI Supplier Finder -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">7. AI Supplier Finder</h2>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Supplier Finder</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label for="supplier-business-type" class="block text-lg font-semibold mb-2 text-gray-800">Your Business Type:</label>
@@ -378,53 +407,6 @@
                         </div>
                         <div id="supplier-loader" class="text-center py-12 hidden"></div>
                         <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Promotion Page -->
-        <div id="page-promotion" class="page">
-            <section class="pt-32 pb-20 bg-white min-h-screen">
-                <div class="container mx-auto px-6">
-                    <div class="max-w-3xl mx-auto">
-                        <div class="text-center mb-12">
-                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Promotion Generator</h1>
-                            <p class="mt-4 text-lg text-gray-600">Promote your business or brand. Our AI will create a compelling ad for you.</p>
-                        </div>
-
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="promo-name" class="block text-lg font-semibold mb-2 text-gray-800">Company / Brand Name:</label>
-                                    <input type="text" id="promo-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Kava Klub">
-                                </div>
-                                <div>
-                                    <label for="promo-description" class="block text-lg font-semibold mb-2 text-gray-800">Short Description:</label>
-                                    <textarea id="promo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., A cozy coffee shop in the heart of Ljubljana, specializing in artisanal coffee and homemade pastries."></textarea>
-                                </div>
-                            </div>
-                            <button id="generate-promo-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="volume-2" class="mr-2"></i>
-                                Generate Promotion
-                            </button>
-                            <p class="text-sm text-gray-500 mt-4 text-center">Free users can generate one promotion per day. <a href="#premium" onclick="handleNav(event, 'premium')" class="text-blue-600 hover:underline">Upgrade to Pro for unlimited promotions.</a></p>
-                        </div>
-
-                        <div id="promo-loader" class="text-center py-12 hidden">
-                             <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Our AI is crafting your promotion...</p>
-                        </div>
-                        
-                        <div id="promo-output" class="mt-12 hidden">
-                             <h2 class="text-2xl font-bold text-center mb-4">Your Generated Ad Preview</h2>
-                             <div class="bg-white p-6 rounded-xl border shadow-md">
-                                <h3 id="promo-headline" class="text-2xl font-bold text-[#1e3a8a]"></h3>
-                                <p id="promo-body" class="mt-2 text-gray-700"></p>
-                                <p id="promo-cta" class="mt-4 font-semibold text-gray-800"></p>
-                             </div>
-                        </div>
-
                     </div>
                 </div>
             </section>
@@ -458,24 +440,7 @@
             </section>
         </div>
         
-        <!-- Premium Page -->
-        <div id="page-premium" class="page">
-            <section class="py-32 bg-white">
-                <div class="container mx-auto px-6">
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Simple, Transparent Pricing</h1>
-                        <p class="mt-4 text-lg text-gray-600">Choose the plan that's right for your stage of growth. Cancel anytime.</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <div class="pricing-card border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Freemium</h3><p class="text-gray-500 mt-2">For getting started</p><p class="text-4xl font-bold mt-6">€0 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a></div>
-                        <div class="pricing-card border-2 border-[#1e3a8a] rounded-xl p-8 flex flex-col relative"><span class="absolute top-0 -translate-y-1/2 bg-[#1e3a8a] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span><h3 class="text-xl font-bold text-[#1e3a8a]">Pro Plan</h3><p class="text-gray-500 mt-2">For serious builders</p><p class="text-4xl font-bold mt-6">€29 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Full access to all AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Unlimited queries</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Live internet access</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>All integrations</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Priority email support</li></ul><a href="#" class="mt-8 block w-full text-center bg-[#1e3a8a] text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition-colors">Choose Pro</a></div>
-                        <div class="pricing-card border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Business Plan</h3><p class="text-gray-500 mt-2">For teams & agencies</p><p class="text-4xl font-bold mt-6">€79 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- About Page -->
+        <!-- About & Pricing Page -->
         <div id="page-about" class="page">
             <section class="pt-32 pb-20 bg-white">
                 <div class="container mx-auto px-6">
@@ -490,11 +455,24 @@
                             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900">Meet the Team</h2>
                             <p class="mt-4 text-lg text-center text-gray-600">The minds behind the mission.</p>
                             <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/1e3a8a/ffffff?text=MS" alt="Maj S."><h3 class="mt-4 text-xl font-bold">M.Stojanović</h3><p class="text-[#1e3a8a] font-semibold">CEO & Founder</p><p class="mt-2 text-gray-600 text-sm">Maj is the visionary who bridges the gap between complex AI capabilities and real-world business needs. With a background in both software engineering and entrepreneurship, he is passionate about creating tools that are not just technologically advanced, but genuinely useful for founders and business owners.</p></div>
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=AC" alt="Alex Chen"><h3 class="mt-4 text-xl font-bold">A.Logar</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & CEO</p><p class="mt-2 text-gray-600 text-sm">Alex is a serial entrepreneur who has experienced the challenges of building a business firsthand. His drive is to simplify the entrepreneurial journey for others, making BizMind AI the co-pilot he wishes he had.</p></div>
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=BK" alt="Benida Kumar"><h3 class="mt-4 text-xl font-bold">K.Kruljac</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & Co-CEO</p><p class="mt-2 text-gray-600 text-sm">Benida leads the technical development of our platform. With a Ph.D. in machine learning, she ensures our AI models are powerful, reliable, and always on the cutting edge of technology.</p></div>
+                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/1e3a8a/ffffff?text=MS" alt="Maj S."><h3 class="mt-4 text-xl font-bold">Maj S.</h3><p class="text-[#1e3a8a] font-semibold">Lead AI Strategist</p><p class="mt-2 text-gray-600 text-sm">Maj is the visionary who bridges the gap between complex AI capabilities and real-world business needs. With a background in both software engineering and entrepreneurship, he is passionate about creating tools that are not just technologically advanced, but genuinely useful for founders and business owners.</p></div>
+                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=AC" alt="Alex Chen"><h3 class="mt-4 text-xl font-bold">Alex Chen</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & CEO</p><p class="mt-2 text-gray-600 text-sm">Alex is a serial entrepreneur who has experienced the challenges of building a business firsthand. His drive is to simplify the entrepreneurial journey for others, making BizMind AI the co-pilot he wishes he had.</p></div>
+                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=BK" alt="Benida Kumar"><h3 class="mt-4 text-xl font-bold">Benida Kumar</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & CTO</p><p class="mt-2 text-gray-600 text-sm">Benida leads the technical development of our platform. With a Ph.D. in machine learning, she ensures our AI models are powerful, reliable, and always on the cutting edge of technology.</p></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Simple, Transparent Pricing</h1>
+                        <p class="mt-4 text-lg text-gray-600">Choose the plan that's right for your stage of growth. Cancel anytime.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Freemium</h3><p class="text-gray-500 mt-2">For getting started</p><p class="text-4xl font-bold mt-6">€0 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a></div>
+                        <div class="pricing-card bg-white border-2 border-[#1e3a8a] rounded-xl p-8 flex flex-col relative"><span class="absolute top-0 -translate-y-1/2 bg-[#1e3a8a] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span><h3 class="text-xl font-bold text-[#1e3a8a]">Pro Plan</h3><p class="text-gray-500 mt-2">For serious builders</p><p class="text-4xl font-bold mt-6">€29 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Full access to all AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Unlimited queries</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Live internet access</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>All integrations</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Priority email support</li></ul><a href="#" class="mt-8 block w-full text-center bg-[#1e3a8a] text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition-colors">Choose Pro</a></div>
+                        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Business Plan</h3><p class="text-gray-500 mt-2">For teams & agencies</p><p class="text-4xl font-bold mt-6">€79 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a></div>
                     </div>
                 </div>
             </section>
