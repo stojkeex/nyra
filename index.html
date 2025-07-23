@@ -521,6 +521,54 @@
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Creating social media profile...</p>
                         </div>
                         <div id="social-output" class="mt-12 hidden"></div>
+                        
+                        <!-- Tool 8: Website Generator -->
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">8. 🌐 AI Website Generator</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="website-company-name" class="block text-lg font-semibold mb-2 text-gray-800">Company Name:</label>
+                                    <input type="text" id="website-company-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Pawsitive Planet">
+                                </div>
+                                <div>
+                                    <label for="website-company-description" class="block text-lg font-semibold mb-2 text-gray-800">Company Description:</label>
+                                    <textarea id="website-company-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys, made from sustainable materials.'"></textarea>
+                                </div>
+                                <div>
+                                    <label for="website-style-select" class="block text-lg font-semibold mb-2 text-gray-800">Website Style:</label>
+                                    <select id="website-style-select" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
+                                        <option value="Modern">Modern</option>
+                                        <option value="Minimalist">Minimalist</option>
+                                        <option value="Professional">Professional</option>
+                                        <option value="Creative">Creative</option>
+                                        <option value="E-commerce">E-commerce</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button id="generate-website-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                <i data-lucide="globe" class="mr-2"></i>
+                                Generate Website ($4.99)
+                            </button>
+                            <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
+                        </div>
+                        <div id="website-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Building your website...</p>
+                        </div>
+                        <div id="website-output" class="mt-12 hidden">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-3xl font-bold">Your AI-Generated Website</h2>
+                                <div class="flex space-x-3">
+                                    <button id="preview-website-button" class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium flex items-center">
+                                        <i data-lucide="eye" class="mr-2"></i> Preview
+                                    </button>
+                                    <button id="download-website-button" class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium flex items-center">
+                                        <i data-lucide="download" class="mr-2"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="website-preview-container" class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg"></div>
+                        </div>
 
                     </div>
                 </div>
@@ -649,6 +697,21 @@
                 <button id="submit-promo-button" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-bold cta-button hover:bg-blue-600">Apply & Generate</button>
                 <button id="no-promo-button" class="text-gray-500 text-sm hover:underline">Proceed to Payment</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Website Preview Modal -->
+    <div id="website-preview-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i data-lucide="eye" class="mr-2 text-[#1e3a8a]"></i>Website Preview
+                </h2>
+                <button id="close-website-preview" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <iframe id="website-preview-frame" class="flex-1 w-full border-0"></iframe>
         </div>
     </div>
 
@@ -882,8 +945,13 @@
             const pitchDeckLoader = document.getElementById('pitch-deck-loader');
             const pitchDeckOutputContainer = document.getElementById('pitch-deck-output');
             const generateSocialButton = document.getElementById('generate-social-button');
+            const generateWebsiteButton = document.getElementById('generate-website-button');
+            const previewWebsiteButton = document.getElementById('preview-website-button');
+            const downloadWebsiteButton = document.getElementById('download-website-button');
+            const websitePreviewModal = document.getElementById('website-preview-modal');
+            const closeWebsitePreview = document.getElementById('close-website-preview');
 
-            // State to hold the function to be executed after payment/promo
+            let generatedWebsiteCode = '';
             let pendingGenerationFunction = null;
             
             function togglePromoModal(show, generationFunction = null) {
@@ -901,7 +969,9 @@
                     promoModal.classList.add('opacity-0');
                     setTimeout(() => {
                         promoModal.classList.add('hidden');
-                        pendingGenerationFunction = null; // Clear after modal is hidden
+                        if (!show) { // Only clear if closing
+                           pendingGenerationFunction = null;
+                        }
                     }, 300);
                 }
             }
@@ -1301,6 +1371,98 @@
                 }
             }
             
+            async function executeWebsiteGeneration() {
+                const companyName = document.getElementById('website-company-name').value.trim();
+                const description = document.getElementById('website-company-description').value.trim();
+                const style = document.getElementById('website-style-select').value;
+
+                if (!companyName || !description) {
+                    alert('Please enter both a company name and description.');
+                    return;
+                }
+
+                generateWebsiteButton.disabled = true;
+                document.getElementById('website-output').classList.add('hidden');
+                document.getElementById('website-loader').classList.remove('hidden');
+
+                const prompt = `You are an expert web developer specializing in creating visually appealing, single-file websites using Tailwind CSS. Create a complete HTML file for a company called "${companyName}". The company description is: "${description}". The website must have a ${style} design style.
+
+                **Requirements:**
+                1.  **Single File:** All HTML, CSS (via Tailwind classes), and JavaScript must be in a single HTML file.
+                2.  **Tailwind CSS:** Use the Tailwind CDN (<script src="https://cdn.tailwindcss.com"></script>) and use Tailwind classes for all styling. Do not use <style> tags or inline style attributes.
+                3.  **Responsive Design:** The website must be fully responsive and look great on mobile, tablet, and desktop screens.
+                4.  **Content:** Generate relevant, high-quality placeholder text for all sections based on the company description.
+                5.  **Sections:** The website must include:
+                    * A modern navigation bar.
+                    * A compelling hero section with the company name and a strong call-to-action.
+                    * An "About Us" section.
+                    * A "Services" or "Products" section (choose whichever is more appropriate).
+                    * A simple "Contact Us" section with a form.
+                    * A clean footer.
+                6.  **Code Only:** Your entire output must be only the HTML code, starting with <!DOCTYPE html> and ending with </html>. Do not include any markdown, explanations, or comments outside of the code.`;
+
+                try {
+                    const websiteCode = await callGemini(prompt);
+                    generatedWebsiteCode = websiteCode;
+                    
+                    const previewContainer = document.getElementById('website-preview-container');
+                    previewContainer.innerHTML = `
+                        <div class="h-64 bg-gray-100 flex items-center justify-center">
+                            <i data-lucide="globe" class="w-16 h-16 text-gray-400"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">${companyName} Website Preview</h3>
+                            <p class="text-gray-600 mt-2">Click "Preview" to see your generated website.</p>
+                        </div>
+                    `;
+                    
+                    document.getElementById('website-loader').classList.add('hidden');
+                    document.getElementById('website-output').classList.remove('hidden');
+                    lucide.createIcons();
+
+                } catch (error) {
+                    console.error("Error generating website:", error);
+                    document.getElementById('website-loader').classList.add('hidden');
+                    alert("Failed to generate website. Please try again.");
+                } finally {
+                    generateWebsiteButton.disabled = false;
+                }
+            }
+
+            function toggleWebsitePreviewModal(show) {
+                if (!websitePreviewModal) return;
+                if (show) {
+                    const previewFrame = document.getElementById('website-preview-frame');
+                    previewFrame.srcdoc = generatedWebsiteCode;
+                    websitePreviewModal.classList.remove('hidden');
+                    setTimeout(() => websitePreviewModal.classList.remove('opacity-0'), 10);
+                } else {
+                    websitePreviewModal.classList.add('opacity-0');
+                    setTimeout(() => websitePreviewModal.classList.add('hidden'), 300);
+                }
+            }
+
+            function downloadWebsite() {
+                if (!generatedWebsiteCode) {
+                    alert('No website generated yet.');
+                    return;
+                }
+                
+                const blob = new Blob([generatedWebsiteCode], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${document.getElementById('website-company-name').value.trim().toLowerCase().replace(/\s+/g, '-')}-website.html`;
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+
             // Event Listeners for Paid Tools
             if (generateNameButton) generateNameButton.addEventListener('click', () => togglePromoModal(true, executeNameGeneration));
             if (generatePlanButton) generatePlanButton.addEventListener('click', () => togglePromoModal(true, executePlanGeneration));
@@ -1308,7 +1470,8 @@
             if (generateSwotButton) generateSwotButton.addEventListener('click', () => togglePromoModal(true, executeSwotGeneration));
             if (generatePitchDeckButton) generatePitchDeckButton.addEventListener('click', () => togglePromoModal(true, executePitchDeckGeneration));
             if (generateSocialButton) generateSocialButton.addEventListener('click', () => togglePromoModal(true, executeSocialMediaGeneration));
-            
+            if (generateWebsiteButton) generateWebsiteButton.addEventListener('click', () => togglePromoModal(true, executeWebsiteGeneration));
+
             // Event Listener for Free Tool
             if (generateSupplierButton) generateSupplierButton.addEventListener('click', executeSupplierGeneration);
 
@@ -1317,10 +1480,10 @@
                 submitPromoButton.addEventListener('click', () => {
                     const correctPassword = "MSTYCFREE";
                     if (promoPasswordInput.value === correctPassword) {
+                        togglePromoModal(false);
                         if (typeof pendingGenerationFunction === 'function') {
                             pendingGenerationFunction();
                         }
-                        togglePromoModal(false);
                     } else {
                         promoError.classList.remove('hidden');
                     }
@@ -1332,6 +1495,11 @@
                     alert("Payment gateway integration is coming soon!");
                 });
             }
+
+            // Website Preview and Download Listeners
+            if (previewWebsiteButton) previewWebsiteButton.addEventListener('click', () => toggleWebsitePreviewModal(true));
+            if (closeWebsitePreview) closeWebsitePreview.addEventListener('click', () => toggleWebsitePreviewModal(false));
+            if (downloadWebsiteButton) downloadWebsiteButton.addEventListener('click', downloadWebsite);
         }
 
         // --- Knowledge Hub Page ---
