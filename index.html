@@ -100,6 +100,24 @@
         .chat-prompt-btn:hover {
             background: #e5e7eb;
         }
+        .tool-category {
+            border-left: 4px solid #1e3a8a;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a202c;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+        }
+        .risk-low { color: #10b981; }
+        .risk-medium { color: #f59e0b; }
+        .risk-high { color: #ef4444; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -465,89 +483,370 @@
         <div id="page-planner" class="page">
             <section class="pt-32 pb-20 min-h-screen">
                 <div class="container mx-auto px-6">
-                    <div class="max-w-4xl mx-auto">
+                    <div class="max-w-6xl mx-auto">
                         <div class="text-center mb-12">
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Business Tools</h1>
                             <p class="mt-4 text-lg text-gray-600">From a creative name to a full business plan, let our AI do the heavy lifting.</p>
                         </div>
                         
-                        <!-- Tool 1: Name Generator -->
-                        <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Business Name Generator</h2>
-                            <div class="mb-4">
-                                <label for="name-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business to get name ideas:</label>
-                                <textarea id="name-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys'"></textarea>
+                        <!-- Tool Categories -->
+                        <div class="mb-12">
+                            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                                <button onclick="filterTools('all')" class="filter-btn bg-[#1e3a8a] text-white px-6 py-2 rounded-full font-semibold">All Tools</button>
+                                <button onclick="filterTools('planning')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-semibold">Planning</button>
+                                <button onclick="filterTools('analysis')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-semibold">Analysis</button>
+                                <button onclick="filterTools('marketing')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-semibold">Marketing</button>
+                                <button onclick="filterTools('finance')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-semibold">Finance</button>
                             </div>
-                            <button id="generate-name-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="lightbulb" class="mr-2"></i>
-                                Generate Names (Demo)
-                            </button>
                         </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- PLANNING TOOLS -->
+                            <!-- Tool 1: Business Name Generator -->
+                            <div class="tool-card planning bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="lightbulb"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Business Name Generator</h2>
+                                        <p class="text-sm text-gray-500">Get creative, memorable names for your business</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea id="name-description" rows="3" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys'"></textarea>
+                                </div>
+                                <button id="generate-name-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="lightbulb" class="mr-2"></i>
+                                    Generate Names (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 2: Business Plan Generator -->
+                            <div class="tool-card planning bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="premium-badge">PRO</div>
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-green-100 text-green-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="file-text"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Business Plan Generator</h2>
+                                        <p class="text-sm text-gray-500">Comprehensive business plans in minutes</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea id="business-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="Describe your business idea in detail..."></textarea>
+                                </div>
+                                <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="wand-2" class="mr-2"></i>
+                                    Generate My Plan (Demo)
+                                </button>
+                            </div>
+
+                            <!-- ANALYSIS TOOLS -->
+                            <!-- Tool 3: Competitor Analysis -->
+                            <div class="tool-card analysis bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="premium-badge">PRO</div>
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-red-100 text-red-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="target"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Competitor Analysis</h2>
+                                        <p class="text-sm text-gray-500">Deep dive into your competition</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="text" id="competitor-industry" placeholder="Your Industry (e.g., 'Coffee Shops')" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="competitor-location" placeholder="Your Location (e.g., 'San Francisco')" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-competitor-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="target" class="mr-2"></i>
+                                    Analyze Competitors (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 4: Market Size Calculator -->
+                            <div class="tool-card analysis bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-purple-100 text-purple-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="pie-chart"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Market Size Calculator</h2>
+                                        <p class="text-sm text-gray-500">Estimate your total addressable market</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="text" id="market-product" placeholder="Your Product/Service" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="market-target" placeholder="Target Market (e.g., 'Small businesses in US')" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-market-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="pie-chart" class="mr-2"></i>
+                                    Calculate Market Size (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 5: Risk Assessment -->
+                            <div class="tool-card analysis bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="premium-badge">PRO</div>
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="shield-alert"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Business Risk Assessment</h2>
+                                        <p class="text-sm text-gray-500">Identify and mitigate potential risks</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea id="risk-business" rows="3" placeholder="Describe your business model and industry..." class="w-full border-gray-300 rounded-lg p-3"></textarea>
+                                </div>
+                                <button id="generate-risk-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="shield-alert" class="mr-2"></i>
+                                    Assess Risks (Demo)
+                                </button>
+                            </div>
+
+                            <!-- MARKETING TOOLS -->
+                            <!-- Tool 6: Customer Persona Builder -->
+                            <div class="tool-card marketing bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-pink-100 text-pink-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="users"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Customer Persona Builder</h2>
+                                        <p class="text-sm text-gray-500">Create detailed customer profiles</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="text" id="persona-product" placeholder="Your Product/Service" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="persona-industry" placeholder="Your Industry" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-persona-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="users" class="mr-2"></i>
+                                    Build Personas (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 7: Pricing Strategy Generator -->
+                            <div class="tool-card marketing bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="premium-badge">PRO</div>
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-indigo-100 text-indigo-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="dollar-sign"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Pricing Strategy Generator</h2>
+                                        <p class="text-sm text-gray-500">Optimize your pricing for maximum profit</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="text" id="pricing-product" placeholder="Product/Service Name" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="number" id="pricing-cost" placeholder="Cost per unit ($)" class="w-full border-gray-300 rounded-lg p-3">
+                                    <select id="pricing-strategy" class="w-full border-gray-300 rounded-lg p-3">
+                                        <option value="">Select Pricing Strategy</option>
+                                        <option value="premium">Premium Pricing</option>
+                                        <option value="competitive">Competitive Pricing</option>
+                                        <option value="value">Value-Based Pricing</option>
+                                        <option value="penetration">Penetration Pricing</option>
+                                    </select>
+                                </div>
+                                <button id="generate-pricing-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="dollar-sign" class="mr-2"></i>
+                                    Generate Pricing (Demo)
+                                </button>
+                            </div>
+
+                            <!-- FINANCE TOOLS -->
+                            <!-- Tool 8: Revenue Model Generator -->
+                            <div class="tool-card finance bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-emerald-100 text-emerald-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="trending-up"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Revenue Model Generator</h2>
+                                        <p class="text-sm text-gray-500">Discover the best way to monetize</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea id="revenue-business" rows="3" placeholder="Describe your business and target customers..." class="w-full border-gray-300 rounded-lg p-3"></textarea>
+                                </div>
+                                <button id="generate-revenue-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="trending-up" class="mr-2"></i>
+                                    Generate Revenue Models (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 9: Financial Projections -->
+                            <div class="tool-card finance bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg relative">
+                                <div class="premium-badge">PRO</div>
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-cyan-100 text-cyan-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="calculator"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Financial Projections</h2>
+                                        <p class="text-sm text-gray-500">5-year financial forecasts</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="number" id="finance-revenue" placeholder="Expected Monthly Revenue ($)" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="number" id="finance-costs" placeholder="Monthly Operating Costs ($)" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="number" id="finance-growth" placeholder="Expected Growth Rate (%)" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-finance-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="calculator" class="mr-2"></i>
+                                    Generate Projections (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Tool 10: Funding Sources Finder -->
+                            <div class="tool-card finance bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-orange-100 text-orange-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="banknote"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Funding Sources Finder</h2>
+                                        <p class="text-sm text-gray-500">Find the right funding for your stage</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <select id="funding-stage" class="w-full border-gray-300 rounded-lg p-3">
+                                        <option value="">Select Business Stage</option>
+                                        <option value="idea">Idea Stage</option>
+                                        <option value="startup">Early Startup</option>
+                                        <option value="growth">Growth Stage</option>
+                                        <option value="expansion">Expansion</option>
+                                    </select>
+                                    <input type="number" id="funding-amount" placeholder="Funding Amount Needed ($)" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="funding-industry" placeholder="Your Industry" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-funding-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="banknote" class="mr-2"></i>
+                                    Find Funding Sources (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Original Tools -->
+                            <!-- Logo Generator -->
+                            <div class="tool-card marketing bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="image"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Logo Idea Generator</h2>
+                                        <p class="text-sm text-gray-500">Creative logo concepts for your brand</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea id="logo-description" rows="3" placeholder="Describe your brand..." class="w-full border-gray-300 rounded-lg p-3"></textarea>
+                                </div>
+                                <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="image" class="mr-2"></i>
+                                    Generate Logo Ideas (Demo)
+                                </button>
+                            </div>
+
+                            <!-- Supplier Finder -->
+                            <div class="tool-card planning bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-green-100 text-green-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                                        <i data-lucide="search"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800">Supplier Finder</h2>
+                                        <p class="text-sm text-gray-500">Find the right suppliers for your business</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4 mb-4">
+                                    <input type="text" id="supplier-business-type" placeholder="Your Business Type" class="w-full border-gray-300 rounded-lg p-3">
+                                    <input type="text" id="supplier-location" placeholder="Your Location" class="w-full border-gray-300 rounded-lg p-3">
+                                </div>
+                                <button id="generate-supplier-button" class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
+                                    <i data-lucide="search" class="mr-2"></i>
+                                    Find Suppliers (Demo)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Output sections -->
                         <div id="name-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Generating names...</p>
                         </div>
                         <div id="name-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
-                        <!-- Tool 2: Business Plan Generator -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Plan Generator</h2>
-                            <div class="mb-4">
-                                <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business idea in detail:</label>
-                                <textarea id="business-description" rows="6" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My business, named Pawsitive Planet, will be an eco-friendly subscription box for dog toys...'"></textarea>
-                            </div>
-                            <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="wand-2" class="mr-2"></i>
-                                Generate My Plan (Demo)
-                            </button>
-                        </div>
                         <div id="plan-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Generating your plan...</p>
                         </div>
                         <div id="plan-output" class="mt-12 space-y-8"></div>
 
-                        <!-- Tool 3: Logo Idea Generator -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
-                            <div class="mb-4">
-                                <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
-                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called \"Pawsitive Planet\".'"></textarea>
-                            </div>
-                            <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="image" class="mr-2"></i>
-                                Generate Logo Ideas (Demo)
-                            </button>
-                        </div>
                         <div id="logo-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Generating logo ideas...</p>
                         </div>
                         <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
-                        <!-- Tool 4: Supplier Finder -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Supplier Finder</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label for="supplier-business-type" class="block text-lg font-semibold mb-2 text-gray-800">Your Business Type:</label>
-                                    <input type="text" id="supplier-business-type" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Coffee Shop">
-                                </div>
-                                <div>
-                                    <label for="supplier-location" class="block text-lg font-semibold mb-2 text-gray-800">Your Location:</label>
-                                    <input type="text" id="supplier-location" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., London, UK">
-                                </div>
-                            </div>
-                            <button id="generate-supplier-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="search" class="mr-2"></i>
-                                Find Suppliers (Demo)
-                            </button>
-                        </div>
                         <div id="supplier-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Finding suppliers...</p>
                         </div>
                         <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+                        <!-- New tool output sections -->
+                        <div id="competitor-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Analyzing competitors...</p>
+                        </div>
+                        <div id="competitor-output" class="mt-12 space-y-6"></div>
+
+                        <div id="market-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Calculating market size...</p>
+                        </div>
+                        <div id="market-output" class="mt-12"></div>
+
+                        <div id="risk-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Assessing risks...</p>
+                        </div>
+                        <div id="risk-output" class="mt-12"></div>
+
+                        <div id="persona-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Building customer personas...</p>
+                        </div>
+                        <div id="persona-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+                        <div id="pricing-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating pricing strategy...</p>
+                        </div>
+                        <div id="pricing-output" class="mt-12"></div>
+
+                        <div id="revenue-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating revenue models...</p>
+                        </div>
+                        <div id="revenue-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+                        <div id="finance-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating financial projections...</p>
+                        </div>
+                        <div id="finance-output" class="mt-12"></div>
+
+                        <div id="funding-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Finding funding sources...</p>
+                        </div>
+                        <div id="funding-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                     </div>
                 </div>
             </section>
@@ -736,7 +1035,7 @@
     <script>
         lucide.createIcons();
 
-        // Mock AI responses for demo purposes
+        // Enhanced Mock AI responses for demo purposes
         const mockResponses = {
             businessNames: [
                 { name: "EcoPaws Planet", reason: "Combines eco-friendly focus with pet care, memorable and brandable" },
@@ -802,6 +1101,162 @@
                 {
                     type: "Organic Treat Suppliers",
                     description: "Include healthy, organic treats in your boxes. Look for suppliers with organic certifications and transparent ingredient sourcing to complement your eco-friendly toy offerings."
+                }
+            ],
+            competitors: [
+                {
+                    name: "Market Leader Corp",
+                    strengths: ["Strong brand recognition", "Large marketing budget", "Established distribution"],
+                    weaknesses: ["Higher prices", "Less personalized service", "Slow to innovate"],
+                    marketShare: "35%",
+                    strategy: "Focus on premium positioning and brand loyalty"
+                },
+                {
+                    name: "Innovative Startup Inc",
+                    strengths: ["Cutting-edge technology", "Agile development", "Strong online presence"],
+                    weaknesses: ["Limited funding", "Small team", "Unproven at scale"],
+                    marketShare: "8%",
+                    strategy: "Disrupt with technology and competitive pricing"
+                },
+                {
+                    name: "Regional Player LLC",
+                    strengths: ["Local market knowledge", "Personal relationships", "Flexible operations"],
+                    weaknesses: ["Limited geographic reach", "Smaller resources", "Less brand awareness"],
+                    marketShare: "12%",
+                    strategy: "Dominate local market with personalized service"
+                }
+            ],
+            marketSize: {
+                tam: "$2.4B",
+                sam: "$480M",
+                som: "$24M",
+                growth: "15%",
+                trends: [
+                    "Increasing demand for sustainable products",
+                    "Growth in subscription-based services",
+                    "Rising pet ownership among millennials",
+                    "Shift towards premium pet products"
+                ]
+            },
+            risks: [
+                {
+                    category: "Market Risk",
+                    level: "Medium",
+                    description: "Economic downturn could reduce discretionary spending on premium pet products",
+                    mitigation: "Develop budget-friendly product lines and flexible subscription options"
+                },
+                {
+                    category: "Operational Risk",
+                    level: "High",
+                    description: "Supply chain disruptions could affect product availability and quality",
+                    mitigation: "Diversify supplier base and maintain safety stock levels"
+                },
+                {
+                    category: "Competitive Risk",
+                    level: "Medium",
+                    description: "Large competitors could enter the eco-friendly pet market",
+                    mitigation: "Build strong brand loyalty and focus on unique value propositions"
+                },
+                {
+                    category: "Financial Risk",
+                    level: "Low",
+                    description: "Cash flow challenges during initial growth phase",
+                    mitigation: "Secure adequate funding and implement strict financial controls"
+                }
+            ],
+            personas: [
+                {
+                    name: "Eco-Conscious Emma",
+                    age: "28-35",
+                    income: "$60,000-$80,000",
+                    description: "Urban professional who prioritizes sustainability in all purchases. Owns a rescue dog and actively seeks eco-friendly pet products.",
+                    painPoints: ["Hard to find truly sustainable pet products", "Wants convenience without compromising values"],
+                    goals: ["Reduce environmental impact", "Provide best care for pet"],
+                    channels: ["Instagram", "Pinterest", "Eco-friendly blogs"]
+                },
+                {
+                    name: "Busy Professional Paul",
+                    age: "35-45",
+                    income: "$80,000-$120,000",
+                    description: "High-earning professional with limited time. Values convenience and quality over price. Has multiple pets.",
+                    painPoints: ["No time to research and shop for pet products", "Wants premium quality"],
+                    goals: ["Save time", "Ensure pet happiness and health"],
+                    channels: ["LinkedIn", "Email", "Premium lifestyle websites"]
+                }
+            ],
+            pricing: {
+                recommended: "$29.99",
+                strategy: "Value-based pricing",
+                rationale: "Premium positioning justified by eco-friendly materials and convenience",
+                alternatives: [
+                    { tier: "Basic", price: "$19.99", features: "2-3 toys per month" },
+                    { tier: "Premium", price: "$29.99", features: "4-5 toys + treats" },
+                    { tier: "Deluxe", price: "$39.99", features: "6+ toys + treats + accessories" }
+                ]
+            },
+            revenueModels: [
+                {
+                    model: "Subscription Revenue",
+                    description: "Monthly recurring revenue from subscription boxes",
+                    pros: ["Predictable income", "High customer lifetime value", "Scalable"],
+                    cons: ["High churn risk", "Customer acquisition costs"],
+                    potential: "$2.4M annually at 8,000 subscribers"
+                },
+                {
+                    model: "One-time Purchases",
+                    description: "Individual product sales without subscription",
+                    pros: ["Lower commitment barrier", "Impulse purchases", "Gift market"],
+                    cons: ["Unpredictable revenue", "Higher marketing costs"],
+                    potential: "$600K annually"
+                },
+                {
+                    model: "Corporate Partnerships",
+                    description: "B2B sales to veterinary clinics and pet stores",
+                    pros: ["Bulk orders", "Steady contracts", "Brand credibility"],
+                    cons: ["Lower margins", "Longer sales cycles"],
+                    potential: "$300K annually"
+                }
+            ],
+            financialProjections: {
+                year1: { revenue: "$480K", expenses: "$555K", profit: "-$75K" },
+                year2: { revenue: "$2.4M", expenses: "$2.16M", profit: "$240K" },
+                year3: { revenue: "$4.8M", expenses: "$3.84M", profit: "$960K" },
+                breakeven: "Month 14",
+                keyMetrics: {
+                    customerAcquisitionCost: "$25",
+                    lifetimeValue: "$180",
+                    churnRate: "5% monthly",
+                    grossMargin: "60%"
+                }
+            },
+            fundingSources: [
+                {
+                    type: "Angel Investors",
+                    amount: "$50K - $250K",
+                    description: "Individual investors who provide early-stage funding",
+                    pros: ["Quick decisions", "Industry expertise", "Mentorship"],
+                    cons: ["Limited funding", "Equity dilution"]
+                },
+                {
+                    type: "Venture Capital",
+                    amount: "$500K - $5M",
+                    description: "Professional investment firms for growth-stage companies",
+                    pros: ["Large funding amounts", "Strategic guidance", "Network access"],
+                    cons: ["High growth expectations", "Loss of control"]
+                },
+                {
+                    type: "Crowdfunding",
+                    amount: "$10K - $500K",
+                    description: "Raise money from many small investors online",
+                    pros: ["Market validation", "Customer base building", "No equity loss"],
+                    cons: ["Public exposure", "All-or-nothing risk"]
+                },
+                {
+                    type: "Small Business Loans",
+                    amount: "$25K - $500K",
+                    description: "Traditional bank loans or SBA-backed financing",
+                    pros: ["No equity dilution", "Tax benefits", "Build credit"],
+                    cons: ["Personal guarantees", "Strict requirements", "Fixed payments"]
                 }
             ],
             chatResponses: [
@@ -898,6 +1353,30 @@
         // Utility function to simulate API delay
         function simulateDelay(ms = 2000) {
             return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Tool filtering functionality
+        function filterTools(category) {
+            const toolCards = document.querySelectorAll('.tool-card');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // Update button styles
+            filterButtons.forEach(btn => {
+                btn.classList.remove('bg-[#1e3a8a]', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            event.target.classList.add('bg-[#1e3a8a]', 'text-white');
+            
+            // Filter tools
+            toolCards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
         // Page Navigation
@@ -1054,6 +1533,7 @@
 
         // AI Planner Page Functionality
         function initializePlannerPageListeners() {
+            // Original tools
             const generatePlanButton = document.getElementById('generate-plan-button');
             const businessDescriptionInput = document.getElementById('business-description');
             const planOutputContainer = document.getElementById('plan-output');
@@ -1075,6 +1555,17 @@
             const supplierLoader = document.getElementById('supplier-loader');
             const supplierOutputContainer = document.getElementById('supplier-output');
 
+            // New tools
+            const generateCompetitorButton = document.getElementById('generate-competitor-button');
+            const generateMarketButton = document.getElementById('generate-market-button');
+            const generateRiskButton = document.getElementById('generate-risk-button');
+            const generatePersonaButton = document.getElementById('generate-persona-button');
+            const generatePricingButton = document.getElementById('generate-pricing-button');
+            const generateRevenueButton = document.getElementById('generate-revenue-button');
+            const generateFinanceButton = document.getElementById('generate-finance-button');
+            const generateFundingButton = document.getElementById('generate-funding-button');
+
+            // Original tool functions
             async function executeNameGeneration() {
                 if (!nameDescriptionInput) return;
                 const description = nameDescriptionInput.value.trim();
@@ -1181,11 +1672,445 @@
                 generateSupplierButton.disabled = false;
             }
 
-            // Event Listeners
+            // New tool functions
+            async function executeCompetitorAnalysis() {
+                const industry = document.getElementById('competitor-industry').value.trim();
+                const location = document.getElementById('competitor-location').value.trim();
+                
+                if (!industry || !location) {
+                    alert('Please provide both industry and location.');
+                    return;
+                }
+
+                generateCompetitorButton.disabled = true;
+                document.getElementById('competitor-output').innerHTML = '';
+                document.getElementById('competitor-loader').classList.remove('hidden');
+
+                await simulateDelay(3000);
+
+                document.getElementById('competitor-loader').classList.add('hidden');
+                
+                let competitorHtml = `<h2 class="text-3xl font-bold text-center mb-6">Competitor Analysis for ${industry} in ${location}</h2>`;
+                
+                mockResponses.competitors.forEach(competitor => {
+                    competitorHtml += `
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in mb-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-[#1e3a8a]">${competitor.name}</h3>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">${competitor.marketShare} Market Share</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <h4 class="font-semibold text-green-600 mb-2">Strengths</h4>
+                                    <ul class="space-y-1">
+                                        ${competitor.strengths.map(strength => `<li class="text-sm text-gray-600">• ${strength}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-red-600 mb-2">Weaknesses</h4>
+                                    <ul class="space-y-1">
+                                        ${competitor.weaknesses.map(weakness => `<li class="text-sm text-gray-600">• ${weakness}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="text-gray-700"><strong>Strategy:</strong> ${competitor.strategy}</p>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('competitor-output').innerHTML = competitorHtml;
+                document.getElementById('competitor-output').scrollIntoView({ behavior: 'smooth' });
+                generateCompetitorButton.disabled = false;
+            }
+
+            async function executeMarketSizeCalculation() {
+                const product = document.getElementById('market-product').value.trim();
+                const target = document.getElementById('market-target').value.trim();
+                
+                if (!product || !target) {
+                    alert('Please provide both product and target market information.');
+                    return;
+                }
+
+                generateMarketButton.disabled = true;
+                document.getElementById('market-output').innerHTML = '';
+                document.getElementById('market-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('market-loader').classList.add('hidden');
+                
+                const marketHtml = `
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                        <h2 class="text-3xl font-bold text-center mb-6">Market Size Analysis for ${product}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-blue-600">TAM</h3>
+                                <p class="text-2xl font-bold text-gray-800">${mockResponses.marketSize.tam}</p>
+                                <p class="text-sm text-gray-600">Total Addressable Market</p>
+                                                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-green-600">SAM</h3>
+                                <p class="text-2xl font-bold text-gray-800">${mockResponses.marketSize.sam}</p>
+                                <p class="text-sm text-gray-600">Serviceable Addressable Market</p>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-purple-600">SOM</h3>
+                                <p class="text-2xl font-bold text-gray-800">${mockResponses.marketSize.som}</p>
+                                <p class="text-sm text-gray-600">Serviceable Obtainable Market</p>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-xl font-bold mb-3">Market Growth Rate: <span class="text-green-600">${mockResponses.marketSize.growth} annually</span></h4>
+                            <h4 class="text-lg font-semibold mb-3">Key Market Trends:</h4>
+                            <ul class="space-y-2">
+                                ${mockResponses.marketSize.trends.map(trend => `<li class="flex items-center"><i data-lucide="trending-up" class="w-4 h-4 text-green-500 mr-2"></i>${trend}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('market-output').innerHTML = marketHtml;
+                lucide.createIcons();
+                document.getElementById('market-output').scrollIntoView({ behavior: 'smooth' });
+                generateMarketButton.disabled = false;
+            }
+
+            async function executeRiskAssessment() {
+                const business = document.getElementById('risk-business').value.trim();
+                
+                if (!business) {
+                    alert('Please describe your business model first.');
+                    return;
+                }
+
+                generateRiskButton.disabled = true;
+                document.getElementById('risk-output').innerHTML = '';
+                document.getElementById('risk-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('risk-loader').classList.add('hidden');
+                
+                let riskHtml = `<div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                    <h2 class="text-3xl font-bold text-center mb-6">Business Risk Assessment</h2>
+                    <div class="space-y-6">`;
+                
+                mockResponses.risks.forEach(risk => {
+                    const riskColor = risk.level === 'High' ? 'risk-high' : risk.level === 'Medium' ? 'risk-medium' : 'risk-low';
+                    riskHtml += `
+                        <div class="border-l-4 border-gray-300 pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-gray-800">${risk.category}</h3>
+                                <span class="px-3 py-1 rounded-full text-sm font-semibold ${riskColor}">${risk.level} Risk</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">${risk.description}</p>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-1">Mitigation Strategy:</h4>
+                                <p class="text-blue-700 text-sm">${risk.mitigation}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                riskHtml += `</div></div>`;
+
+                document.getElementById('risk-output').innerHTML = riskHtml;
+                document.getElementById('risk-output').scrollIntoView({ behavior: 'smooth' });
+                generateRiskButton.disabled = false;
+            }
+
+            async function executePersonaBuilder() {
+                const product = document.getElementById('persona-product').value.trim();
+                const industry = document.getElementById('persona-industry').value.trim();
+                
+                if (!product || !industry) {
+                    alert('Please provide both product and industry information.');
+                    return;
+                }
+
+                generatePersonaButton.disabled = true;
+                document.getElementById('persona-output').innerHTML = '';
+                document.getElementById('persona-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('persona-loader').classList.add('hidden');
+                
+                let personaHtml = '';
+                mockResponses.personas.forEach(persona => {
+                    personaHtml += `
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                            <div class="flex items-center mb-4">
+                                <img src="/placeholder.svg?height=64&width=64&text=${persona.name.charAt(0)}" alt="${persona.name}" class="w-16 h-16 rounded-full mr-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-[#1e3a8a]">${persona.name}</h3>
+                                    <p class="text-gray-600">Age: ${persona.age} | Income: ${persona.income}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 mb-4">${persona.description}</p>
+                            <div class="space-y-3">
+                                <div>
+                                    <h4 class="font-semibold text-red-600 mb-1">Pain Points:</h4>
+                                    <ul class="text-sm text-gray-600">
+                                        ${persona.painPoints.map(point => `<li>• ${point}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-green-600 mb-1">Goals:</h4>
+                                    <ul class="text-sm text-gray-600">
+                                        ${persona.goals.map(goal => `<li>• ${goal}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-600 mb-1">Preferred Channels:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${persona.channels.map(channel => `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">${channel}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('persona-output').innerHTML = personaHtml;
+                document.getElementById('persona-output').scrollIntoView({ behavior: 'smooth' });
+                generatePersonaButton.disabled = false;
+            }
+
+            async function executePricingStrategy() {
+                const product = document.getElementById('pricing-product').value.trim();
+                const cost = document.getElementById('pricing-cost').value.trim();
+                const strategy = document.getElementById('pricing-strategy').value;
+                
+                if (!product || !cost || !strategy) {
+                    alert('Please fill in all pricing fields.');
+                    return;
+                }
+
+                generatePricingButton.disabled = true;
+                document.getElementById('pricing-output').innerHTML = '';
+                document.getElementById('pricing-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('pricing-loader').classList.add('hidden');
+                
+                const pricingHtml = `
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                        <h2 class="text-3xl font-bold text-center mb-6">Pricing Strategy for ${product}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-bold text-green-600 mb-3">Recommended Price</h3>
+                                <p class="text-3xl font-bold text-gray-800">${mockResponses.pricing.recommended}</p>
+                                <p class="text-sm text-gray-600 mt-2">Based on ${mockResponses.pricing.strategy}</p>
+                            </div>
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-bold text-blue-600 mb-3">Strategy Rationale</h3>
+                                <p class="text-gray-700">${mockResponses.pricing.rationale}</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-xl font-bold mb-4">Alternative Pricing Tiers</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                ${mockResponses.pricing.alternatives.map(alt => `
+                                    <div class="border border-gray-200 p-4 rounded-lg">
+                                        <h4 class="font-bold text-[#1e3a8a]">${alt.tier}</h4>
+                                        <p class="text-2xl font-bold text-gray-800">${alt.price}</p>
+                                        <p class="text-sm text-gray-600">${alt.features}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('pricing-output').innerHTML = pricingHtml;
+                document.getElementById('pricing-output').scrollIntoView({ behavior: 'smooth' });
+                generatePricingButton.disabled = false;
+            }
+
+            async function executeRevenueModelGeneration() {
+                const business = document.getElementById('revenue-business').value.trim();
+                
+                if (!business) {
+                    alert('Please describe your business first.');
+                    return;
+                }
+
+                generateRevenueButton.disabled = true;
+                document.getElementById('revenue-output').innerHTML = '';
+                document.getElementById('revenue-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('revenue-loader').classList.add('hidden');
+                
+                let revenueHtml = '';
+                mockResponses.revenueModels.forEach(model => {
+                    revenueHtml += `
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                            <h3 class="text-xl font-bold text-[#1e3a8a] mb-3">${model.model}</h3>
+                            <p class="text-gray-700 mb-4">${model.description}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <h4 class="font-semibold text-green-600 mb-2">Pros</h4>
+                                    <ul class="space-y-1">
+                                        ${model.pros.map(pro => `<li class="text-sm text-gray-600">• ${pro}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-red-600 mb-2">Cons</h4>
+                                    <ul class="space-y-1">
+                                        ${model.cons.map(con => `<li class="text-sm text-gray-600">• ${con}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800">Revenue Potential:</h4>
+                                <p class="text-blue-700 font-bold">${model.potential}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('revenue-output').innerHTML = revenueHtml;
+                document.getElementById('revenue-output').scrollIntoView({ behavior: 'smooth' });
+                generateRevenueButton.disabled = false;
+            }
+
+            async function executeFinancialProjections() {
+                const revenue = document.getElementById('finance-revenue').value.trim();
+                const costs = document.getElementById('finance-costs').value.trim();
+                const growth = document.getElementById('finance-growth').value.trim();
+                
+                if (!revenue || !costs || !growth) {
+                    alert('Please fill in all financial fields.');
+                    return;
+                }
+
+                generateFinanceButton.disabled = true;
+                document.getElementById('finance-output').innerHTML = '';
+                document.getElementById('finance-loader').classList.remove('hidden');
+
+                await simulateDelay(3000);
+
+                document.getElementById('finance-loader').classList.add('hidden');
+                
+                const financeHtml = `
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                        <h2 class="text-3xl font-bold text-center mb-6">5-Year Financial Projections</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-green-600">Year 1</h3>
+                                <p class="text-xl font-bold text-gray-800">Revenue: ${mockResponses.financialProjections.year1.revenue}</p>
+                                <p class="text-sm text-gray-600">Profit: ${mockResponses.financialProjections.year1.profit}</p>
+                            </div>
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-blue-600">Year 2</h3>
+                                <p class="text-xl font-bold text-gray-800">Revenue: ${mockResponses.financialProjections.year2.revenue}</p>
+                                <p class="text-sm text-gray-600">Profit: ${mockResponses.financialProjections.year2.profit}</p>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <h3 class="text-lg font-bold text-purple-600">Year 3</h3>
+                                <p class="text-xl font-bold text-gray-800">Revenue: ${mockResponses.financialProjections.year3.revenue}</p>
+                                <p class="text-sm text-gray-600">Profit: ${mockResponses.financialProjections.year3.profit}</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-4">Key Metrics</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div>
+                                    <p class="text-sm text-gray-600">Break-even Point</p>
+                                    <p class="font-bold">${mockResponses.financialProjections.breakeven}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Customer LTV</p>
+                                    <p class="font-bold">${mockResponses.financialProjections.keyMetrics.lifetimeValue}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">CAC</p>
+                                    <p class="font-bold">${mockResponses.financialProjections.keyMetrics.customerAcquisitionCost}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Gross Margin</p>
+                                    <p class="font-bold">${mockResponses.financialProjections.keyMetrics.grossMargin}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('finance-output').innerHTML = financeHtml;
+                document.getElementById('finance-output').scrollIntoView({ behavior: 'smooth' });
+                generateFinanceButton.disabled = false;
+            }
+
+            async function executeFundingSourcesFinder() {
+                const stage = document.getElementById('funding-stage').value;
+                const amount = document.getElementById('funding-amount').value.trim();
+                const industry = document.getElementById('funding-industry').value.trim();
+                
+                if (!stage || !amount || !industry) {
+                    alert('Please fill in all funding fields.');
+                    return;
+                }
+
+                generateFundingButton.disabled = true;
+                document.getElementById('funding-output').innerHTML = '';
+                document.getElementById('funding-loader').classList.remove('hidden');
+
+                await simulateDelay(2500);
+
+                document.getElementById('funding-loader').classList.add('hidden');
+                
+                let fundingHtml = '';
+                mockResponses.fundingSources.forEach(source => {
+                    fundingHtml += `
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-xl font-bold text-[#1e3a8a]">${source.type}</h3>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">${source.amount}</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">${source.description}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <h4 class="font-semibold text-green-600 mb-2">Pros</h4>
+                                    <ul class="space-y-1">
+                                        ${source.pros.map(pro => `<li class="text-sm text-gray-600">• ${pro}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-red-600 mb-2">Cons</h4>
+                                    <ul class="space-y-1">
+                                        ${source.cons.map(con => `<li class="text-sm text-gray-600">• ${con}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('funding-output').innerHTML = fundingHtml;
+                document.getElementById('funding-output').scrollIntoView({ behavior: 'smooth' });
+                generateFundingButton.disabled = false;
+            }
+
+            // Event Listeners for original tools
             if (generateNameButton) generateNameButton.addEventListener('click', executeNameGeneration);
             if (generatePlanButton) generatePlanButton.addEventListener('click', executePlanGeneration);
             if (generateLogoButton) generateLogoButton.addEventListener('click', executeLogoGeneration);
             if (generateSupplierButton) generateSupplierButton.addEventListener('click', executeSupplierGeneration);
+
+            // Event Listeners for new tools
+            if (generateCompetitorButton) generateCompetitorButton.addEventListener('click', executeCompetitorAnalysis);
+            if (generateMarketButton) generateMarketButton.addEventListener('click', executeMarketSizeCalculation);
+            if (generateRiskButton) generateRiskButton.addEventListener('click', executeRiskAssessment);
+            if (generatePersonaButton) generatePersonaButton.addEventListener('click', executePersonaBuilder);
+            if (generatePricingButton) generatePricingButton.addEventListener('click', executePricingStrategy);
+            if (generateRevenueButton) generateRevenueButton.addEventListener('click', executeRevenueModelGeneration);
+            if (generateFinanceButton) generateFinanceButton.addEventListener('click', executeFinancialProjections);
+            if (generateFundingButton) generateFundingButton.addEventListener('click', executeFundingSourcesFinder);
         }
 
         // Knowledge Hub Page
