@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -29,35 +28,33 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         .feature-card, .pricing-card, .testimonial-card {
-             transition: all 0.3s ease;
+            transition: all 0.3s ease;
         }
         .feature-card:hover, .pricing-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
-        /* Hide pages by default */
         .page {
             display: none;
         }
-        /* Show the active page */
         .page.active {
             display: block;
         }
-        /* Mobile menu transition */
         #mobile-menu {
             transition: transform 0.3s ease-in-out;
         }
-        /* FAQ Accordion */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary .accordion-icon { transform: rotate(180deg); }
-
-        /* Modal Styles */
+        details > summary { 
+            list-style: none; 
+        }
+        details > summary::-webkit-details-marker { 
+            display: none; 
+        }
+        details[open] summary .accordion-icon { 
+            transform: rotate(180deg); 
+        }
         .modal-backdrop {
             transition: opacity 0.3s ease-in-out;
         }
-        
-        /* Loading Spinner */
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #1e3a8a;
@@ -84,15 +81,40 @@
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1.0); }
         }
+        @keyframes fade-in { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        } 
+        .animate-fade-in { 
+            animation: fade-in 0.5s ease-out forwards; 
+        }
+        .chat-prompt-btn {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chat-prompt-btn:hover {
+            background: #e5e7eb;
+        }
     </style>
 </head>
 <body class="text-gray-800">
-
     <!-- Header -->
     <header class="fixed w-full z-50 glass-effect">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#home" onclick="handleNav(event, 'home')" class="flex items-center cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A3 3 0 1 0 12 18Z"/><path d="M12 12a4 4 0 0 0 3.474 3.944A3 3 0 1 0 17 9.5a4 4 0 0 0-4.854-3.875Z"/><path d="M12 5a3 3 0 0 1 3 3"/><path d="M12 18a3 3 0 0 0 3-3"/><path d="M12 12a4 4 0 0 0-4 4"/><path d="M12 12a4 4 0 0 1 4-4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit">
+                    <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A3 3 0 1 0 12 18Z"/>
+                    <path d="M12 12a4 4 0 0 0 3.474 3.944A3 3 0 1 0 17 9.5a4 4 0 0 0-4.854-3.875Z"/>
+                    <path d="M12 5a3 3 0 0 1 3 3"/>
+                    <path d="M12 18a3 3 0 0 0 3-3"/>
+                    <path d="M12 12a4 4 0 0 0-4 4"/>
+                    <path d="M12 12a4 4 0 0 1 4-4"/>
+                </svg>
                 <h1 class="text-2xl font-bold text-[#1e3a8a] ml-2">BizMind AI</h1>
             </a>
             <nav class="hidden md:flex items-center space-x-8">
@@ -114,7 +136,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white z-40 transform -translate-x-full md:hidden">
         <div class="flex justify-end p-6">
-             <button id="close-menu-button" class="text-gray-800 focus:outline-none">
+            <button id="close-menu-button" class="text-gray-800 focus:outline-none">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
         </div>
@@ -144,19 +166,33 @@
                     </div>
                 </div>
             </section>
-             <section id="how-it-works" class="py-20 bg-white/60 backdrop-blur-sm">
+
+            <section id="how-it-works" class="py-20 bg-white/60 backdrop-blur-sm">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Get Started in 3 Simple Steps</h2>
                         <p class="mt-4 text-lg text-gray-600">From idea to execution in minutes, not months.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                        <div class="p-6"><div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">1</div><h3 class="text-xl font-bold mt-6 mb-2">Describe Your Vision</h3><p class="text-gray-600">Tell our AI about your business idea or existing company. The more detail, the better the insights.</p></div>
-                        <div class="p-6"><div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">2</div><h3 class="text-xl font-bold mt-6 mb-2">Get Instant Analysis</h3><p class="text-gray-600">Our AI analyzes your idea against real-time market data, trends, and competitor landscapes.</p></div>
-                        <div class="p-6"><div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">3</div><h3 class="text-xl font-bold mt-6 mb-2">Execute Your Plan</h3><p class="text-gray-600">Receive a step-by-step business plan and use our AI tools to create marketing materials, strategies, and more.</p></div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">1</div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Describe Your Vision</h3>
+                            <p class="text-gray-600">Tell our AI about your business idea or existing company. The more detail, the better the insights.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">2</div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Get Instant Analysis</h3>
+                            <p class="text-gray-600">Our AI analyzes your idea against real-time market data, trends, and competitor landscapes.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-24 w-24 mx-auto bg-blue-100 text-[#1e3a8a] rounded-full text-4xl font-bold">3</div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Execute Your Plan</h3>
+                            <p class="text-gray-600">Receive a step-by-step business plan and use our AI tools to create marketing materials, strategies, and more.</p>
+                        </div>
                     </div>
                 </div>
             </section>
+
             <section id="features" class="py-20">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
@@ -164,30 +200,99 @@
                         <p class="mt-4 text-lg text-gray-600">Replace expensive tools and consultants with a single, intelligent platform.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="search"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Market Research AI</h3><p class="text-gray-600">Uncover market size, trends, and customer demographics. Analyze competitors and find your unique selling proposition.</p></div>
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="lightbulb"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3><p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p></div>
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="megaphone"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3><p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p></div>
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="users"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3><p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p></div>
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="volume-2"></i></div><h3 class="text-xl font-bold mt-6 mb-2">AI Promotion Generator</h3><p class="text-gray-600">Describe your business and let our AI generate a compelling advertisement to attract new customers.</p></div>
-                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="scale"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3><p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="search"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Market Research AI</h3>
+                            <p class="text-gray-600">Uncover market size, trends, and customer demographics. Analyze competitors and find your unique selling proposition.</p>
+                        </div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="lightbulb"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3>
+                            <p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p>
+                        </div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="megaphone"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3>
+                            <p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p>
+                        </div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3>
+                            <p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p>
+                        </div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="volume-2"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">AI Promotion Generator</h3>
+                            <p class="text-gray-600">Describe your business and let our AI generate a compelling advertisement to attract new customers.</p>
+                        </div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm">
+                            <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="scale"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3>
+                            <p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p>
+                        </div>
                     </div>
                 </div>
             </section>
+
             <section id="testimonials" class="py-20 bg-white/60 backdrop-blur-sm">
                 <div class="container mx-auto px-6">
-                    <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Trusted by Founders and Owners</h2></div>
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Trusted by Founders and Owners</h2>
+                    </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“BizMind AI helped me go from idea to investor-ready in 2 weeks. The business plan generator is pure magic.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=L" alt="Luka, Founder" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Luka, Founder</p><p class="text-sm text-gray-500">SaaS Startup</p></div></div></div>
-                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“I replaced my business consultant with this AI – and it’s better. It's saved me thousands and provides instant, data-driven advice.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=A" alt="Ana, Ecom Owner" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Ana, Ecom Owner</p><p class="text-sm text-gray-500">Shopify Store</p></div></div></div>
-                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“The market analysis feature is a game-changer. It identified a niche competitor I had no idea about, allowing me to pivot my strategy early.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=M" alt="Mike, Entrepreneur" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Mike, Entrepreneur</p><p class="text-sm text-gray-500">Mobile App</p></div></div></div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl">
+                            <p class="text-gray-600 italic">"BizMind AI helped me go from idea to investor-ready in 2 weeks. The business plan generator is pure magic."</p>
+                            <div class="flex items-center mt-6">
+                                <img src="/placeholder.svg?height=48&width=48&text=L" alt="Luka, Founder" class="w-12 h-12 rounded-full">
+                                <div class="ml-4">
+                                    <p class="font-bold">Luka, Founder</p>
+                                    <p class="text-sm text-gray-500">SaaS Startup</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl">
+                            <p class="text-gray-600 italic">"I replaced my business consultant with this AI – and it's better. It's saved me thousands and provides instant, data-driven advice."</p>
+                            <div class="flex items-center mt-6">
+                                <img src="/placeholder.svg?height=48&width=48&text=A" alt="Ana, Ecom Owner" class="w-12 h-12 rounded-full">
+                                <div class="ml-4">
+                                    <p class="font-bold">Ana, Ecom Owner</p>
+                                    <p class="text-sm text-gray-500">Shopify Store</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl">
+                            <p class="text-gray-600 italic">"The market analysis feature is a game-changer. It identified a niche competitor I had no idea about, allowing me to pivot my strategy early."</p>
+                            <div class="flex items-center mt-6">
+                                <img src="/placeholder.svg?height=48&width=48&text=M" alt="Mike, Entrepreneur" class="w-12 h-12 rounded-full">
+                                <div class="ml-4">
+                                    <p class="font-bold">Mike, Entrepreneur</p>
+                                    <p class="text-sm text-gray-500">Mobile App</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
             <section class="py-20 bg-[#1e3a8a] text-white">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-3xl md:text-4xl font-bold">Ready to Build Your Future?</h2>
                     <p class="mt-4 text-lg text-blue-200 max-w-2xl mx-auto">Join thousands of entrepreneurs growing smarter with BizMind AI. No credit card required to start.</p>
-                    <div class="mt-8"><a href="#about" onclick="handleNav(event, 'about')" class="cta-button bg-white text-[#1e3a8a] px-10 py-4 rounded-lg font-bold text-lg">Try BizMind AI Free</a></div>
+                    <div class="mt-8">
+                        <a href="#about" onclick="handleNav(event, 'about')" class="cta-button bg-white text-[#1e3a8a] px-10 py-4 rounded-lg font-bold text-lg">Try BizMind AI Free</a>
+                    </div>
                 </div>
             </section>
         </div>
@@ -201,7 +306,6 @@
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Knowledge Hub</h1>
                             <p class="mt-4 text-lg text-gray-600">Your AI-powered business academy. Get personalized guides and courses for your entrepreneurial journey.</p>
                         </div>
-
                         <div class="space-y-8">
                             <!-- Guide 1 -->
                             <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
@@ -223,7 +327,7 @@
                                 </div>
                                 <button onclick="generateGuide('How to Dropship with Zero Budget', 'guide2')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
                             </div>
-                             <!-- Guide 3 -->
+                            <!-- Guide 3 -->
                             <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-2">5 Best Strategies for Instagram Growth</h2>
                                 <p class="text-gray-600 mb-4">Actionable tips to grow your Instagram presence. Personalize them for your brand.</p>
@@ -233,8 +337,7 @@
                                 </div>
                                 <button onclick="generateGuide('5 Best Strategies for Instagram Growth', 'guide3')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
                             </div>
-                            
-                            <!-- NEW: AI Mini-Course Generator -->
+                            <!-- AI Mini-Course Generator -->
                             <div class="mt-8 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <div class="flex items-center mb-4">
                                     <i data-lucide="graduation-cap" class="w-10 h-10 text-[#1e3a8a] mr-4 flex-shrink-0"></i>
@@ -249,20 +352,17 @@
                                 <button onclick="generateCourse()" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Mini-Course</button>
                             </div>
                         </div>
-
                         <!-- Output sections -->
                         <div id="guide-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Generating your personalized guide...</p>
                         </div>
                         <div id="guide-output" class="mt-12"></div>
-                        
                         <div id="course-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Building your custom course...</p>
                         </div>
                         <div id="course-output" class="mt-12 space-y-4"></div>
-
                     </div>
                 </div>
             </section>
@@ -321,7 +421,6 @@
                             <!-- User profiles will be injected here -->
                         </div>
                     </div>
-
                     <!-- Promotion Section -->
                     <div class="max-w-3xl mx-auto mt-20">
                         <div class="text-center mb-12">
@@ -345,14 +444,17 @@
                             </button>
                             <p class="text-sm text-gray-500 mt-4 text-center">Free users can generate one promotion per day. <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Upgrade to Pro for unlimited promotions.</a></p>
                         </div>
-                        <div id="promo-loader" class="text-center py-12 hidden"></div>
+                        <div id="promo-loader" class="text-center py-12 hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating your promotion...</p>
+                        </div>
                         <div id="promo-output" class="mt-12 hidden">
-                             <h2 class="text-2xl font-bold text-center mb-4">Your Generated Ad Preview</h2>
-                             <div class="bg-white p-6 rounded-xl border shadow-md">
-                                 <h3 id="promo-headline" class="text-2xl font-bold text-[#1e3a8a]"></h3>
-                                 <p id="promo-body" class="mt-2 text-gray-700"></p>
-                                 <p id="promo-cta" class="mt-4 font-semibold text-gray-800"></p>
-                             </div>
+                            <h2 class="text-2xl font-bold text-center mb-4">Your Generated Ad Preview</h2>
+                            <div class="bg-white p-6 rounded-xl border shadow-md">
+                                <h3 id="promo-headline" class="text-2xl font-bold text-[#1e3a8a]"></h3>
+                                <p id="promo-body" class="mt-2 text-gray-700"></p>
+                                <p id="promo-cta" class="mt-4 font-semibold text-gray-800"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -378,9 +480,8 @@
                             </div>
                             <button id="generate-name-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="lightbulb" class="mr-2"></i>
-                                Generate Names ($0.49)
+                                Generate Names (Demo)
                             </button>
-                            <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="name-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -397,9 +498,8 @@
                             </div>
                             <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="wand-2" class="mr-2"></i>
-                                Generate My Plan ($1.89)
+                                Generate My Plan (Demo)
                             </button>
-                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="plan-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -412,13 +512,12 @@
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
                             <div class="mb-4">
                                 <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
-                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called "Pawsitive Planet".'"></textarea>
+                                <textarea id="logo-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'My brand is called \"Pawsitive Planet\".'"></textarea>
                             </div>
                             <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="image" class="mr-2"></i>
-                                Generate Logo Ideas ($1.49)
+                                Generate Logo Ideas (Demo)
                             </button>
-                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="logo-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -441,7 +540,7 @@
                             </div>
                             <button id="generate-supplier-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="search" class="mr-2"></i>
-                                Find Suppliers (Free)
+                                Find Suppliers (Demo)
                             </button>
                         </div>
                         <div id="supplier-loader" class="text-center py-12 hidden">
@@ -449,127 +548,6 @@
                             <p class="mt-4 text-lg text-gray-600 font-semibold">Finding suppliers...</p>
                         </div>
                         <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-                        <!-- Tool 5: SWOT Analysis -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">5. AI SWOT Analysis Generator</h2>
-                            <div class="mb-4">
-                                <label for="swot-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business for a SWOT analysis:</label>
-                                <textarea id="swot-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'A local, independent bookstore specializing in rare and vintage books.'"></textarea>
-                            </div>
-                            <button id="generate-swot-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="layout-grid" class="mr-2"></i>
-                                Generate SWOT Analysis ($1.99)
-                            </button>
-                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
-                        </div>
-                        <div id="swot-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating SWOT analysis...</p>
-                        </div>
-                        <div id="swot-output" class="mt-12 hidden"></div>
-
-                        <!-- Tool 6: Pitch Deck Outline -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">6. AI Pitch Deck Outline Generator</h2>
-                            <div class="mb-4">
-                                <label for="pitch-deck-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business for a pitch deck outline:</label>
-                                <textarea id="pitch-deck-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An AI-powered app that creates personalized travel itineraries based on user preferences and budget.'"></textarea>
-                            </div>
-                            <button id="generate-pitch-deck-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="presentation" class="mr-2"></i>
-                                Generate Pitch Deck Outline ($0.99)
-                            </button>
-                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
-                        </div>
-                        <div id="pitch-deck-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Generating pitch deck outline...</p>
-                        </div>
-                        <div id="pitch-deck-output" class="mt-12 hidden"></div>
-
-                        <!-- Tool 7: Social Media Assistant -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">7. ✨ Social Media Assistant</h2>
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="social-brand-name" class="block text-lg font-semibold mb-2 text-gray-800">Brand Name:</label>
-                                    <input type="text" id="social-brand-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Pawsitive Planet">
-                                </div>
-                                <div>
-                                    <label for="social-brand-description" class="block text-lg font-semibold mb-2 text-gray-800">Brand Description:</label>
-                                    <textarea id="social-brand-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys, made from sustainable materials.'"></textarea>
-                                </div>
-                                <div>
-                                    <label for="social-platform-select" class="block text-lg font-semibold mb-2 text-gray-800">Select Social Media Platform:</label>
-                                    <select id="social-platform-select" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
-                                        <option value="Instagram">Instagram</option>
-                                        <option value="TikTok">TikTok</option>
-                                        <option value="YouTube">YouTube</option>
-                                        <option value="X (Twitter)">X (Twitter)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button id="generate-social-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="share-2" class="mr-2"></i>
-                                Create Social Media Profile ($1.99)
-                            </button>
-                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
-                        </div>
-                        <div id="social-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Creating social media profile...</p>
-                        </div>
-                        <div id="social-output" class="mt-12 hidden"></div>
-                        
-                        <!-- Tool 8: Website Generator -->
-                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">8. 🌐 AI Website Generator</h2>
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="website-company-name" class="block text-lg font-semibold mb-2 text-gray-800">Company Name:</label>
-                                    <input type="text" id="website-company-name" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., Pawsitive Planet">
-                                </div>
-                                <div>
-                                    <label for="website-company-description" class="block text-lg font-semibold mb-2 text-gray-800">Company Description:</label>
-                                    <textarea id="website-company-description" rows="4" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]" placeholder="e.g., 'An eco-friendly subscription box for dog toys, made from sustainable materials.'"></textarea>
-                                </div>
-                                <div>
-                                    <label for="website-style-select" class="block text-lg font-semibold mb-2 text-gray-800">Website Style:</label>
-                                    <select id="website-style-select" class="w-full border-gray-300 rounded-lg p-3 focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
-                                        <option value="Modern">Modern</option>
-                                        <option value="Minimalist">Minimalist</option>
-                                        <option value="Professional">Professional</option>
-                                        <option value="Creative">Creative</option>
-                                        <option value="E-commerce">E-commerce</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button id="generate-website-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
-                                <i data-lucide="globe" class="mr-2"></i>
-                                Generate Website ($4.99)
-                            </button>
-                            <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
-                        </div>
-                        <div id="website-loader" class="text-center py-12 hidden">
-                            <div class="loader mx-auto"></div>
-                            <p class="mt-4 text-lg text-gray-600 font-semibold">Building your website...</p>
-                        </div>
-                        <div id="website-output" class="mt-12 hidden">
-                            <div class="flex justify-between items-center mb-6">
-                                <h2 class="text-3xl font-bold">Your AI-Generated Website</h2>
-                                <div class="flex space-x-3">
-                                    <button id="preview-website-button" class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium flex items-center">
-                                        <i data-lucide="eye" class="mr-2"></i> Preview
-                                    </button>
-                                    <button id="download-website-button" class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium flex items-center">
-                                        <i data-lucide="download" class="mr-2"></i> Download
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="website-preview-container" class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg"></div>
-                        </div>
-
                     </div>
                 </div>
             </section>
@@ -585,7 +563,14 @@
                     </div>
                     <div class="max-w-3xl mx-auto bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg flex flex-col" style="height: 65vh;">
                         <div id="chat-window" class="flex-1 p-6 space-y-4 overflow-y-auto">
-                            <div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700"><p>Hello! I'm BizMind AI. How can I help you strategize, research, or grow your business today?</p></div></div>
+                            <div class="flex items-start gap-3">
+                                <div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="bot"></i>
+                                </div>
+                                <div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700">
+                                    <p>Hello! I'm BizMind AI. How can I help you strategize, research, or grow your business today?</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 bg-white/80 border-t border-gray-200">
                             <div id="chat-suggestions" class="flex flex-wrap gap-2 mb-3">
@@ -595,14 +580,16 @@
                             </div>
                             <div class="flex items-center space-x-3">
                                 <input type="text" id="chat-input" placeholder="Ask about market trends, marketing strategies, etc..." class="flex-1 w-full border-gray-300 rounded-lg focus:ring-[#1e3a8a] focus:border-[#1e3a8a]">
-                                <button id="send-chat-button" class="bg-[#1e3a8a] text-white p-3 rounded-lg hover:bg-blue-800 transition-colors"><i data-lucide="send"></i></button>
+                                <button id="send-chat-button" class="bg-[#1e3a8a] text-white p-3 rounded-lg hover:bg-blue-800 transition-colors">
+                                    <i data-lucide="send"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-        
+
         <!-- About & Pricing Page -->
         <div id="page-about" class="page">
             <section class="pt-32 pb-20">
@@ -611,16 +598,41 @@
                         <h1 class="text-4xl md:text-5xl font-bold text-center text-gray-900">About BizMind AI</h1>
                         <p class="mt-6 text-lg text-center text-gray-600">We're on a mission to democratize business intelligence and empower every entrepreneur with the tools to succeed.</p>
                         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="rocket" class="mr-3"></i>Our Mission</h2><p class="mt-4 text-gray-700">In today's fast-paced market, access to timely data, strategic insights, and operational efficiency tools is the key differentiator. Historically, these resources were reserved for large corporations. BizMind AI was created to level the playing field. We believe that every founder, startup, and small business owner deserves a dedicated partner to help navigate the complexities of building and scaling a business.</p></div>
-                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="eye" class="mr-3"></i>Our Vision</h2><p class="mt-4 text-gray-700">Our vision is a world where anyone with a great idea has access to the strategic intelligence needed to turn it into a thriving business. We aim to be the indispensable operating system for entrepreneurship, powering the next generation of innovators and market leaders through accessible, powerful, and intuitive AI.</p></div>
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8">
+                                <h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center">
+                                    <i data-lucide="rocket" class="mr-3"></i>Our Mission
+                                </h2>
+                                <p class="mt-4 text-gray-700">In today's fast-paced market, access to timely data, strategic insights, and operational efficiency tools is the key differentiator. Historically, these resources were reserved for large corporations. BizMind AI was created to level the playing field. We believe that every founder, startup, and small business owner deserves a dedicated partner to help navigate the complexities of building and scaling a business.</p>
+                            </div>
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8">
+                                <h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center">
+                                    <i data-lucide="eye" class="mr-3"></i>Our Vision
+                                </h2>
+                                <p class="mt-4 text-gray-700">Our vision is a world where anyone with a great idea has access to the strategic intelligence needed to turn it into a thriving business. We aim to be the indispensable operating system for entrepreneurship, powering the next generation of innovators and market leaders through accessible, powerful, and intuitive AI.</p>
+                            </div>
                         </div>
                         <div class="mt-20">
                             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900">Meet the Team</h2>
                             <p class="mt-4 text-lg text-center text-gray-600">The minds behind the mission.</p>
                             <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/1e3a8a/ffffff?text=MS" alt="Maj S."><h3 class="mt-4 text-xl font-bold">Maj S.</h3><p class="text-[#1e3a8a] font-semibold">Lead AI Strategist</p><p class="mt-2 text-gray-600 text-sm">Maj is the visionary who bridges the gap between complex AI capabilities and real-world business needs. With a background in both software engineering and entrepreneurship, he is passionate about creating tools that are not just technologically advanced, but genuinely useful for founders and business owners.</p></div>
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=AC" alt="Alex Chen"><h3 class="mt-4 text-xl font-bold">Alex Chen</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & CEO</p><p class="mt-2 text-gray-600 text-sm">Alex is a serial entrepreneur who has experienced the challenges of building a business firsthand. His drive is to simplify the entrepreneurial journey for others, making BizMind AI the co-pilot he wishes he had.</p></div>
-                                <div class="text-center"><img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="https://placehold.co/128x128/E2E8F0/4A5568?text=BK" alt="Benida Kumar"><h3 class="mt-4 text-xl font-bold">Benida Kumar</h3><p class="text-[#1e3a8a] font-semibold">Co-Founder & CTO</p><p class="mt-2 text-gray-600 text-sm">Benida leads the technical development of our platform. With a Ph.D. in machine learning, she ensures our AI models are powerful, reliable, and always on the cutting edge of technology.</p></div>
+                                <div class="text-center">
+                                    <img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="/placeholder.svg?height=128&width=128&text=MS" alt="Maj S.">
+                                    <h3 class="mt-4 text-xl font-bold">Maj S.</h3>
+                                    <p class="text-[#1e3a8a] font-semibold">Lead AI Strategist</p>
+                                    <p class="mt-2 text-gray-600 text-sm">Maj is the visionary who bridges the gap between complex AI capabilities and real-world business needs. With a background in both software engineering and entrepreneurship, he is passionate about creating tools that are not just technologically advanced, but genuinely useful for founders and business owners.</p>
+                                </div>
+                                <div class="text-center">
+                                    <img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="/placeholder.svg?height=128&width=128&text=AC" alt="Alex Chen">
+                                    <h3 class="mt-4 text-xl font-bold">Alex Chen</h3>
+                                    <p class="text-[#1e3a8a] font-semibold">Co-Founder & CEO</p>
+                                    <p class="mt-2 text-gray-600 text-sm">Alex is a serial entrepreneur who has experienced the challenges of building a business firsthand. His drive is to simplify the entrepreneurial journey for others, making BizMind AI the co-pilot he wishes he had.</p>
+                                </div>
+                                <div class="text-center">
+                                    <img class="w-32 h-32 mx-auto rounded-full shadow-lg" src="/placeholder.svg?height=128&width=128&text=BK" alt="Benida Kumar">
+                                    <h3 class="mt-4 text-xl font-bold">Benida Kumar</h3>
+                                    <p class="text-[#1e3a8a] font-semibold">Co-Founder & CTO</p>
+                                    <p class="mt-2 text-gray-600 text-sm">Benida leads the technical development of our platform. With a Ph.D. in machine learning, she ensures our AI models are powerful, reliable, and always on the cutting edge of technology.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -633,9 +645,45 @@
                         <p class="mt-4 text-lg text-gray-600">Choose the plan that's right for your stage of growth. Cancel anytime.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Freemium</h3><p class="text-gray-500 mt-2">For getting started</p><p class="text-4xl font-bold mt-6">$0 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a></div>
-                        <div class="pricing-card bg-white border-2 border-[#1e3a8a] rounded-xl p-8 flex flex-col relative"><span class="absolute top-0 -translate-y-1/2 bg-[#1e3a8a] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span><h3 class="text-xl font-bold text-[#1e3a8a]">Pro Plan</h3><p class="text-gray-500 mt-2">For serious builders</p><p class="text-4xl font-bold mt-6">$29 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Full access to all AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Unlimited queries</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Live internet access</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>All integrations</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Priority email support</li></ul><a href="#" class="mt-8 block w-full text-center bg-[#1e3a8a] text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition-colors">Choose Pro</a></div>
-                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Business Plan</h3><p class="text-gray-500 mt-2">For teams & agencies</p><p class="text-4xl font-bold mt-6">$79 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a></div>
+                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col">
+                            <h3 class="text-xl font-bold text-gray-900">Freemium</h3>
+                            <p class="text-gray-500 mt-2">For getting started</p>
+                            <p class="text-4xl font-bold mt-6">$0 <span class="text-lg font-normal text-gray-500">/ month</span></p>
+                            <ul class="space-y-4 mt-8 text-gray-600 flex-grow">
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li>
+                            </ul>
+                            <a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a>
+                        </div>
+                        <div class="pricing-card bg-white border-2 border-[#1e3a8a] rounded-xl p-8 flex flex-col relative">
+                            <span class="absolute top-0 -translate-y-1/2 bg-[#1e3a8a] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span>
+                            <h3 class="text-xl font-bold text-[#1e3a8a]">Pro Plan</h3>
+                            <p class="text-gray-500 mt-2">For serious builders</p>
+                            <p class="text-4xl font-bold mt-6">$29 <span class="text-lg font-normal text-gray-500">/ month</span></p>
+                            <ul class="space-y-4 mt-8 text-gray-600 flex-grow">
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Full access to all AI tools</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Unlimited queries</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Live internet access</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>All integrations</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Priority email support</li>
+                            </ul>
+                            <a href="#" class="mt-8 block w-full text-center bg-[#1e3a8a] text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition-colors">Choose Pro</a>
+                        </div>
+                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col">
+                            <h3 class="text-xl font-bold text-gray-900">Business Plan</h3>
+                            <p class="text-gray-500 mt-2">For teams & agencies</p>
+                            <p class="text-4xl font-bold mt-6">$79 <span class="text-lg font-normal text-gray-500">/ month</span></p>
+                            <ul class="space-y-4 mt-8 text-gray-600 flex-grow">
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li>
+                            </ul>
+                            <a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -654,9 +702,11 @@
             </div>
         </div>
     </footer>
+
     <button id="open-support-chat" class="fixed bottom-6 right-6 bg-[#1e3a8a] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center cta-button z-40">
         <i data-lucide="message-square" class="w-8 h-8"></i>
     </button>
+
     <div id="live-support-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl h-full max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center p-4 border-b">
@@ -683,74 +733,174 @@
         </div>
     </div>
 
-    <!-- Payment/Promo Code Modal -->
-    <div id="promo-modal" class="modal-backdrop fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-6 text-center">
-            <i data-lucide="lock" class="w-16 h-16 text-blue-500 mx-auto mb-4"></i>
-            <h3 class="text-2xl font-bold text-gray-900">Unlock This Feature</h3>
-            <p class="text-lg text-gray-600 mt-2">Enter a promo code to generate for free.</p>
-            <div class="mt-4">
-                <input type="password" id="promo-password-input" class="w-full border-gray-300 rounded-lg p-3 text-center" placeholder="Enter password">
-                <p id="promo-error" class="text-red-500 text-sm mt-1 hidden">Incorrect password. Please try again.</p>
-            </div>
-            <div class="mt-6 flex flex-col space-y-3">
-                <button id="submit-promo-button" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-bold cta-button hover:bg-blue-600">Apply & Generate</button>
-                <button id="no-promo-button" class="text-gray-500 text-sm hover:underline">Proceed to Payment</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Website Preview Modal -->
-    <div id="website-preview-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center p-4 border-b">
-                <h2 class="text-xl font-bold flex items-center">
-                    <i data-lucide="eye" class="mr-2 text-[#1e3a8a]"></i>Website Preview
-                </h2>
-                <button id="close-website-preview" class="text-gray-500 hover:text-gray-800">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <iframe id="website-preview-frame" class="flex-1 w-full border-0"></iframe>
-        </div>
-    </div>
-
-
     <script>
         lucide.createIcons();
 
-        // --- Centralized Gemini API Fetch Function ---
-        async function callGemini(prompt, isJson = false) {
-            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            let payload = { contents: chatHistory };
-            if (isJson) {
-                payload.generationConfig = { responseMimeType: "application/json", responseSchema: isJson.responseSchema };
-            }
-            
-            const apiKey = "AIzaSyBqVM8Bfl9XPa-L4Kf6lFOegWuUcTIo6C0"; // Handled by environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        // Mock AI responses for demo purposes
+        const mockResponses = {
+            businessNames: [
+                { name: "EcoPaws Planet", reason: "Combines eco-friendly focus with pet care, memorable and brandable" },
+                { name: "GreenTail Box", reason: "Simple, direct name that clearly communicates the eco-friendly pet subscription concept" },
+                { name: "Pawsitive Earth", reason: "Plays on 'positive' while emphasizing environmental consciousness" },
+                { name: "TailWag Green", reason: "Fun, playful name that suggests happy pets and environmental responsibility" },
+                { name: "EcoFetch Co.", reason: "Professional yet approachable, suggests fetching eco-friendly products for pets" }
+            ],
+            businessPlan: [
+                {
+                    title: "Executive Summary",
+                    icon: "file-text",
+                    content: "Your eco-friendly dog toy subscription service addresses the growing market demand for sustainable pet products. With pet industry spending exceeding $261 billion globally, there's significant opportunity for environmentally conscious alternatives.\n\nKey differentiators include biodegradable materials, educational content about sustainability, and partnerships with environmental organizations. The subscription model ensures recurring revenue while building customer loyalty.\n\nFinancial projections show potential profitability within 18 months, with initial funding requirements of $150,000 for inventory, marketing, and operations."
+                },
+                {
+                    title: "Market Analysis",
+                    icon: "search",
+                    content: "The pet toy market is valued at $2.4 billion annually, with 15% year-over-year growth. Key trends include:\n\n• 73% of pet owners willing to pay premium for eco-friendly products\n• Subscription box market growing at 435% annually\n• Millennial pet owners (largest demographic) prioritize sustainability\n\nTarget market: Environmentally conscious dog owners, aged 25-45, household income $50,000+, primarily urban/suburban areas. Estimated addressable market: 12 million households.\n\nCompetitors include BarkBox and Super Chewer, but none focus specifically on sustainability."
+                },
+                {
+                    title: "Marketing Strategy",
+                    icon: "megaphone",
+                    content: "Multi-channel approach focusing on digital marketing:\n\n• Social media campaigns highlighting environmental impact\n• Influencer partnerships with eco-conscious pet bloggers\n• Content marketing about sustainable pet care\n• SEO-optimized website targeting 'eco-friendly pet toys'\n• Email marketing with educational content\n\nLaunch strategy includes free trial boxes, referral programs, and partnerships with veterinary clinics and pet stores. Budget allocation: 40% digital ads, 30% influencer marketing, 20% content creation, 10% traditional marketing.\n\nCustomer acquisition cost target: $25, with lifetime value of $180."
+                },
+                {
+                    title: "Operations Plan",
+                    icon: "sliders-horizontal",
+                    content: "Supply chain focused on sustainable sourcing:\n\n• Partner with certified eco-friendly manufacturers\n• Implement quality control processes\n• Develop packaging using recycled materials\n• Establish inventory management system\n\nFulfillment through third-party logistics provider initially, transitioning to owned warehouse at 5,000+ subscribers. Subscription management platform will handle billing, customer service, and analytics.\n\nKey metrics to track: churn rate, customer satisfaction, inventory turnover, and environmental impact measurements."
+                },
+                {
+                    title: "Financial Projections",
+                    icon: "trending-up",
+                    content: "Revenue model: Monthly subscriptions at $29.99, with annual plans at $299 (17% discount).\n\nYear 1 projections:\n• 500 subscribers by month 6\n• 2,000 subscribers by month 12\n• Revenue: $480,000\n• Gross margin: 60%\n• Net loss: $75,000 (investment in growth)\n\nYear 2 projections:\n• 8,000 subscribers\n• Revenue: $2.4M\n• Net profit: $240,000\n\nBreak-even point: Month 14\nFunding needed: $150,000 for initial inventory, marketing, and 18 months operating expenses."
+                }
+            ],
+            logoIdeas: [
+                {
+                    title: "Circular Paw & Leaf Design",
+                    description: "A minimalist circular logo featuring a stylized dog paw print integrated with a green leaf. The paw pad could be designed as a leaf shape, symbolizing the connection between pets and nature. Use earthy green and brown colors to emphasize the eco-friendly aspect."
+                },
+                {
+                    title: "Playful Dog Silhouette with Recycling Elements",
+                    description: "A friendly dog silhouette (golden retriever or lab style) with small recycling symbols or eco-friendly icons incorporated into the design. The dog could be holding a toy made from recycled materials, conveying both the pet focus and environmental consciousness."
+                },
+                {
+                    title: "Modern Typography with Nature Accent",
+                    description: "Clean, modern sans-serif typography for the brand name with a small nature element - perhaps a leaf dotting an 'i' or growing from one of the letters. This approach is professional yet approachable, perfect for a subscription service targeting millennial pet owners."
+                }
+            ],
+            suppliers: [
+                {
+                    type: "Eco-Friendly Toy Manufacturers",
+                    description: "Look for manufacturers specializing in biodegradable materials like hemp, organic cotton, and recycled plastics. Verify certifications like GOTS (Global Organic Textile Standard) or similar eco-credentials."
+                },
+                {
+                    type: "Sustainable Packaging Suppliers",
+                    description: "Source recyclable or compostable packaging materials. Consider suppliers offering custom printing with soy-based inks and minimal packaging designs to reduce environmental impact."
+                },
+                {
+                    type: "Local Artisan Toy Makers",
+                    description: "Partner with local craftspeople who create handmade, natural dog toys. This supports local economy while ensuring unique, high-quality products that align with your eco-friendly mission."
+                },
+                {
+                    type: "Organic Treat Suppliers",
+                    description: "Include healthy, organic treats in your boxes. Look for suppliers with organic certifications and transparent ingredient sourcing to complement your eco-friendly toy offerings."
+                }
+            ],
+            chatResponses: [
+                "That's a great question! For market analysis, I'd recommend starting with industry reports from IBISWorld or Euromonitor. You can also use Google Trends to see search volume for your product category, and analyze competitors' social media engagement to gauge market interest.",
+                "For marketing strategies, consider your target audience's preferred channels. If you're targeting millennials, focus on Instagram and TikTok. For B2B, LinkedIn is crucial. Always test small campaigns first to optimize your messaging before scaling up.",
+                "Here are 5 blog post ideas for your business: 1) 'Industry Trends to Watch in 2024', 2) 'Common Mistakes New Entrepreneurs Make', 3) 'How to Validate Your Business Idea', 4) 'Building a Strong Brand Identity', 5) 'Customer Retention Strategies That Actually Work'.",
+                "I'd be happy to help you with that! Could you provide more specific details about your business or the particular challenge you're facing? The more context you give me, the better I can tailor my advice to your situation."
+            ],
+            guides: {
+                "How to Start a Business": "Starting a business in the {niche} industry with the goal of {goals} requires careful planning and execution. Here's your personalized step-by-step guide:\n\n1. VALIDATE YOUR IDEA\nBefore investing time and money, ensure there's demand for your {niche} products/services. Conduct market research by:\n- Surveying potential customers\n- Analyzing competitors\n- Testing your concept with a small audience\n\n2. CREATE A BUSINESS PLAN\nDevelop a comprehensive plan including:\n- Executive summary\n- Market analysis specific to {niche}\n- Marketing strategy to achieve {goals}\n- Financial projections\n- Operations plan\n\n3. CHOOSE YOUR BUSINESS STRUCTURE\nSelect the appropriate legal structure (LLC, Corporation, etc.) based on your needs and consult with a business attorney.\n\n4. REGISTER YOUR BUSINESS\n- Choose and register your business name\n- Obtain necessary licenses and permits for {niche}\n- Get an EIN from the IRS\n\n5. SET UP FINANCES\n- Open a business bank account\n- Set up accounting systems\n- Consider business insurance\n\n6. BUILD YOUR BRAND\n- Design a logo and brand identity\n- Create a professional website\n- Develop marketing materials\n\n7. LAUNCH AND MARKET\n- Execute your marketing strategy\n- Focus on achieving {goals}\n- Monitor and adjust based on results\n\nRemember, success in {niche} requires persistence and adaptability. Stay focused on your goal of {goals} while remaining flexible in your approach.",
+                
+                "How to Dropship with Zero Budget": "Starting a dropshipping business in {niche} with zero budget to achieve {goals} is challenging but possible. Here's your personalized roadmap:\n\n1. CHOOSE YOUR NICHE CAREFULLY\nFocus on {niche} products that have:\n- High demand but low competition\n- Good profit margins (aim for 30-50%)\n- Lightweight and easy to ship\n\n2. FIND FREE SUPPLIERS\n- Use AliExpress for initial product sourcing\n- Contact manufacturers directly via Alibaba\n- Look for suppliers offering dropshipping programs\n- Negotiate payment terms (pay after sale)\n\n3. BUILD A FREE STORE\n- Use Shopify's 14-day free trial\n- Try WooCommerce with free WordPress hosting\n- Consider Facebook Shop or Instagram Shopping\n- Use free themes and customize minimally\n\n4. FREE MARKETING STRATEGIES\n- Create social media accounts for your {niche} brand\n- Post valuable content related to {niche}\n- Join Facebook groups and Reddit communities\n- Use Pinterest for visual {niche} products\n- Collaborate with micro-influencers (product exchange)\n\n5. OPTIMIZE FOR {goals}\n- Set specific milestones toward {goals}\n- Track key metrics: conversion rate, average order value\n- A/B test product descriptions and images\n- Focus on customer service to build reviews\n\n6. SCALE GRADUALLY\n- Reinvest profits into paid advertising\n- Expand product range within {niche}\n- Build email list for repeat customers\n- Consider private labeling successful products\n\nSuccess in {niche} dropshipping requires patience and consistent effort. Focus on providing value to customers while working toward {goals}.",
+                
+                "5 Best Strategies for Instagram Growth": "Growing your Instagram presence in the {niche} space to achieve {goals} requires strategic planning. Here are the top 5 strategies:\n\n1. CONTENT STRATEGY FOR {niche}\n- Post consistently (1-2 times daily)\n- Use high-quality visuals relevant to {niche}\n- Mix content types: photos, videos, carousels, Stories\n- Share behind-the-scenes content\n- Create educational posts about {niche}\n- Use trending audio in Reels\n\n2. HASHTAG OPTIMIZATION\n- Research {niche}-specific hashtags\n- Use a mix of popular and niche hashtags\n- Create a branded hashtag for your {niche} business\n- Aim for 20-30 hashtags per post\n- Avoid banned or overused hashtags\n\n3. ENGAGEMENT TACTICS\n- Respond to all comments within 2 hours\n- Engage with other {niche} accounts\n- Use Instagram Stories polls, questions, and quizzes\n- Go live regularly to discuss {niche} topics\n- Collaborate with other {niche} creators\n\n4. STRATEGIC PARTNERSHIPS\n- Partner with {niche} influencers\n- Cross-promote with complementary brands\n- Join {niche} engagement pods (carefully)\n- Guest post on other {niche} accounts\n- Participate in {niche} challenges and trends\n\n5. ANALYTICS AND OPTIMIZATION\n- Track metrics aligned with {goals}\n- Use Instagram Insights to understand your audience\n- Post when your {niche} audience is most active\n- A/B test different content formats\n- Adjust strategy based on performance data\n\nTo achieve {goals}, focus on providing genuine value to your {niche} audience. Consistency and authentic engagement will drive sustainable growth over time."
+            },
+            courses: {
+                "Digital Marketing for Startups": [
+                    {
+                        module_title: "Foundation of Digital Marketing",
+                        key_points: [
+                            "Understanding the digital marketing ecosystem and key channels",
+                            "Setting SMART marketing goals and KPIs for startups",
+                            "Building buyer personas and customer journey mapping",
+                            "Creating a digital marketing budget with limited resources",
+                            "Essential tools and platforms every startup should know"
+                        ]
+                    },
+                    {
+                        module_title: "Content Marketing Strategy",
+                        key_points: [
+                            "Developing a content strategy that aligns with business goals",
+                            "Creating valuable content that attracts your target audience",
+                            "Content distribution across multiple channels effectively",
+                            "Measuring content performance and ROI",
+                            "Repurposing content to maximize reach and efficiency"
+                        ]
+                    },
+                    {
+                        module_title: "Social Media Marketing",
+                        key_points: [
+                            "Choosing the right social media platforms for your startup",
+                            "Creating engaging content that drives community building",
+                            "Understanding social media algorithms and optimization",
+                            "Running cost-effective social media advertising campaigns",
+                            "Building and managing an online community around your brand"
+                        ]
+                    },
+                    {
+                        module_title: "Search Engine Optimization (SEO)",
+                        key_points: [
+                            "Keyword research and competitive analysis for startups",
+                            "On-page SEO optimization techniques and best practices",
+                            "Building high-quality backlinks on a startup budget",
+                            "Local SEO strategies for location-based businesses",
+                            "Measuring and tracking SEO performance over time"
+                        ]
+                    },
+                    {
+                        module_title: "Email Marketing and Automation",
+                        key_points: [
+                            "Building an email list from scratch using lead magnets",
+                            "Creating effective email campaigns that convert",
+                            "Setting up automated email sequences for nurturing leads",
+                            "Segmenting your email list for personalized messaging",
+                            "Analyzing email metrics and optimizing for better results"
+                        ]
+                    },
+                    {
+                        module_title: "Analytics and Growth Optimization",
+                        key_points: [
+                            "Setting up Google Analytics and other tracking tools",
+                            "Understanding key metrics and what they mean for growth",
+                            "A/B testing strategies for continuous improvement",
+                            "Creating dashboards and reports for stakeholders",
+                            "Using data to make informed marketing decisions and pivot strategies"
+                        ]
+                    }
+                ]
+            },
+            promotions: [
+                {
+                    headline: "Transform Your Morning Routine at The Cozy Corner Cafe",
+                    body: "Discover the perfect blend of artisanal coffee and homemade pastries in the heart of the city. Our expert baristas craft each cup with locally-sourced beans, while our bakers create fresh pastries daily using traditional recipes.",
+                    cta: "Visit us today and taste the difference quality makes!"
+                },
+                {
+                    headline: "Where Coffee Meets Community",
+                    body: "More than just a coffee shop - we're your neighborhood gathering place. Enjoy free WiFi, cozy seating, and the warmest atmosphere in town while savoring our signature drinks and treats.",
+                    cta: "Join our coffee community - your perfect cup awaits!"
+                }
+            ]
+        };
 
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
-            }
-            const result = await response.json();
-
-            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
-                const textResponse = result.candidates[0].content.parts[0].text;
-                return isJson ? JSON.parse(textResponse) : textResponse;
-            } else {
-                console.log("Unexpected API response:", result);
-                throw new Error("Invalid response structure from API.");
-            }
+        // Utility function to simulate API delay
+        function simulateDelay(ms = 2000) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // --- Page Navigation ---
+        // Page Navigation
         const pages = document.querySelectorAll('.page');
         const mobileMenu = document.getElementById('mobile-menu');
         const hamburgerButton = document.getElementById('hamburger-button');
@@ -760,12 +910,13 @@
             pages.forEach(page => page.classList.remove('active'));
             const newPage = document.getElementById(`page-${pageId}`);
             if (newPage) newPage.classList.add('active');
-            window.scrollTo(0, 0); 
+            window.scrollTo(0, 0);
+            
             if (pageId === 'networking') {
                 initializeNetworkingPage();
             }
         }
-        
+
         function handleNav(event, pageId, fromMobile = false) {
             event.preventDefault();
             showPage(pageId);
@@ -773,8 +924,8 @@
             history.pushState(null, null, `#${pageId}`);
         }
 
-        // --- Typing Indicator ---
-        function showTypingIndicator(chatWindowElement, sender) {
+        // Typing Indicator
+        function showTypingIndicator(chatWindowElement, sender = 'ai') {
             const typingEl = document.createElement('div');
             typingEl.id = 'typing-indicator';
             typingEl.className = 'flex items-start gap-3';
@@ -793,7 +944,7 @@
             if (indicator) indicator.remove();
         }
 
-        // --- Main Chatbot Functionality ---
+        // Main Chatbot Functionality
         function initializeChatPageListeners() {
             const chatInput = document.getElementById('chat-input');
             const sendChatButton = document.getElementById('send-chat-button');
@@ -805,8 +956,8 @@
                 const messageElement = document.createElement('div');
                 if (sender === 'user') {
                     messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-xs break-words"><p>${message}</p></div></div>`;
-                } else { // AI
-                     messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700 max-w-xs break-words"><p>${message}</p></div></div>`;
+                } else {
+                    messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700 max-w-xs break-words"><p>${message}</p></div></div>`;
                 }
                 chatWindow.appendChild(messageElement);
                 lucide.createIcons();
@@ -820,23 +971,19 @@
                 addChatMessage(userInput, 'user');
                 chatInput.value = '';
                 showTypingIndicator(chatWindow, 'ai');
-
-                const prompt = `You are BizMind AI, a helpful and concise business assistant. A user said: "${userInput}". Respond helpfully.`;
-                try {
-                    const aiResponse = await callGemini(prompt);
-                    removeTypingIndicator(chatWindow);
-                    addChatMessage(aiResponse, 'ai');
-                } catch (error) {
-                    console.error("Chatbot error:", error);
-                    removeTypingIndicator(chatWindow);
-                    addChatMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'ai');
-                }
+                
+                await simulateDelay(1500);
+                
+                const randomResponse = mockResponses.chatResponses[Math.floor(Math.random() * mockResponses.chatResponses.length)];
+                removeTypingIndicator(chatWindow);
+                addChatMessage(randomResponse, 'ai');
             }
-            
+
             if (sendChatButton) {
                 sendChatButton.addEventListener('click', handleMainChat);
                 chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleMainChat(); });
             }
+
             if (chatPromptButtons) {
                 chatPromptButtons.forEach(button => {
                     button.addEventListener('click', () => {
@@ -849,7 +996,7 @@
             }
         }
 
-        // --- Live Support Chat Functionality ---
+        // Live Support Chat Functionality
         function initializeSupportListeners() {
             const openSupportButton = document.getElementById('open-support-chat');
             const closeSupportButton = document.getElementById('close-support-chat');
@@ -868,14 +1015,14 @@
                     setTimeout(() => supportModal.classList.add('hidden'), 300);
                 }
             }
-            
+
             function addSupportChatMessage(message, sender) {
                 if(!supportChatWindow) return;
                 const messageElement = document.createElement('div');
                 if (sender === 'user') {
                     messageElement.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-blue-500 text-white rounded-lg p-3 max-w-md break-words"><p>${message}</p></div></div>`;
-                } else { // Admin/AI
-                     messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div><div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700 max-w-md break-words"><p class="font-bold text-green-800">Support AI</p><p>${message}</p></div></div>`;
+                } else {
+                    messageElement.innerHTML = `<div class="flex items-start gap-3"><div class="bg-green-100 text-green-800 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="user-check"></i></div><div class="bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-700 max-w-md break-words"><p class="font-bold text-green-800">Support AI</p><p>${message}</p></div></div>`;
                 }
                 supportChatWindow.appendChild(messageElement);
                 lucide.createIcons();
@@ -890,19 +1037,13 @@
                 addSupportChatMessage(userInput, 'user');
                 supportChatInput.value = '';
                 showTypingIndicator(supportChatWindow, 'admin');
-
-                const prompt = `You are a friendly and helpful AI support agent for BizMind AI. A user needs help and said: "${userInput}". Provide a helpful first response and mention that a human agent will be connected if needed.`;
-                try {
-                    const aiResponse = await callGemini(prompt);
-                    removeTypingIndicator(supportChatWindow);
-                    addSupportChatMessage(aiResponse, 'ai');
-                } catch (error) {
-                    console.error("Support chat error:", error);
-                    removeTypingIndicator(supportChatWindow);
-                    addSupportChatMessage("I'm having trouble connecting to our systems. A human agent has been notified and will be with you shortly.", 'ai');
-                }
+                
+                await simulateDelay(1500);
+                
+                removeTypingIndicator(supportChatWindow);
+                addSupportChatMessage("Thank you for reaching out! I understand your concern and I'm here to help. A human support agent has been notified and will be with you shortly to provide personalized assistance.", 'ai');
             }
-            
+
             if (openSupportButton) openSupportButton.addEventListener('click', () => toggleSupportModal(true));
             if (closeSupportButton) closeSupportButton.addEventListener('click', () => toggleSupportModal(false));
             if (sendSupportChatButton) {
@@ -911,70 +1052,28 @@
             }
         }
 
-        // --- AI Planner Page Functionality ---
+        // AI Planner Page Functionality
         function initializePlannerPageListeners() {
-            // ... (Get all element references as before)
             const generatePlanButton = document.getElementById('generate-plan-button');
             const businessDescriptionInput = document.getElementById('business-description');
             const planOutputContainer = document.getElementById('plan-output');
             const planLoader = document.getElementById('plan-loader');
-            const promoModal = document.getElementById('promo-modal');
-            const submitPromoButton = document.getElementById('submit-promo-button');
-            const noPromoButton = document.getElementById('no-promo-button');
-            const promoPasswordInput = document.getElementById('promo-password-input');
-            const promoError = document.getElementById('promo-error');
+
             const generateLogoButton = document.getElementById('generate-logo-button');
             const logoDescriptionInput = document.getElementById('logo-description');
             const logoOutputContainer = document.getElementById('logo-output');
             const logoLoader = document.getElementById('logo-loader');
+
             const nameDescriptionInput = document.getElementById('name-description');
             const generateNameButton = document.getElementById('generate-name-button');
             const nameLoader = document.getElementById('name-loader');
             const nameOutputContainer = document.getElementById('name-output');
+
             const supplierBusinessTypeInput = document.getElementById('supplier-business-type');
             const supplierLocationInput = document.getElementById('supplier-location');
             const generateSupplierButton = document.getElementById('generate-supplier-button');
             const supplierLoader = document.getElementById('supplier-loader');
             const supplierOutputContainer = document.getElementById('supplier-output');
-            const generateSwotButton = document.getElementById('generate-swot-button');
-            const swotDescriptionInput = document.getElementById('swot-description');
-            const swotLoader = document.getElementById('swot-loader');
-            const swotOutputContainer = document.getElementById('swot-output');
-            const generatePitchDeckButton = document.getElementById('generate-pitch-deck-button');
-            const pitchDeckDescriptionInput = document.getElementById('pitch-deck-description');
-            const pitchDeckLoader = document.getElementById('pitch-deck-loader');
-            const pitchDeckOutputContainer = document.getElementById('pitch-deck-output');
-            const generateSocialButton = document.getElementById('generate-social-button');
-            const generateWebsiteButton = document.getElementById('generate-website-button');
-            const previewWebsiteButton = document.getElementById('preview-website-button');
-            const downloadWebsiteButton = document.getElementById('download-website-button');
-            const websitePreviewModal = document.getElementById('website-preview-modal');
-            const closeWebsitePreview = document.getElementById('close-website-preview');
-
-            let generatedWebsiteCode = '';
-            let pendingGenerationFunction = null;
-            
-            function togglePromoModal(show, generationFunction = null) {
-                if (show) {
-                    pendingGenerationFunction = generationFunction;
-                }
-
-                if (!promoModal) return;
-                promoError.classList.add('hidden');
-                promoPasswordInput.value = '';
-                if (show) {
-                    promoModal.classList.remove('hidden');
-                    setTimeout(() => promoModal.classList.remove('opacity-0'), 10);
-                } else {
-                    promoModal.classList.add('opacity-0');
-                    setTimeout(() => {
-                        promoModal.classList.add('hidden');
-                        if (!show) { // Only clear if closing
-                           pendingGenerationFunction = null;
-                        }
-                    }, 300);
-                }
-            }
 
             async function executeNameGeneration() {
                 if (!nameDescriptionInput) return;
@@ -988,72 +1087,47 @@
                 nameOutputContainer.innerHTML = '';
                 nameLoader.classList.remove('hidden');
 
-                const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
-                
-                try {
-                    const nameIdeas = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
-                            required: ["name_ideas"]
-                        }
-                    });
+                await simulateDelay(2000);
 
-                    nameLoader.classList.add('hidden');
-                    nameIdeas.name_ideas.forEach(idea => {
-                        const ideaEl = document.createElement('div');
-                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
-                        nameOutputContainer.appendChild(ideaEl);
-                    });
+                nameLoader.classList.add('hidden');
+                mockResponses.businessNames.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
+                    nameOutputContainer.appendChild(ideaEl);
+                });
 
-                } catch (error) {
-                    console.error("Error generating names:", error);
-                    nameLoader.classList.add('hidden');
-                    nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-                } finally {
-                    generateNameButton.disabled = false;
-                }
+                generateNameButton.disabled = false;
             }
-            
+
             async function executePlanGeneration() {
                 if (!businessDescriptionInput) return;
                 const description = businessDescriptionInput.value.trim();
-                
+                if (!description) {
+                    alert('Please describe your business idea first.');
+                    return;
+                }
+
                 generatePlanButton.disabled = true;
                 planOutputContainer.innerHTML = '';
                 planLoader.classList.remove('hidden');
 
-                const prompt = `You are an expert business consultant AI. A user has provided the following business idea: '${description}'. Based on this idea, and using your knowledge and access to real-time information, generate a comprehensive business plan. Please provide the output in a structured JSON format. The JSON object should have a single key 'plan', which is an array of objects. Each object in the array should represent a section of the business plan and have the following properties: 'title' (a string), 'icon' (a relevant Lucide icon name as a string, e.g., 'search', 'megaphone', 'lightbulb', 'file-text', 'sliders-horizontal'), and 'content' (a detailed string for that section, formatted with paragraphs). The plan must include at least these sections: Executive Summary, Market Analysis, Social Media & Marketing Strategy, Operations & Automation, and Key Advice & Next Steps. The content should be insightful, actionable, and tailored specifically to the user's idea.`;
+                await simulateDelay(3000);
+
+                planLoader.classList.add('hidden');
+                const delay = ms => new Promise(res => setTimeout(res, ms));
                 
-                try {
-                    const planSections = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { "plan": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "icon": { "type": "STRING" }, "content": { "type": "STRING" } }, required: ["title", "icon", "content"] } } },
-                            required: ["plan"]
-                        }
-                    });
-
-                    planLoader.classList.add('hidden');
-                    const delay = ms => new Promise(res => setTimeout(res, ms));
-
-                    for (const section of planSections.plan) {
-                        await delay(500);
-                        const sectionEl = document.createElement('div');
-                        sectionEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                        sectionEl.innerHTML = `<h3 class="text-2xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="${section.icon || 'file-text'}" class="mr-3"></i>${section.title}</h3><p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${section.content}</p>`;
-                        planOutputContainer.appendChild(sectionEl);
-                        lucide.createIcons();
-                        sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                } catch (error) {
-                    console.error("Error generating plan:", error);
-                    planLoader.classList.add('hidden');
-                    planOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-                } finally {
-                    generatePlanButton.disabled = false;
+                for (const section of mockResponses.businessPlan) {
+                    await delay(500);
+                    const sectionEl = document.createElement('div');
+                    sectionEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    sectionEl.innerHTML = `<h3 class="text-2xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="${section.icon}" class="mr-3"></i>${section.title}</h3><p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${section.content}</p>`;
+                    planOutputContainer.appendChild(sectionEl);
+                    lucide.createIcons();
+                    sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
+
+                generatePlanButton.disabled = false;
             }
 
             async function executeLogoGeneration() {
@@ -1068,34 +1142,19 @@
                 logoOutputContainer.innerHTML = '';
                 logoLoader.classList.remove('hidden');
 
-                const prompt = `You are a creative branding expert AI. A user has described their brand: '${description}'. Generate 3 distinct and creative logo concepts. For each concept, provide a title, a detailed description of the visual elements, and the reasoning behind the design choices. Output this as a JSON object with a key 'logo_ideas', which is an array of objects. Each object should have 'title' and 'description' properties.`;
-                
-                try {
-                    const logoIdeas = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { "logo_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["title", "description"] } } },
-                            required: ["logo_ideas"]
-                        }
-                    });
+                await simulateDelay(2500);
 
-                    logoLoader.classList.add('hidden');
-                    logoIdeas.logo_ideas.forEach(idea => {
-                        const ideaEl = document.createElement('div');
-                        ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                        ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.title}</h3><p class="text-gray-700">${idea.description}</p>`;
-                        logoOutputContainer.appendChild(ideaEl);
-                    });
+                logoLoader.classList.add('hidden');
+                mockResponses.logoIdeas.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-xl font-bold text-[#1e3a8a] mb-2">${idea.title}</h3><p class="text-gray-700">${idea.description}</p>`;
+                    logoOutputContainer.appendChild(ideaEl);
+                });
 
-                } catch (error) {
-                    console.error("Error generating logo ideas:", error);
-                    logoLoader.classList.add('hidden');
-                    logoOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-                } finally {
-                    generateLogoButton.disabled = false;
-                }
+                generateLogoButton.disabled = false;
             }
-            
+
             async function executeSupplierGeneration() {
                 if (!supplierBusinessTypeInput || !supplierLocationInput) return;
                 const businessType = supplierBusinessTypeInput.value.trim();
@@ -1109,400 +1168,27 @@
                 supplierOutputContainer.innerHTML = '';
                 supplierLoader.classList.remove('hidden');
 
-                const prompt = `As a procurement specialist AI, identify potential categories of suppliers for a '${businessType}' located in '${location}'. Do not list specific company names. Instead, provide a list of supplier *types* and a brief description of what to look for in each. For example, for a coffee shop, you might suggest "Coffee Bean Roasters" and "Local Bakeries". Output this as a JSON object with a key 'supplier_categories', which is an array of objects. Each object should have 'type' and 'description' properties.`;
-                
-                try {
-                    const supplierIdeas = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { "supplier_categories": { type: "ARRAY", items: { type: "OBJECT", properties: { "type": { "type": "STRING" }, "description": { "type": "STRING" } }, required: ["type", "description"] } } },
-                            required: ["supplier_categories"]
-                        }
-                    });
+                await simulateDelay(2000);
 
-                    supplierLoader.classList.add('hidden');
-                    supplierIdeas.supplier_categories.forEach(idea => {
-                        const ideaEl = document.createElement('div');
-                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.type}</h3><p class="text-gray-600 text-sm">${idea.description}</p>`;
-                        supplierOutputContainer.appendChild(ideaEl);
-                    });
+                supplierLoader.classList.add('hidden');
+                mockResponses.suppliers.forEach(idea => {
+                    const ideaEl = document.createElement('div');
+                    ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                    ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.type}</h3><p class="text-gray-600 text-sm">${idea.description}</p>`;
+                    supplierOutputContainer.appendChild(ideaEl);
+                });
 
-                } catch (error) {
-                    console.error("Error generating suppliers:", error);
-                    supplierLoader.classList.add('hidden');
-                    supplierOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-                } finally {
-                    generateSupplierButton.disabled = false;
-                }
+                generateSupplierButton.disabled = false;
             }
 
-            async function executeSwotGeneration() {
-                if (!swotDescriptionInput) return;
-                const description = swotDescriptionInput.value.trim();
-                if (!description) {
-                    alert('Please describe your business for the SWOT analysis.');
-                    return;
-                }
-
-                generateSwotButton.disabled = true;
-                swotOutputContainer.innerHTML = '';
-                swotOutputContainer.classList.add('hidden');
-                swotLoader.classList.remove('hidden');
-
-                const prompt = `You are a strategic business analyst AI. A user has described their business: '${description}'. Generate a comprehensive SWOT analysis (Strengths, Weaknesses, Opportunities, Threats). Strengths and Weaknesses are internal factors. Opportunities and Threats are external factors. Provide 3-4 bullet points for each category. Output this as a JSON object.`;
-                
-                const schema = {
-                    type: "OBJECT",
-                    properties: {
-                        "strengths": { "type": "ARRAY", "items": { "type": "STRING" } },
-                        "weaknesses": { "type": "ARRAY", "items": { "type": "STRING" } },
-                        "opportunities": { "type": "ARRAY", "items": { "type": "STRING" } },
-                        "threats": { "type": "ARRAY", "items": { "type": "STRING" } }
-                    },
-                    required: ["strengths", "weaknesses", "opportunities", "threats"]
-                };
-
-                try {
-                    const swotData = await callGemini(prompt, { responseSchema: schema });
-
-                    swotLoader.classList.add('hidden');
-                    
-                    const renderSection = (title, items, colorClass, icon) => {
-                        const listItems = items.map(item => `<li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-gray-500"></i><span>${item}</span></li>`).join('');
-                        return `
-                            <div class="bg-white p-6 rounded-xl border">
-                                <h3 class="text-xl font-bold ${colorClass} flex items-center mb-3"><i data-lucide="${icon}" class="w-5 h-5 mr-2"></i>${title}</h3>
-                                <ul class="space-y-2 text-gray-700">${listItems}</ul>
-                            </div>
-                        `;
-                    };
-
-                    const swotHtml = `
-                        <h2 class="text-3xl font-bold text-center mb-6">SWOT Analysis</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            ${renderSection('Strengths', swotData.strengths, 'text-green-600', 'thumbs-up')}
-                            ${renderSection('Weaknesses', swotData.weaknesses, 'text-red-600', 'thumbs-down')}
-                            ${renderSection('Opportunities', swotData.opportunities, 'text-blue-600', 'trending-up')}
-                            ${renderSection('Threats', swotData.threats, 'text-yellow-600', 'shield-alert')}
-                        </div>
-                    `;
-
-                    swotOutputContainer.innerHTML = swotHtml;
-                    swotOutputContainer.classList.remove('hidden');
-                    lucide.createIcons();
-                    swotOutputContainer.scrollIntoView({ behavior: 'smooth' });
-
-                } catch (error) {
-                    console.error("Error generating SWOT analysis:", error);
-                    swotLoader.classList.add('hidden');
-                    swotOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Failed to generate SWOT analysis. Please try again.</span></div>`;
-                    swotOutputContainer.classList.remove('hidden');
-                } finally {
-                    generateSwotButton.disabled = false;
-                }
-            }
-
-            async function executePitchDeckGeneration() {
-                if (!pitchDeckDescriptionInput) return;
-                const description = pitchDeckDescriptionInput.value.trim();
-                if (!description) {
-                    alert('Please describe your business for the pitch deck outline.');
-                    return;
-                }
-
-                generatePitchDeckButton.disabled = true;
-                pitchDeckOutputContainer.innerHTML = '';
-                pitchDeckOutputContainer.classList.add('hidden');
-                pitchDeckLoader.classList.remove('hidden');
-
-                const prompt = `You are an expert startup advisor and pitch deck creator. A user has described their business: '${description}'. Generate a standard 10-slide pitch deck outline for them. The slides should be in a logical order for an investor presentation. For each slide, provide a title and 3-4 key bullet points of content. Output this as a JSON object.`;
-                
-                const schema = {
-                    type: "OBJECT",
-                    properties: {
-                        "pitch_deck": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "slide_number": { "type": "NUMBER" },
-                                    "slide_title": { "type": "STRING" },
-                                    "slide_content": { "type": "ARRAY", "items": { "type": "STRING" } }
-                                },
-                                required: ["slide_number", "slide_title", "slide_content"]
-                            }
-                        }
-                    },
-                    required: ["pitch_deck"]
-                };
-
-                try {
-                    const pitchDeckData = await callGemini(prompt, { responseSchema: schema });
-
-                    pitchDeckLoader.classList.add('hidden');
-                    
-                    let pitchDeckHtml = `<h2 class="text-3xl font-bold text-center mb-6">AI-Generated Pitch Deck Outline</h2><div class="space-y-6">`;
-                    
-                    pitchDeckData.pitch_deck.forEach(slide => {
-                        const pointsHtml = slide.slide_content.map(point => `<li class="flex items-start"><i data-lucide="check" class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0"></i><span>${point}</span></li>`).join('');
-                        pitchDeckHtml += `
-                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
-                                <h3 class="text-xl font-bold text-[#1e3a8a] mb-3">Slide ${slide.slide_number}: ${slide.slide_title}</h3>
-                                <ul class="space-y-2 text-gray-700">
-                                    ${pointsHtml}
-                                </ul>
-                            </div>
-                        `;
-                    });
-                    pitchDeckHtml += `</div>`;
-
-                    pitchDeckOutputContainer.innerHTML = pitchDeckHtml;
-                    pitchDeckOutputContainer.classList.remove('hidden');
-                    lucide.createIcons();
-                    pitchDeckOutputContainer.scrollIntoView({ behavior: 'smooth' });
-
-                } catch (error) {
-                    console.error("Error generating pitch deck:", error);
-                    pitchDeckLoader.classList.add('hidden');
-                    pitchDeckOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Failed to generate pitch deck outline. Please try again.</span></div>`;
-                    pitchDeckOutputContainer.classList.remove('hidden');
-                } finally {
-                    generatePitchDeckButton.disabled = false;
-                }
-            }
-
-            async function executeSocialMediaGeneration() {
-                const brandNameInput = document.getElementById('social-brand-name');
-                const descriptionInput = document.getElementById('social-brand-description');
-                const platformInput = document.getElementById('social-platform-select');
-                const loader = document.getElementById('social-loader');
-                const outputContainer = document.getElementById('social-output');
-                const button = document.getElementById('generate-social-button');
-
-                const brandName = brandNameInput.value.trim();
-                const description = descriptionInput.value.trim();
-                const platform = platformInput.value;
-
-                if (!brandName || !description) {
-                    alert('Please enter a brand name and description.');
-                    return;
-                }
-
-                button.disabled = true;
-                outputContainer.innerHTML = '';
-                outputContainer.classList.add('hidden');
-                loader.classList.remove('hidden');
-
-                const prompt = `
-                    You are a world-class social media marketing expert. A user wants to create a social media profile for their brand on ${platform}.
-                    Brand Name: "${brandName}"
-                    Brand Description: "${description}"
-
-                    Your task is to generate a complete, professional social media profile kit. Please provide the following:
-                    1.  **Username**: A creative, catchy, and unique username that is highly likely to be available. Avoid common or generic names. The username must be in all lowercase letters.
-                    2.  **Bio**: A compelling bio, perfectly optimized for ${platform}. It should be engaging, include a call to action, and use emojis where appropriate for the platform.
-                    3.  **Post Ideas**: A list of 5 distinct and engaging content ideas tailored specifically for the brand and the ${platform} audience. These should be actionable ideas.
-
-                    Please provide the output in a structured JSON format. The JSON object must have keys: "username" (string), "bio" (string), and "post_ideas" (an array of strings).
-                `;
-
-                const schema = {
-                    type: "OBJECT",
-                    properties: {
-                        "username": { "type": "STRING" },
-                        "bio": { "type": "STRING" },
-                        "post_ideas": { "type": "ARRAY", "items": { "type": "STRING" } }
-                    },
-                    required: ["username", "bio", "post_ideas"]
-                };
-
-                try {
-                    const result = await callGemini(prompt, { responseSchema: schema });
-
-                    loader.classList.add('hidden');
-
-                    const postIdeasHtml = result.post_ideas.map(idea => `
-                        <li class="flex items-start p-3 bg-gray-50 rounded-lg">
-                            <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500 mr-3 mt-1 flex-shrink-0"></i>
-                            <span>${idea}</span>
-                        </li>
-                    `).join('');
-
-                    const outputHtml = `
-                        <h2 class="text-3xl font-bold text-center mb-6">Your AI-Generated Profile for ${platform}</h2>
-                        <div class="space-y-8">
-                            <!-- Username -->
-                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                                <h3 class="text-xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="at-sign" class="w-5 h-5 mr-2"></i>Username Suggestion</h3>
-                                <p class="text-2xl font-mono bg-gray-100 p-3 rounded-lg text-center text-gray-800">${result.username.toLowerCase()}</p>
-                            </div>
-
-                            <!-- Bio -->
-                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                                <h3 class="text-xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="file-text" class="w-5 h-5 mr-2"></i>Profile Bio</h3>
-                                <div class="p-4 border-l-4 border-blue-200 bg-blue-50 rounded-lg">
-                                    <p class="text-gray-800 whitespace-pre-wrap">${result.bio}</p>
-                                </div>
-                            </div>
-
-                            <!-- Post Ideas -->
-                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                                <h3 class="text-xl font-bold text-[#1e3a8a] flex items-center mb-3"><i data-lucide="zap" class="w-5 h-5 mr-2"></i>Post Ideas for ${platform}</h3>
-                                <ul class="space-y-3 text-gray-700">
-                                    ${postIdeasHtml}
-                                </ul>
-                            </div>
-                        </div>
-                    `;
-
-                    outputContainer.innerHTML = outputHtml;
-                    outputContainer.classList.remove('hidden');
-                    lucide.createIcons();
-                    outputContainer.scrollIntoView({ behavior: 'smooth' });
-
-                } catch (error) {
-                    console.error("Error generating social media profile:", error);
-                    loader.classList.add('hidden');
-                    outputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Failed to generate the profile. Please try again.</span></div>`;
-                    outputContainer.classList.remove('hidden');
-                } finally {
-                    button.disabled = false;
-                }
-            }
-            
-            async function executeWebsiteGeneration() {
-                const companyName = document.getElementById('website-company-name').value.trim();
-                const description = document.getElementById('website-company-description').value.trim();
-                const style = document.getElementById('website-style-select').value;
-
-                if (!companyName || !description) {
-                    alert('Please enter both a company name and description.');
-                    return;
-                }
-
-                generateWebsiteButton.disabled = true;
-                document.getElementById('website-output').classList.add('hidden');
-                document.getElementById('website-loader').classList.remove('hidden');
-
-                const prompt = `You are an expert web developer specializing in creating visually appealing, single-file websites using Tailwind CSS. Create a complete HTML file for a company called "${companyName}". The company description is: "${description}". The website must have a ${style} design style.
-
-                **Requirements:**
-                1.  **Single File:** All HTML, CSS (via Tailwind classes), and JavaScript must be in a single HTML file.
-                2.  **Tailwind CSS:** Use the Tailwind CDN (<script src="https://cdn.tailwindcss.com"></script>) and use Tailwind classes for all styling. Do not use <style> tags or inline style attributes.
-                3.  **Responsive Design:** The website must be fully responsive and look great on mobile, tablet, and desktop screens.
-                4.  **Content:** Generate relevant, high-quality placeholder text for all sections based on the company description.
-                5.  **Sections:** The website must include:
-                    * A modern navigation bar.
-                    * A compelling hero section with the company name and a strong call-to-action.
-                    * An "About Us" section.
-                    * A "Services" or "Products" section (choose whichever is more appropriate).
-                    * A simple "Contact Us" section with a form.
-                    * A clean footer.
-                6.  **Code Only:** Your entire output must be only the HTML code, starting with <!DOCTYPE html> and ending with </html>. Do not include any markdown, explanations, or comments outside of the code.`;
-
-                try {
-                    const websiteCode = await callGemini(prompt);
-                    generatedWebsiteCode = websiteCode;
-                    
-                    const previewContainer = document.getElementById('website-preview-container');
-                    previewContainer.innerHTML = `
-                        <div class="h-64 bg-gray-100 flex items-center justify-center">
-                            <i data-lucide="globe" class="w-16 h-16 text-gray-400"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold">${companyName} Website Preview</h3>
-                            <p class="text-gray-600 mt-2">Click "Preview" to see your generated website.</p>
-                        </div>
-                    `;
-                    
-                    document.getElementById('website-loader').classList.add('hidden');
-                    document.getElementById('website-output').classList.remove('hidden');
-                    lucide.createIcons();
-
-                } catch (error) {
-                    console.error("Error generating website:", error);
-                    document.getElementById('website-loader').classList.add('hidden');
-                    alert("Failed to generate website. Please try again.");
-                } finally {
-                    generateWebsiteButton.disabled = false;
-                }
-            }
-
-            function toggleWebsitePreviewModal(show) {
-                if (!websitePreviewModal) return;
-                if (show) {
-                    const previewFrame = document.getElementById('website-preview-frame');
-                    previewFrame.srcdoc = generatedWebsiteCode;
-                    websitePreviewModal.classList.remove('hidden');
-                    setTimeout(() => websitePreviewModal.classList.remove('opacity-0'), 10);
-                } else {
-                    websitePreviewModal.classList.add('opacity-0');
-                    setTimeout(() => websitePreviewModal.classList.add('hidden'), 300);
-                }
-            }
-
-            function downloadWebsite() {
-                if (!generatedWebsiteCode) {
-                    alert('No website generated yet.');
-                    return;
-                }
-                
-                const blob = new Blob([generatedWebsiteCode], { type: 'text/html' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${document.getElementById('website-company-name').value.trim().toLowerCase().replace(/\s+/g, '-')}-website.html`;
-                document.body.appendChild(a);
-                a.click();
-                
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
-            }
-
-            // Event Listeners for Paid Tools
-            if (generateNameButton) generateNameButton.addEventListener('click', () => togglePromoModal(true, executeNameGeneration));
-            if (generatePlanButton) generatePlanButton.addEventListener('click', () => togglePromoModal(true, executePlanGeneration));
-            if (generateLogoButton) generateLogoButton.addEventListener('click', () => togglePromoModal(true, executeLogoGeneration));
-            if (generateSwotButton) generateSwotButton.addEventListener('click', () => togglePromoModal(true, executeSwotGeneration));
-            if (generatePitchDeckButton) generatePitchDeckButton.addEventListener('click', () => togglePromoModal(true, executePitchDeckGeneration));
-            if (generateSocialButton) generateSocialButton.addEventListener('click', () => togglePromoModal(true, executeSocialMediaGeneration));
-            if (generateWebsiteButton) generateWebsiteButton.addEventListener('click', () => togglePromoModal(true, executeWebsiteGeneration));
-
-            // Event Listener for Free Tool
+            // Event Listeners
+            if (generateNameButton) generateNameButton.addEventListener('click', executeNameGeneration);
+            if (generatePlanButton) generatePlanButton.addEventListener('click', executePlanGeneration);
+            if (generateLogoButton) generateLogoButton.addEventListener('click', executeLogoGeneration);
             if (generateSupplierButton) generateSupplierButton.addEventListener('click', executeSupplierGeneration);
-
-            // Modal Buttons
-            if (submitPromoButton) {
-                submitPromoButton.addEventListener('click', () => {
-                    const correctPassword = "MSTYCFREE";
-                    if (promoPasswordInput.value === correctPassword) {
-                        togglePromoModal(false);
-                        if (typeof pendingGenerationFunction === 'function') {
-                            pendingGenerationFunction();
-                        }
-                    } else {
-                        promoError.classList.remove('hidden');
-                    }
-                });
-            }
-            if (noPromoButton) {
-                noPromoButton.addEventListener('click', () => {
-                    togglePromoModal(false);
-                    alert("Payment gateway integration is coming soon!");
-                });
-            }
-
-            // Website Preview and Download Listeners
-            if (previewWebsiteButton) previewWebsiteButton.addEventListener('click', () => toggleWebsitePreviewModal(true));
-            if (closeWebsitePreview) closeWebsitePreview.addEventListener('click', () => toggleWebsitePreviewModal(false));
-            if (downloadWebsiteButton) downloadWebsiteButton.addEventListener('click', downloadWebsite);
         }
 
-        // --- Knowledge Hub Page ---
+        // Knowledge Hub Page
         async function generateGuide(guideTitle, guideId) {
             const nicheInput = document.getElementById(`${guideId}-niche`);
             const goalsInput = document.getElementById(`${guideId}-goals`);
@@ -1519,26 +1205,22 @@
 
             guideLoader.classList.remove('hidden');
             guideOutput.innerHTML = '';
-            document.getElementById('course-output').innerHTML = ''; // Clear other output
+            document.getElementById('course-output').innerHTML = '';
 
-            const prompt = `You are an expert author AI. Create a detailed, step-by-step guide on the topic: "${guideTitle}". Personalize this guide for a user whose business niche is "${niche}" and whose primary goal is "${goals}". The guide should be practical, actionable, and easy to follow. Structure it with clear headings and paragraphs. Do not use markdown like # or **. Just use plain text with newlines.`;
+            await simulateDelay(3000);
 
-            try {
-                const guideContent = await callGemini(prompt);
-                guideOutput.innerHTML = `
-                    <div class="bg-white/60 backdrop-blur-sm p-8 rounded-xl border border-gray-200 shadow-lg animate-fade-in">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">${guideTitle}</h2>
-                        <h3 class="text-xl font-semibold text-gray-700 mb-6">Personalized for: <span class="text-[#1e3a8a]">${niche}</span></h3>
-                        <div class="prose max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap">${guideContent}</div>
-                    </div>
-                `;
-                guideOutput.scrollIntoView({ behavior: 'smooth' });
-            } catch (error) {
-                console.error("Error generating guide:", error);
-                guideOutput.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Failed to generate the guide. Please try again.</span></div>`;
-            } finally {
-                guideLoader.classList.add('hidden');
-            }
+            const guideTemplate = mockResponses.guides[guideTitle];
+            const personalizedGuide = guideTemplate.replace(/{niche}/g, niche).replace(/{goals}/g, goals);
+
+            guideOutput.innerHTML = `
+                <div class="bg-white/60 backdrop-blur-sm p-8 rounded-xl border border-gray-200 shadow-lg animate-fade-in">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">${guideTitle}</h2>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-6">Personalized for: <span class="text-[#1e3a8a]">${niche}</span></h3>
+                    <div class="prose max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap">${personalizedGuide}</div>
+                </div>
+            `;
+            guideOutput.scrollIntoView({ behavior: 'smooth' });
+            guideLoader.classList.add('hidden');
         }
 
         async function generateCourse() {
@@ -1554,66 +1236,41 @@
 
             courseLoader.classList.remove('hidden');
             courseOutput.innerHTML = '';
-            document.getElementById('guide-output').innerHTML = ''; // Clear other output
+            document.getElementById('guide-output').innerHTML = '';
 
-            const prompt = `You are an AI curriculum developer. Create a mini-course on the topic: "${topic}". The course should be broken down into 4-6 logical modules. Each module needs a title and a list of 3-5 key learning points (as strings in an array). Provide the output in a structured JSON format. The JSON object must have a single key 'course', which is an array of objects. Each object in the array represents a module and must have 'module_title' (string) and 'key_points' (array of strings) properties.`;
+            await simulateDelay(2500);
+
+            const courseData = mockResponses.courses["Digital Marketing for Startups"];
+            let courseHtml = `<h2 class="text-3xl font-bold text-center mb-6">Your Mini-Course on: ${topic}</h2>`;
             
-            const schema = {
-                type: "OBJECT",
-                properties: {
-                    "course": {
-                        type: "ARRAY",
-                        items: {
-                            type: "OBJECT",
-                            properties: {
-                                "module_title": { "type": "STRING" },
-                                "key_points": { "type": "ARRAY", "items": { "type": "STRING" } }
-                            },
-                            required: ["module_title", "key_points"]
-                        }
-                    }
-                },
-                required: ["course"]
-            };
+            courseData.forEach((module, index) => {
+                const pointsHtml = module.key_points.map(point => `<li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0"></i><span>${point}</span></li>`).join('');
+                courseHtml += `
+                    <details class="bg-white/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 open:shadow-lg" ${index === 0 ? 'open' : ''}>
+                        <summary class="font-bold text-xl text-gray-800 cursor-pointer flex justify-between items-center">
+                            ${module.module_title}
+                            <i data-lucide="chevron-down" class="accordion-icon transition-transform duration-300"></i>
+                        </summary>
+                        <ul class="mt-4 space-y-3 text-gray-700">
+                            ${pointsHtml}
+                        </ul>
+                    </details>
+                `;
+            });
 
-            try {
-                const courseData = await callGemini(prompt, { responseSchema: schema });
-                let courseHtml = `<h2 class="text-3xl font-bold text-center mb-6">Your Mini-Course on: ${topic}</h2>`;
-                courseData.course.forEach((module, index) => {
-                    const pointsHtml = module.key_points.map(point => `<li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0"></i><span>${point}</span></li>`).join('');
-                    courseHtml += `
-                        <details class="bg-white/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 open:shadow-lg" ${index === 0 ? 'open' : ''}>
-                            <summary class="font-bold text-xl text-gray-800 cursor-pointer flex justify-between items-center">
-                                ${module.module_title}
-                                <i data-lucide="chevron-down" class="accordion-icon transition-transform duration-300"></i>
-                            </summary>
-                            <ul class="mt-4 space-y-3 text-gray-700">
-                                ${pointsHtml}
-                            </ul>
-                        </details>
-                    `;
-                });
-                courseOutput.innerHTML = courseHtml;
-                lucide.createIcons();
-                courseOutput.scrollIntoView({ behavior: 'smooth' });
-
-            } catch (error) {
-                console.error("Error generating course:", error);
-                courseOutput.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Failed to generate the course. Please try again.</span></div>`;
-            } finally {
-                courseLoader.classList.add('hidden');
-            }
+            courseOutput.innerHTML = courseHtml;
+            lucide.createIcons();
+            courseOutput.scrollIntoView({ behavior: 'smooth' });
+            courseLoader.classList.add('hidden');
         }
 
-
-        // --- Networking Page ---
+        // Networking Page
         function initializeNetworkingPage() {
             const profileFormSection = document.getElementById('profile-form-section');
             const profileListSection = document.getElementById('profile-list-section');
             const profileForm = document.getElementById('profile-form');
-            
-            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
+            const userProfile = JSON.parse(localStorage.getItem('userProfile') || 'null');
             if (userProfile) {
                 profileFormSection.classList.add('hidden');
                 profileListSection.classList.remove('hidden');
@@ -1628,12 +1285,13 @@
                     e.preventDefault();
                     const bioInput = document.getElementById('profile-bio');
                     const bioError = document.getElementById('bio-error');
+                    
                     if (bioInput.value.length < 50) {
                         bioError.classList.remove('hidden');
                         return;
                     }
+                    
                     bioError.classList.add('hidden');
-
                     const newProfile = {
                         firstName: document.getElementById('profile-first-name').value,
                         lastName: document.getElementById('profile-last-name').value,
@@ -1641,6 +1299,7 @@
                         location: document.getElementById('profile-location').value,
                         bio: bioInput.value
                     };
+                    
                     localStorage.setItem('userProfile', JSON.stringify(newProfile));
                     profileFormSection.classList.add('hidden');
                     profileListSection.classList.remove('hidden');
@@ -1653,23 +1312,22 @@
         function displayProfiles() {
             const profileListContainer = document.getElementById('profile-list-container');
             const currentUser = JSON.parse(localStorage.getItem('userProfile'));
-
             const mockProfiles = [
                 { firstName: 'Jane', lastName: 'Doe', age: 28, location: 'New York, USA', bio: 'I am looking for a partner to develop a sustainable fashion brand. I have experience in marketing and e-commerce, and I need someone with design and production knowledge.' },
                 { firstName: 'John', lastName: 'Smith', age: 35, location: 'London, UK', bio: 'I am developing a mobile app for tourists on the Slovenian coast. I am a programmer and am looking for someone to take over the business and marketing side. I want to create something truly useful.' },
                 { firstName: 'Eva', lastName: 'Williams', age: 42, location: 'Berlin, Germany', bio: 'I am an experienced manager in the hospitality industry and want to open my own restaurant with locally sourced food. I am looking for investors and perhaps a head chef with the same vision.' }
             ];
-            
-            const allProfiles = [currentUser, ...mockProfiles];
 
-            profileListContainer.innerHTML = ''; // Clear previous list
+            const allProfiles = [currentUser, ...mockProfiles];
+            profileListContainer.innerHTML = '';
+            
             allProfiles.forEach(profile => {
                 if (!profile) return;
                 const profileCard = document.createElement('div');
                 profileCard.className = 'bg-white/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-sm';
                 profileCard.innerHTML = `
                     <div class="flex items-center mb-4">
-                        <img src="https://placehold.co/64x64/1e3a8a/ffffff?text=${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}" alt="Profile picture" class="w-16 h-16 rounded-full mr-4">
+                        <img src="/placeholder.svg?height=64&width=64&text=${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}" alt="Profile picture" class="w-16 h-16 rounded-full mr-4">
                         <div>
                             <h3 class="text-xl font-bold">${profile.firstName} ${profile.lastName}</h3>
                             <p class="text-gray-500">${profile.age} years old, ${profile.location}</p>
@@ -1680,8 +1338,8 @@
                 profileListContainer.appendChild(profileCard);
             });
         }
-        
-        // --- Promotion Page ---
+
+        // Promotion Page
         function initializePromotionPageListeners() {
             const generatePromoButton = document.getElementById('generate-promo-button');
             const promoNameInput = document.getElementById('promo-name');
@@ -1692,7 +1350,7 @@
             async function handlePromotionGeneration() {
                 const lastPromoDate = localStorage.getItem('lastPromotionDate');
                 const today = new Date().toDateString();
-
+                
                 if (lastPromoDate === today) {
                     alert('You have already used your free promotion for today. Please upgrade to Pro for unlimited promotions.');
                     return;
@@ -1700,7 +1358,7 @@
 
                 const name = promoNameInput.value.trim();
                 const description = promoDescriptionInput.value.trim();
-
+                
                 if (!name || !description) {
                     alert('Please enter both a company name and a description.');
                     return;
@@ -1709,38 +1367,23 @@
                 generatePromoButton.disabled = true;
                 promoOutputContainer.classList.add('hidden');
                 promoLoader.classList.remove('hidden');
+                promoLoader.innerHTML = `
+                    <div class="loader mx-auto"></div>
+                    <p class="mt-4 text-lg text-gray-600 font-semibold">Generating your promotion...</p>
+                `;
 
-                const prompt = `You are a marketing expert. Create a short, catchy advertisement for a company named "${name}". The company is described as: "${description}". The ad should have a headline, a body, and a call to action. Output this as a JSON object with keys 'headline', 'body', and 'cta'.`;
+                await simulateDelay(2000);
 
-                try {
-                    const ad = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                "headline": { "type": "STRING" },
-                                "body": { "type": "STRING" },
-                                "cta": { "type": "STRING" }
-                            },
-                            required: ["headline", "body", "cta"]
-                        }
-                    });
-
-                    promoLoader.classList.add('hidden');
-                    document.getElementById('promo-headline').textContent = ad.headline;
-                    document.getElementById('promo-body').textContent = ad.body;
-                    document.getElementById('promo-cta').textContent = ad.cta;
-                    promoOutputContainer.classList.remove('hidden');
-
-                    // Set the date for the free user limit
-                    localStorage.setItem('lastPromotionDate', today);
-
-                } catch (error) {
-                    console.error("Error generating promotion:", error);
-                    promoLoader.classList.add('hidden');
-                    alert("Sorry, there was an error generating your promotion. Please try again.");
-                } finally {
-                    generatePromoButton.disabled = false;
-                }
+                const randomPromo = mockResponses.promotions[Math.floor(Math.random() * mockResponses.promotions.length)];
+                
+                promoLoader.classList.add('hidden');
+                document.getElementById('promo-headline').textContent = randomPromo.headline.replace('The Cozy Corner Cafe', name);
+                document.getElementById('promo-body').textContent = randomPromo.body;
+                document.getElementById('promo-cta').textContent = randomPromo.cta;
+                promoOutputContainer.classList.remove('hidden');
+                
+                localStorage.setItem('lastPromotionDate', today);
+                generatePromoButton.disabled = false;
             }
 
             if (generatePromoButton) {
@@ -1748,29 +1391,24 @@
             }
         }
 
-
-        // --- Event Listener Initialization ---
+        // Event Listener Initialization
         function initializeEventListeners() {
             hamburgerButton.addEventListener('click', () => mobileMenu.classList.remove('-translate-x-full'));
             closeMenuButton.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
-            
-            initializePlannerPageListeners(); 
+
+            initializePlannerPageListeners();
             initializeChatPageListeners();
             initializeSupportListeners();
             initializePromotionPageListeners();
         }
 
-        // --- Initial Page Load and History Handling ---
+        // Initial Page Load and History Handling
         document.addEventListener('DOMContentLoaded', () => {
             const initialPage = window.location.hash.substring(1) || 'home';
             showPage(initialPage);
             initializeEventListeners();
-            const styleSheet = document.createElement("style");
-            styleSheet.type = "text/css";
-            styleSheet.innerText = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }`;
-            document.head.appendChild(styleSheet);
         });
-        
+
         window.onpopstate = () => {
             const pageId = window.location.hash.substring(1) || 'home';
             showPage(pageId);
