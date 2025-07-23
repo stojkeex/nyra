@@ -382,8 +382,9 @@
                             </div>
                             <button id="generate-name-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="lightbulb" class="mr-2"></i>
-                                Generate Names
+                                Generate Names ($0.49)
                             </button>
+                            <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="name-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -400,8 +401,9 @@
                             </div>
                             <button id="generate-plan-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="wand-2" class="mr-2"></i>
-                                Generate My Plan
+                                Generate My Plan ($1.89)
                             </button>
+                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="plan-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -418,8 +420,9 @@
                             </div>
                             <button id="generate-logo-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="image" class="mr-2"></i>
-                                Generate Logo Ideas
+                                Generate Logo Ideas ($1.49)
                             </button>
+                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="logo-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -442,7 +445,7 @@
                             </div>
                             <button id="generate-supplier-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="search" class="mr-2"></i>
-                                Find Suppliers
+                                Find Suppliers (Free)
                             </button>
                         </div>
                         <div id="supplier-loader" class="text-center py-12 hidden">
@@ -460,8 +463,9 @@
                             </div>
                             <button id="generate-swot-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="layout-grid" class="mr-2"></i>
-                                Generate SWOT Analysis
+                                Generate SWOT Analysis ($1.99)
                             </button>
+                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="swot-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -478,8 +482,9 @@
                             </div>
                             <button id="generate-pitch-deck-button" class="w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="presentation" class="mr-2"></i>
-                                Generate Pitch Deck Outline
+                                Generate Pitch Deck Outline ($0.99)
                             </button>
+                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="pitch-deck-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -511,8 +516,9 @@
                             </div>
                             <button id="generate-social-button" class="mt-6 w-full bg-[#1e3a8a] text-white py-4 rounded-lg font-bold text-lg cta-button flex items-center justify-center">
                                 <i data-lucide="share-2" class="mr-2"></i>
-                                Create Social Media Profile
+                                Create Social Media Profile ($1.99)
                             </button>
+                             <p class="text-sm text-gray-500 mt-2 text-center">Free & unlimited with a <a href="#about" onclick="handleNav(event, 'about')" class="text-blue-600 hover:underline">Pro Plan</a>.</p>
                         </div>
                         <div id="social-loader" class="text-center py-12 hidden">
                             <div class="loader mx-auto"></div>
@@ -633,19 +639,19 @@
         </div>
     </div>
 
-    <!-- Promo Code Modal -->
+    <!-- Payment/Promo Code Modal -->
     <div id="promo-modal" class="modal-backdrop fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden opacity-0">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-6 text-center">
-            <i data-lucide="gift" class="w-16 h-16 text-blue-500 mx-auto mb-4"></i>
-            <h3 class="text-2xl font-bold text-gray-900">Free Promo</h3>
-            <p class="text-lg text-gray-600 mt-2">Enter your password to generate the plan for free.</p>
+            <i data-lucide="lock" class="w-16 h-16 text-blue-500 mx-auto mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-900">Unlock This Feature</h3>
+            <p class="text-lg text-gray-600 mt-2">Enter a promo code to generate for free.</p>
             <div class="mt-4">
                 <input type="password" id="promo-password-input" class="w-full border-gray-300 rounded-lg p-3 text-center" placeholder="Enter password">
                 <p id="promo-error" class="text-red-500 text-sm mt-1 hidden">Incorrect password. Please try again.</p>
             </div>
             <div class="mt-6 flex flex-col space-y-3">
-                <button id="submit-promo-button" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-bold cta-button hover:bg-blue-600">Apply Promo</button>
-                <button id="no-promo-button" class="text-gray-500 text-sm hover:underline">No Promo Code?</button>
+                <button id="submit-promo-button" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-bold cta-button hover:bg-blue-600">Apply & Generate</button>
+                <button id="no-promo-button" class="text-gray-500 text-sm hover:underline">Proceed to Payment</button>
             </div>
         </div>
     </div>
@@ -848,6 +854,7 @@
 
         // --- AI Planner Page Functionality ---
         function initializePlannerPageListeners() {
+            // ... (Get all element references as before)
             const generatePlanButton = document.getElementById('generate-plan-button');
             const businessDescriptionInput = document.getElementById('business-description');
             const planOutputContainer = document.getElementById('plan-output');
@@ -880,8 +887,16 @@
             const pitchDeckOutputContainer = document.getElementById('pitch-deck-output');
             const generateSocialButton = document.getElementById('generate-social-button');
 
+            // State to hold the function to be executed after payment/promo
+            let pendingGenerationFunction = null;
             
-            function togglePromoModal(show) {
+            function togglePromoModal(show, generationFunction = null) {
+                if (show) {
+                    pendingGenerationFunction = generationFunction;
+                } else {
+                    pendingGenerationFunction = null;
+                }
+
                 if (!promoModal) return;
                 promoError.classList.add('hidden');
                 promoPasswordInput.value = '';
@@ -894,14 +909,46 @@
                 }
             }
 
-            async function handlePlanGeneration() {
-                if (!businessDescriptionInput.value.trim()) {
-                    alert('Please describe your business idea first.');
+            async function executeNameGeneration() {
+                if (!nameDescriptionInput) return;
+                const description = nameDescriptionInput.value.trim();
+                if (!description) {
+                    alert('Please describe your business for name ideas first.');
                     return;
                 }
-                togglePromoModal(true);
-            }
 
+                generateNameButton.disabled = true;
+                nameOutputContainer.innerHTML = '';
+                nameLoader.classList.remove('hidden');
+
+                const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
+                
+                try {
+                    const nameIdeas = await callGemini(prompt, {
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
+                            required: ["name_ideas"]
+                        }
+                    });
+
+                    nameLoader.classList.add('hidden');
+                    nameIdeas.name_ideas.forEach(idea => {
+                        const ideaEl = document.createElement('div');
+                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
+                        nameOutputContainer.appendChild(ideaEl);
+                    });
+
+                } catch (error) {
+                    console.error("Error generating names:", error);
+                    nameLoader.classList.add('hidden');
+                    nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
+                } finally {
+                    generateNameButton.disabled = false;
+                }
+            }
+            
             async function executePlanGeneration() {
                 if (!businessDescriptionInput) return;
                 const description = businessDescriptionInput.value.trim();
@@ -942,7 +989,7 @@
                 }
             }
 
-            async function handleLogoGeneration() {
+            async function executeLogoGeneration() {
                 if (!logoDescriptionInput) return;
                 const description = logoDescriptionInput.value.trim();
                 if (!description) {
@@ -982,47 +1029,7 @@
                 }
             }
             
-            async function handleNameGeneration() {
-                if (!nameDescriptionInput) return;
-                const description = nameDescriptionInput.value.trim();
-                if (!description) {
-                    alert('Please describe your business for name ideas first.');
-                    return;
-                }
-
-                generateNameButton.disabled = true;
-                nameOutputContainer.innerHTML = '';
-                nameLoader.classList.remove('hidden');
-
-                const prompt = `You are a creative branding expert AI. A user has described their business: '${description}'. Generate 5 creative and memorable business names. For each name, provide a short, compelling reason why it's a good fit. Output this as a JSON object with a key 'name_ideas', which is an array of objects. Each object should have 'name' and 'reason' properties.`;
-                
-                try {
-                    const nameIdeas = await callGemini(prompt, {
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { "name_ideas": { type: "ARRAY", items: { type: "OBJECT", properties: { "name": { "type": "STRING" }, "reason": { "type": "STRING" } }, required: ["name", "reason"] } } },
-                            required: ["name_ideas"]
-                        }
-                    });
-
-                    nameLoader.classList.add('hidden');
-                    nameIdeas.name_ideas.forEach(idea => {
-                        const ideaEl = document.createElement('div');
-                        ideaEl.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
-                        ideaEl.innerHTML = `<h3 class="text-lg font-bold text-[#1e3a8a]">${idea.name}</h3><p class="text-gray-600 text-sm">${idea.reason}</p>`;
-                        nameOutputContainer.appendChild(ideaEl);
-                    });
-
-                } catch (error) {
-                    console.error("Error generating names:", error);
-                    nameLoader.classList.add('hidden');
-                    nameOutputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg md:col-span-2" role="alert"><strong class="font-bold">Oops!</strong><span class="block sm:inline"> Something went wrong. Please try again.</span></div>`;
-                } finally {
-                    generateNameButton.disabled = false;
-                }
-            }
-
-            async function handleSupplierGeneration() {
+            async function executeSupplierGeneration() {
                 if (!supplierBusinessTypeInput || !supplierLocationInput) return;
                 const businessType = supplierBusinessTypeInput.value.trim();
                 const location = supplierLocationInput.value.trim();
@@ -1063,7 +1070,7 @@
                 }
             }
 
-            async function handleSwotGeneration() {
+            async function executeSwotGeneration() {
                 if (!swotDescriptionInput) return;
                 const description = swotDescriptionInput.value.trim();
                 if (!description) {
@@ -1129,7 +1136,7 @@
                 }
             }
 
-            async function handlePitchDeckGeneration() {
+            async function executePitchDeckGeneration() {
                 if (!pitchDeckDescriptionInput) return;
                 const description = pitchDeckDescriptionInput.value.trim();
                 if (!description) {
@@ -1198,7 +1205,7 @@
                 }
             }
 
-            async function handleSocialMediaGeneration() {
+            async function executeSocialMediaGeneration() {
                 const brandNameInput = document.getElementById('social-brand-name');
                 const descriptionInput = document.getElementById('social-brand-description');
                 const platformInput = document.getElementById('social-platform-select');
@@ -1297,13 +1304,26 @@
                 }
             }
             
-            if (generatePlanButton) generatePlanButton.addEventListener('click', handlePlanGeneration);
+            // Event Listeners for Paid Tools
+            if (generateNameButton) generateNameButton.addEventListener('click', () => togglePromoModal(true, executeNameGeneration));
+            if (generatePlanButton) generatePlanButton.addEventListener('click', () => togglePromoModal(true, executePlanGeneration));
+            if (generateLogoButton) generateLogoButton.addEventListener('click', () => togglePromoModal(true, executeLogoGeneration));
+            if (generateSwotButton) generateSwotButton.addEventListener('click', () => togglePromoModal(true, executeSwotGeneration));
+            if (generatePitchDeckButton) generatePitchDeckButton.addEventListener('click', () => togglePromoModal(true, executePitchDeckGeneration));
+            if (generateSocialButton) generateSocialButton.addEventListener('click', () => togglePromoModal(true, executeSocialMediaGeneration));
+            
+            // Event Listener for Free Tool
+            if (generateSupplierButton) generateSupplierButton.addEventListener('click', executeSupplierGeneration);
+
+            // Modal Buttons
             if (submitPromoButton) {
                 submitPromoButton.addEventListener('click', () => {
                     const correctPassword = "MSTYCFREE";
                     if (promoPasswordInput.value === correctPassword) {
                         togglePromoModal(false);
-                        executePlanGeneration();
+                        if (typeof pendingGenerationFunction === 'function') {
+                            pendingGenerationFunction();
+                        }
                     } else {
                         promoError.classList.remove('hidden');
                     }
@@ -1315,12 +1335,6 @@
                     alert("Payment gateway integration is coming soon!");
                 });
             }
-            if (generateLogoButton) generateLogoButton.addEventListener('click', handleLogoGeneration);
-            if (generateNameButton) generateNameButton.addEventListener('click', handleNameGeneration);
-            if (generateSupplierButton) generateSupplierButton.addEventListener('click', handleSupplierGeneration);
-            if (generateSwotButton) generateSwotButton.addEventListener('click', handleSwotGeneration);
-            if (generatePitchDeckButton) generatePitchDeckButton.addEventListener('click', handlePitchDeckGeneration);
-            if (generateSocialButton) generateSocialButton.addEventListener('click', handleSocialMediaGeneration);
         }
 
         // --- Knowledge Hub Page ---
