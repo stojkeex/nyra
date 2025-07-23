@@ -13,18 +13,13 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            color: #ffffff;
-        }
-        .bg-hero-pattern {
-            background-color: #ffffff;
-            background-image: radial-gradient(circle at 1px 1px, #d1d5db 1px, transparent 0);
-            background-size: 2rem 2rem;
+            background: linear-gradient(to bottom right, #eef2ff, #f8fafc);
         }
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
         .cta-button {
             transition: all 0.3s ease;
@@ -91,7 +86,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="text-gray-800">
 
     <!-- Header -->
     <header class="fixed w-full z-50 glass-effect">
@@ -136,7 +131,7 @@
     <main>
         <!-- Home Page -->
         <div id="page-home" class="page active">
-            <section class="bg-hero-pattern pt-32 pb-20 md:pt-48 md:pb-32 text-center">
+            <section class="pt-32 pb-20 md:pt-48 md:pb-32 text-center">
                 <div class="container mx-auto px-6">
                     <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">Your Personal <span class="text-[#1e3a8a]">AI Business Partner</span></h1>
                     <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Get real-time insights, automated strategies, and intelligent tools to build, launch, and grow your business – all powered by a single, business-focused AI.</p>
@@ -149,7 +144,7 @@
                     </div>
                 </div>
             </section>
-             <section id="how-it-works" class="py-20 bg-white">
+             <section id="how-it-works" class="py-20 bg-white/60 backdrop-blur-sm">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Get Started in 3 Simple Steps</h2>
@@ -162,29 +157,29 @@
                     </div>
                 </div>
             </section>
-            <section id="features" class="py-20 bg-gray-50">
+            <section id="features" class="py-20">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">An Entire Team of AI Experts</h2>
                         <p class="mt-4 text-lg text-gray-600">Replace expensive tools and consultants with a single, intelligent platform.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="search"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Market Research AI</h3><p class="text-gray-600">Uncover market size, trends, and customer demographics. Analyze competitors and find your unique selling proposition.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="lightbulb"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3><p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="megaphone"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3><p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="users"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3><p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="volume-2"></i></div><h3 class="text-xl font-bold mt-6 mb-2">AI Promotion Generator</h3><p class="text-gray-600">Describe your business and let our AI generate a compelling advertisement to attract new customers.</p></div>
-                        <div class="feature-card bg-white p-8 rounded-xl border border-gray-100"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="scale"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3><p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="search"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Market Research AI</h3><p class="text-gray-600">Uncover market size, trends, and customer demographics. Analyze competitors and find your unique selling proposition.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="lightbulb"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Startup Advisor</h3><p class="text-gray-600">Validate your ideas, build comprehensive business plans, and generate investor-ready pitch decks in minutes.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="megaphone"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Marketing Assistant</h3><p class="text-gray-600">Generate ad copy, social media campaigns, email newsletters, and blog posts tailored to your target audience.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="users"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Networking Hub</h3><p class="text-gray-600">Create your profile and connect with a community of like-minded founders, mentors, and potential partners.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="volume-2"></i></div><h3 class="text-xl font-bold mt-6 mb-2">AI Promotion Generator</h3><p class="text-gray-600">Describe your business and let our AI generate a compelling advertisement to attract new customers.</p></div>
+                        <div class="feature-card bg-white/80 p-8 rounded-xl border border-gray-100 shadow-sm"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-12 h-12 flex items-center justify-center"><i data-lucide="scale"></i></div><h3 class="text-xl font-bold mt-6 mb-2">Finance & Legal Helper</h3><p class="text-gray-600">Get basic financial projections, understand key metrics, and find information on legal requirements for your country.</p></div>
                     </div>
                 </div>
             </section>
-            <section id="testimonials" class="py-20 bg-white">
+            <section id="testimonials" class="py-20 bg-white/60 backdrop-blur-sm">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Trusted by Founders and Owners</h2></div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        <div class="testimonial-card bg-gray-50 p-8 rounded-xl"><p class="text-gray-600 italic">“BizMind AI helped me go from idea to investor-ready in 2 weeks. The business plan generator is pure magic.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=L" alt="Luka, Founder" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Luka, Founder</p><p class="text-sm text-gray-500">SaaS Startup</p></div></div></div>
-                        <div class="testimonial-card bg-gray-50 p-8 rounded-xl"><p class="text-gray-600 italic">“I replaced my business consultant with this AI – and it’s better. It's saved me thousands and provides instant, data-driven advice.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=A" alt="Ana, Ecom Owner" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Ana, Ecom Owner</p><p class="text-sm text-gray-500">Shopify Store</p></div></div></div>
-                        <div class="testimonial-card bg-gray-50 p-8 rounded-xl"><p class="text-gray-600 italic">“The market analysis feature is a game-changer. It identified a niche competitor I had no idea about, allowing me to pivot my strategy early.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=M" alt="Mike, Entrepreneur" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Mike, Entrepreneur</p><p class="text-sm text-gray-500">Mobile App</p></div></div></div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“BizMind AI helped me go from idea to investor-ready in 2 weeks. The business plan generator is pure magic.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=L" alt="Luka, Founder" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Luka, Founder</p><p class="text-sm text-gray-500">SaaS Startup</p></div></div></div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“I replaced my business consultant with this AI – and it’s better. It's saved me thousands and provides instant, data-driven advice.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=A" alt="Ana, Ecom Owner" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Ana, Ecom Owner</p><p class="text-sm text-gray-500">Shopify Store</p></div></div></div>
+                        <div class="testimonial-card bg-gray-50/80 p-8 rounded-xl"><p class="text-gray-600 italic">“The market analysis feature is a game-changer. It identified a niche competitor I had no idea about, allowing me to pivot my strategy early.”</p><div class="flex items-center mt-6"><img src="https://placehold.co/48x48/E2E8F0/4A5568?text=M" alt="Mike, Entrepreneur" class="w-12 h-12 rounded-full"><div class="ml-4"><p class="font-bold">Mike, Entrepreneur</p><p class="text-sm text-gray-500">Mobile App</p></div></div></div>
                     </div>
                 </div>
             </section>
@@ -199,7 +194,7 @@
 
         <!-- Knowledge Hub Page -->
         <div id="page-knowledge-hub" class="page">
-            <section class="pt-32 pb-20 bg-white min-h-screen">
+            <section class="pt-32 pb-20 min-h-screen">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto">
                         <div class="text-center mb-12">
@@ -209,7 +204,7 @@
 
                         <div class="space-y-8">
                             <!-- Guide 1 -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-2">How to Start a Business (Step-by-Step)</h2>
                                 <p class="text-gray-600 mb-4">A comprehensive guide from idea to launch. Personalize it for your specific industry.</p>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -219,7 +214,7 @@
                                 <button onclick="generateGuide('How to Start a Business', 'guide1')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
                             </div>
                             <!-- Guide 2 -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-2">How to Dropship with Zero Budget</h2>
                                 <p class="text-gray-600 mb-4">Learn the secrets of dropshipping without upfront investment. Get a guide tailored to your product ideas.</p>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -229,7 +224,7 @@
                                 <button onclick="generateGuide('How to Dropship with Zero Budget', 'guide2')" class="mt-4 w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold text-lg cta-button">Generate Personalized Guide</button>
                             </div>
                              <!-- Guide 3 -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-2">5 Best Strategies for Instagram Growth</h2>
                                 <p class="text-gray-600 mb-4">Actionable tips to grow your Instagram presence. Personalize them for your brand.</p>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -240,7 +235,7 @@
                             </div>
                             
                             <!-- NEW: AI Mini-Course Generator -->
-                            <div class="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                            <div class="mt-8 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                                 <div class="flex items-center mb-4">
                                     <i data-lucide="graduation-cap" class="w-10 h-10 text-[#1e3a8a] mr-4 flex-shrink-0"></i>
                                     <div>
@@ -275,7 +270,7 @@
 
         <!-- Networking & Promotion Page -->
         <div id="page-networking" class="page">
-            <section class="pt-32 pb-20 bg-white min-h-screen">
+            <section class="pt-32 pb-20 min-h-screen">
                 <div class="container mx-auto px-6">
                     <!-- Networking Section -->
                     <div id="profile-form-section">
@@ -284,7 +279,7 @@
                                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Connect with Others</h1>
                                 <p class="mt-4 text-lg text-gray-600">Create your profile and find co-founders, partners, or mentors with similar interests.</p>
                             </div>
-                            <form id="profile-form" class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg space-y-6">
+                            <form id="profile-form" class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label for="profile-first-name" class="block text-lg font-semibold mb-2 text-gray-800">First Name</label>
@@ -333,7 +328,7 @@
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">AI Promotion Generator</h1>
                             <p class="mt-4 text-lg text-gray-600">Promote your business or brand. Our AI will create a compelling ad for you.</p>
                         </div>
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <div class="space-y-4">
                                 <div>
                                     <label for="promo-name" class="block text-lg font-semibold mb-2 text-gray-800">Company / Brand Name:</label>
@@ -366,7 +361,7 @@
 
         <!-- AI Planner Page -->
         <div id="page-planner" class="page">
-            <section class="pt-32 pb-20 bg-white min-h-screen">
+            <section class="pt-32 pb-20 min-h-screen">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto">
                         <div class="text-center mb-12">
@@ -375,7 +370,7 @@
                         </div>
                         
                         <!-- Tool 1: Name Generator -->
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Business Name Generator</h2>
                             <div class="mb-4">
                                 <label for="name-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business to get name ideas:</label>
@@ -394,7 +389,7 @@
                         <div id="name-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
                         <!-- Tool 2: Business Plan Generator -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Business Plan Generator</h2>
                             <div class="mb-4">
                                 <label for="business-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business idea in detail:</label>
@@ -413,7 +408,7 @@
                         <div id="plan-output" class="mt-12 space-y-8"></div>
 
                         <!-- Tool 3: Logo Idea Generator -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">3. AI Logo Idea Generator</h2>
                             <div class="mb-4">
                                 <label for="logo-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your brand for logo ideas:</label>
@@ -432,7 +427,7 @@
                         <div id="logo-output" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
                         <!-- Tool 4: Supplier Finder -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">4. AI Supplier Finder</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
@@ -456,7 +451,7 @@
                         <div id="supplier-output" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
                         <!-- Tool 5: SWOT Analysis -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">5. AI SWOT Analysis Generator</h2>
                             <div class="mb-4">
                                 <label for="swot-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business for a SWOT analysis:</label>
@@ -475,7 +470,7 @@
                         <div id="swot-output" class="mt-12 hidden"></div>
 
                         <!-- Tool 6: Pitch Deck Outline -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">6. AI Pitch Deck Outline Generator</h2>
                             <div class="mb-4">
                                 <label for="pitch-deck-description" class="block text-lg font-semibold mb-2 text-gray-800">Describe your business for a pitch deck outline:</label>
@@ -494,7 +489,7 @@
                         <div id="pitch-deck-output" class="mt-12 hidden"></div>
 
                         <!-- Tool 7: Social Media Assistant -->
-                        <div class="mt-16 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-lg">
+                        <div class="mt-16 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8 shadow-lg">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">7. ✨ Social Media Assistant</h2>
                             <div class="space-y-4">
                                 <div>
@@ -534,17 +529,17 @@
 
         <!-- Chat Bot Page -->
         <div id="page-chat" class="page">
-            <section class="pt-32 pb-20 bg-white min-h-screen">
+            <section class="pt-32 pb-20 min-h-screen">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900">BizMind AI Chat</h1>
                         <p class="mt-4 text-lg text-gray-600">Your personal business consultant. Ask me anything.</p>
                     </div>
-                    <div class="max-w-3xl mx-auto bg-gray-50 border border-gray-200 rounded-xl shadow-lg flex flex-col" style="height: 65vh;">
+                    <div class="max-w-3xl mx-auto bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg flex flex-col" style="height: 65vh;">
                         <div id="chat-window" class="flex-1 p-6 space-y-4 overflow-y-auto">
                             <div class="flex items-start gap-3"><div class="bg-blue-100 text-[#1e3a8a] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0"><i data-lucide="bot"></i></div><div class="bg-white border border-gray-200 rounded-lg p-3 text-gray-700"><p>Hello! I'm BizMind AI. How can I help you strategize, research, or grow your business today?</p></div></div>
                         </div>
-                        <div class="p-4 bg-white border-t border-gray-200">
+                        <div class="p-4 bg-white/80 border-t border-gray-200">
                             <div id="chat-suggestions" class="flex flex-wrap gap-2 mb-3">
                                 <button class="chat-prompt-btn">Analyze my competition</button>
                                 <button class="chat-prompt-btn">Draft a marketing email</button>
@@ -562,14 +557,14 @@
         
         <!-- About & Pricing Page -->
         <div id="page-about" class="page">
-            <section class="pt-32 pb-20 bg-white">
+            <section class="pt-32 pb-20">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto">
                         <h1 class="text-4xl md:text-5xl font-bold text-center text-gray-900">About BizMind AI</h1>
                         <p class="mt-6 text-lg text-center text-gray-600">We're on a mission to democratize business intelligence and empower every entrepreneur with the tools to succeed.</p>
                         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="rocket" class="mr-3"></i>Our Mission</h2><p class="mt-4 text-gray-700">In today's fast-paced market, access to timely data, strategic insights, and operational efficiency tools is the key differentiator. Historically, these resources were reserved for large corporations. BizMind AI was created to level the playing field. We believe that every founder, startup, and small business owner deserves a dedicated partner to help navigate the complexities of building and scaling a business.</p></div>
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="eye" class="mr-3"></i>Our Vision</h2><p class="mt-4 text-gray-700">Our vision is a world where anyone with a great idea has access to the strategic intelligence needed to turn it into a thriving business. We aim to be the indispensable operating system for entrepreneurship, powering the next generation of innovators and market leaders through accessible, powerful, and intuitive AI.</p></div>
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="rocket" class="mr-3"></i>Our Mission</h2><p class="mt-4 text-gray-700">In today's fast-paced market, access to timely data, strategic insights, and operational efficiency tools is the key differentiator. Historically, these resources were reserved for large corporations. BizMind AI was created to level the playing field. We believe that every founder, startup, and small business owner deserves a dedicated partner to help navigate the complexities of building and scaling a business.</p></div>
+                            <div class="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-xl p-8"><h2 class="text-2xl font-bold text-[#1e3a8a] flex items-center"><i data-lucide="eye" class="mr-3"></i>Our Vision</h2><p class="mt-4 text-gray-700">Our vision is a world where anyone with a great idea has access to the strategic intelligence needed to turn it into a thriving business. We aim to be the indispensable operating system for entrepreneurship, powering the next generation of innovators and market leaders through accessible, powerful, and intuitive AI.</p></div>
                         </div>
                         <div class="mt-20">
                             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900">Meet the Team</h2>
@@ -583,16 +578,16 @@
                     </div>
                 </div>
             </section>
-            <section class="py-20 bg-gray-50">
+            <section class="py-20 bg-white/60 backdrop-blur-sm">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-12">
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Simple, Transparent Pricing</h1>
                         <p class="mt-4 text-lg text-gray-600">Choose the plan that's right for your stage of growth. Cancel anytime.</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Freemium</h3><p class="text-gray-500 mt-2">For getting started</p><p class="text-4xl font-bold mt-6">$0 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a></div>
+                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Freemium</h3><p class="text-gray-500 mt-2">For getting started</p><p class="text-4xl font-bold mt-6">$0 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Basic AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>10 queries per day</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Limited data sources</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Community support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Start for Free</a></div>
                         <div class="pricing-card bg-white border-2 border-[#1e3a8a] rounded-xl p-8 flex flex-col relative"><span class="absolute top-0 -translate-y-1/2 bg-[#1e3a8a] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span><h3 class="text-xl font-bold text-[#1e3a8a]">Pro Plan</h3><p class="text-gray-500 mt-2">For serious builders</p><p class="text-4xl font-bold mt-6">$29 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Full access to all AI tools</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Unlimited queries</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Live internet access</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>All integrations</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Priority email support</li></ul><a href="#" class="mt-8 block w-full text-center bg-[#1e3a8a] text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition-colors">Choose Pro</a></div>
-                        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Business Plan</h3><p class="text-gray-500 mt-2">For teams & agencies</p><p class="text-4xl font-bold mt-6">$79 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a></div>
+                        <div class="pricing-card bg-white/80 border border-gray-200 rounded-xl p-8 flex flex-col"><h3 class="text-xl font-bold text-gray-900">Business Plan</h3><p class="text-gray-500 mt-2">For teams & agencies</p><p class="text-4xl font-bold mt-6">$79 <span class="text-lg font-normal text-gray-500">/ month</span></p><ul class="space-y-4 mt-8 text-gray-600 flex-grow"><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Everything in Pro</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Monitoring Dashboard</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Team collaboration (3 seats)</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>Dedicated account manager</li><li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-2"></i>24/7 priority support</li></ul><a href="#" class="mt-8 block w-full text-center bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition-colors">Contact Sales</a></div>
                     </div>
                 </div>
             </section>
@@ -894,8 +889,6 @@
             function togglePromoModal(show, generationFunction = null) {
                 if (show) {
                     pendingGenerationFunction = generationFunction;
-                } else {
-                    pendingGenerationFunction = null;
                 }
 
                 if (!promoModal) return;
@@ -906,7 +899,10 @@
                     setTimeout(() => promoModal.classList.remove('opacity-0'), 10);
                 } else {
                     promoModal.classList.add('opacity-0');
-                    setTimeout(() => promoModal.classList.add('hidden'), 300);
+                    setTimeout(() => {
+                        promoModal.classList.add('hidden');
+                        pendingGenerationFunction = null; // Clear after modal is hidden
+                    }, 300);
                 }
             }
 
@@ -1321,10 +1317,10 @@
                 submitPromoButton.addEventListener('click', () => {
                     const correctPassword = "MSTYCFREE";
                     if (promoPasswordInput.value === correctPassword) {
-                        togglePromoModal(false);
                         if (typeof pendingGenerationFunction === 'function') {
                             pendingGenerationFunction();
                         }
+                        togglePromoModal(false);
                     } else {
                         promoError.classList.remove('hidden');
                     }
@@ -1362,7 +1358,7 @@
             try {
                 const guideContent = await callGemini(prompt);
                 guideOutput.innerHTML = `
-                    <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-lg animate-fade-in">
+                    <div class="bg-white/60 backdrop-blur-sm p-8 rounded-xl border border-gray-200 shadow-lg animate-fade-in">
                         <h2 class="text-3xl font-bold text-gray-900 mb-4">${guideTitle}</h2>
                         <h3 class="text-xl font-semibold text-gray-700 mb-6">Personalized for: <span class="text-[#1e3a8a]">${niche}</span></h3>
                         <div class="prose max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap">${guideContent}</div>
@@ -1418,7 +1414,7 @@
                 courseData.course.forEach((module, index) => {
                     const pointsHtml = module.key_points.map(point => `<li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0"></i><span>${point}</span></li>`).join('');
                     courseHtml += `
-                        <details class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 open:shadow-lg" ${index === 0 ? 'open' : ''}>
+                        <details class="bg-white/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 open:shadow-lg" ${index === 0 ? 'open' : ''}>
                             <summary class="font-bold text-xl text-gray-800 cursor-pointer flex justify-between items-center">
                                 ${module.module_title}
                                 <i data-lucide="chevron-down" class="accordion-icon transition-transform duration-300"></i>
@@ -1502,7 +1498,7 @@
             allProfiles.forEach(profile => {
                 if (!profile) return;
                 const profileCard = document.createElement('div');
-                profileCard.className = 'bg-white p-6 rounded-xl border border-gray-200 shadow-sm';
+                profileCard.className = 'bg-white/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200 shadow-sm';
                 profileCard.innerHTML = `
                     <div class="flex items-center mb-4">
                         <img src="https://placehold.co/64x64/1e3a8a/ffffff?text=${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}" alt="Profile picture" class="w-16 h-16 rounded-full mr-4">
